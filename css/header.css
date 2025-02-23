@@ -15,6 +15,7 @@ body {
 
 .logo-container img {
     height: 40px;
+    border-radius: 50%;
 }
 
 .search-container {
@@ -39,6 +40,7 @@ body {
 .search-button {
     border: none;
     background: #ECD54C;
+    border-radius: 50%;
     cursor: pointer;
     padding: 8px;
     transition: background-color 0.3s;
@@ -70,6 +72,8 @@ body {
 .profile-icon img {
     height: 36px;
     cursor: pointer;
+    border-radius: 50%;
+
     top: 20%;
     position: absolute;
     left: 93%;
