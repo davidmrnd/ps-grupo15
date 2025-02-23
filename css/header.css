@@ -10,6 +10,7 @@ body {
     padding: 10px 20px;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
+    position: relative;
 }
 
 .logo-container img {
@@ -23,6 +24,9 @@ body {
     border-radius: 20px;
     overflow: hidden;
     background-color: #f9f9f9;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .search-box {
@@ -34,14 +38,22 @@ body {
 
 .search-button {
     border: none;
-    background: none;
+    background: #ECD54C;
     cursor: pointer;
     padding: 8px;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background: #d1b842;
 }
 
 .nav-links {
     display: flex;
     gap: 15px;
+    position: absolute;
+    left: 5%;
+    transform: translateX(-5%);
 }
 
 .nav-links a {
@@ -52,12 +64,16 @@ body {
 }
 
 .nav-links a:hover {
-    color: #007BFF;
+    color: #d1b842;
 }
 
 .profile-icon img {
     height: 36px;
     cursor: pointer;
+    top: 20%;
+    position: absolute;
+    left: 93%;
+    transform: translateX(-93%);
 }
 
 .cta-button {
