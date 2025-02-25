@@ -1,11 +1,11 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Oswald, sans-serif;
 }
 
 .header-container {
     display: flex;
-    justify-content: space-between;  /* Espacio entre los contenedores */
+    justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     background-color: #fff;
@@ -15,7 +15,7 @@ body {
 .left-container {
     display: flex;
     align-items: center;
-    gap: 20px;  /* Espacio entre el logo y la barra de navegación */
+    gap: 20px;
 }
 
 .logo-container img {
@@ -46,9 +46,9 @@ body {
     border-radius: 20px;
     overflow: hidden;
     background-color: #f9f9f9;
-    flex-grow: 1;  /* Ocupa todo el espacio disponible */
-    max-width: 500px;  /* Limita el tamaño máximo */
-    margin: 0 20px;  /* Espacio a los lados */
+    flex-grow: 1;
+    max-width: 500px;
+    margin: 0 20px;
 }
 
 .search-box {
@@ -74,7 +74,7 @@ body {
 .right-container {
     display: flex;
     align-items: center;
-    gap: 15px;  /* Espacio entre los elementos */
+    gap: 15px;
 }
 
 .cta-button {
