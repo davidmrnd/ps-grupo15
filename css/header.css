@@ -5,17 +5,38 @@ body {
 
 .header-container {
     display: flex;
+    justify-content: space-between;  /* Espacio entre los contenedores */
     align-items: center;
-    justify-content: space-between;
     padding: 10px 20px;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
-    position: relative;
+}
+
+.left-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;  /* Espacio entre el logo y la barra de navegación */
 }
 
 .logo-container img {
     height: 40px;
     border-radius: 50%;
+}
+
+.nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #d1b842;
 }
 
 .search-container {
@@ -25,16 +46,16 @@ body {
     border-radius: 20px;
     overflow: hidden;
     background-color: #f9f9f9;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    flex-grow: 1;  /* Ocupa todo el espacio disponible */
+    max-width: 500px;  /* Limita el tamaño máximo */
+    margin: 0 20px;  /* Espacio a los lados */
 }
 
 .search-box {
     border: none;
     padding: 8px 12px;
     outline: none;
-    width: 200px;
+    width: 100%;
 }
 
 .search-button {
@@ -50,34 +71,10 @@ body {
     background: #d1b842;
 }
 
-.nav-links {
+.right-container {
     display: flex;
-    gap: 15px;
-    position: absolute;
-    left: 5%;
-    transform: translateX(-5%);
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #d1b842;
-}
-
-.profile-icon img {
-    height: 36px;
-    cursor: pointer;
-    border-radius: 50%;
-
-    top: 20%;
-    position: absolute;
-    left: 93%;
-    transform: translateX(-93%);
+    align-items: center;
+    gap: 15px;  /* Espacio entre los elementos */
 }
 
 .cta-button {
@@ -85,6 +82,7 @@ body {
     border: none;
     padding: 10px 15px;
     border-radius: 20px;
+    font-size: 15px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -92,4 +90,17 @@ body {
 
 .cta-button:hover {
     background-color: #d1b842;
+}
+
+.login-text {
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.login-text:hover {
+    color: #d1b842;
 }
