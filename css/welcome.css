@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #F0ECE3;
+}
+
+header, footer {
+    background-color: #F0ECE3;
+    text-align: center;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 100px auto;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.description {
+    font-size: 16px;
+    color: #555;
+    margin-top: 5px;
+    margin-right: 250px;
+}
+
+.image-container img {
+    width: 500px;
+    object-fit: cover;
+}
