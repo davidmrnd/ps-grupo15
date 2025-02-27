@@ -1,12 +1,9 @@
 body {
-    font-family: serif,"Britannic Bold", "Arial";
+    font-family: Oswald, sans-serif;
     height: 100vh;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f8f5eb;
 }
+
 header {
     display: flex;
     justify-content: center;
