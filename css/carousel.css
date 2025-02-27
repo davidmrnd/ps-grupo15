@@ -4,6 +4,9 @@ body {
     margin: 0;
 }
 
+.carousel-title {
+    text-align: center;
+}
 .carousel-container {
     position: relative;
     width: 60%;
