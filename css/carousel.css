@@ -82,3 +82,24 @@ body {
 .carousel-button:focus {
     outline: none;
 }
+
+.start-rating {
+    justify-content: center;
+    background-color: #ECD54C;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    display: block;
+    margin: auto;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+.start-rating:hover {
+    background-color: #d1b842;
+}
+
+a {
+    text-decoration: none;
+}
