@@ -4,11 +4,6 @@ body {
     margin: 0;
 }
 
-header {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
 .carousel-container {
     position: relative;
     width: 60%;
@@ -63,7 +58,8 @@ header {
 
 .carousel-buttons {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .carousel-button {
