@@ -1,5 +1,5 @@
 body {
-    font-family: Oswald, sans-serif;
+    font-family: serif,"Britannic Bold", "Arial";
     height: 100vh;
     margin: 0;
     display: flex;
@@ -32,42 +32,38 @@ header {
     align-items: center;
     justify-content: center;
     transition: transform 0.5s ease-in-out;
-    gap: 15px; /* Reducimos la separación entre imágenes */
+    gap: 15px;
 }
 
-/* Ajustar tamaño y distribución de las imágenes */
 .carousel-slide {
     flex: 0 0 auto;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Tamaño de las imágenes según su posición en el carrusel */
 .carousel-slide:nth-child(1),
 .carousel-slide:nth-child(5) {
-    width: 15%; /* Antes era 15%, ahora un poco más grande */
+    width: 15%;
     opacity: 0.6;
 }
 
 .carousel-slide:nth-child(2),
 .carousel-slide:nth-child(4) {
-    width: 20%; /* Antes era 25%, ahora más grande */
+    width: 20%;
     opacity: 0.8;
 }
 
 .carousel-slide:nth-child(3) {
-    width: 30%; /* Antes era 35%, ahora más grande */
+    width: 30%;
     opacity: 1;
     transform: scale(1);
 }
 
-/* Ajuste de las imágenes para que mantengan proporción */
 .carousel-slide img {
     width: 100%;
     height: 40%;
     display: block;
 }
 
-/* Botones */
 .carousel-buttons {
     text-align: center;
     margin-top: 10px;
@@ -77,7 +73,7 @@ header {
     background-color: #ECD54C;
     border: none;
     color: black;
-    padding: 5px 10px;
+    padding: 2px 5px;
     cursor: pointer;
     border-radius: 50%;
     transition: background-color 0.3s ease;
