@@ -1,8 +1,6 @@
 .comments-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    margin-left: 150px;
+    width: 80%; /* Antes tenía un max-width de 800px, lo eliminamos */
+    margin: 20px auto;
 }
 
 .comment {
