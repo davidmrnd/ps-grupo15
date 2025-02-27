@@ -1,16 +1,8 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
 .container {
     display: flex;
     align-items: center;
+    margin-left: 300px;
+    margin-top: 70px;
 }
 
 .image-container img {
