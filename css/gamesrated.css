@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    position: relative;
+    scale: 80% 80%;
+}
+
+.box {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+
+.box:nth-child(1) {
+    transform: translateY(20px);
+}
+
+.box:nth-child(2) {
+    transform: translateY(-10px);
+}
+
+.box:nth-child(3) {
+    transform: translateY(30px);
+}
