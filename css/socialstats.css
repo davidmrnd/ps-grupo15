@@ -2,7 +2,6 @@
     display: flex;
     gap: 40px;
     margin-left: 250px;
-    margin-top: 140px;
 }
 
 .column {
@@ -23,4 +22,5 @@
 
 .profilesocialstats-container {
     display: flex;
+    align-items: center;
 }
