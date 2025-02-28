@@ -1,5 +1,5 @@
 .comments-container {
-    width: 80%; /* Antes tenía un max-width de 800px, lo eliminamos */
+    width: 80%;
     margin: 20px auto;
 }
 
