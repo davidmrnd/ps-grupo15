@@ -19,7 +19,8 @@ con la función "Seguir" el cual recomendará los comentarios de estos usuarios
 - ✅ Busqueda por categorías
 
 ## 📄 Documentación
-- **Mockups & StoryBoard**: Ubicado en **/gamecritic_mockups**.
+- **Mockups & StoryBoard**: Ubicado en **/gamecritic_mockups_storyboard/mockups_storyboard.pdf** o haciendo click en [mockups_storyboard.pdf](gamecritic_mockups_storyboard/mockups_storyboard.pdf)
+  .
 
 ## 📂 Archivos templates y donde se usan
 Los templates utilizados en el proyecto son:
