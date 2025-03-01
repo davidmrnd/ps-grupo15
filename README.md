@@ -19,14 +19,20 @@ con la función "Seguir" el cual recomendará los comentarios de estos usuarios
 - ✅ Busqueda por categorías
 
 ## 📄 Documentación
-- **Mockups & StoryBoard**: Ubicado en **/GAMECRITIC_MOCKUPS**.
+- **Mockups & StoryBoard**: Ubicado en **/gamecritic_mockups**.
 
-## 📂 Archivos y templates
+## 📂 Archivos templates y donde se usan
 Los templates utilizados en el proyecto son:
-- `templates/header.html` → Cabecera del sitio.
+- `templates/carousel.html` → `index.html` y `categories.html`
+- `templates/comentaries.html` → `userprofile.html` y `videogameprofile.html`
 - `templates/footer.html` → Pie de página.
-- `templates/profile.html` → Perfil de usuario.
-- `templates/comentaries.html` → Sección de comentarios.
+- `templates/header.html` → Cabecera de página.
+- `templates/login.html` → `singin.html`
+- `templates/profile.html` → `userprofile.html` y `videogameprofile.html`
+- `templates/registration.html` → `singup.html`
+- `templates/socialstats.html` → `userprofile.html`
+- `templates/stars.html` → `userprofile.html` y `videogameprofile.html`
+- `templates/welcome.html` → `index.html`
 
 ## 🌐 Páginas HTML
 Listado de páginas y módulos que implementan:
@@ -39,6 +45,7 @@ Listado de páginas y módulos que implementan:
 | `singin.html`           | Pagina de inicio sesión |
 | `userprofile.html`      | Perfil de usuario       |
 | `videogameprofile.html` | Detalles del videojuego |
+| `newcomment.html`       | Nueva valoración         |
 
 
 ## 💻 Tecnologías utilizadas
