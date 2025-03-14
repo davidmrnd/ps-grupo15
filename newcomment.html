@@ -1,32 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <script src="xlu-include-file.js"></script>
+  <script src="js/load-template.js"></script>
 </head>
 <body>
 
-<header xlu-include-file="/templates/header.html">
-</header>
+<header id="header"></header>
 
-<main xlu-include-file="/templates/profile.html">
-</main>
+<main id="profile"></main>
 
-<main xlu-include-file="/templates/comentaries.html">
-</main>
-
+<main id="comentaries"></main>
 
 <a href="videogameprofile.html"><button class="send-rating">Enviar Comentario</button></a>
 
-<footer xlu-include-file="/templates/footer.html">
-</footer>
-
+<footer id="footer"></footer>
 
 <script>
+  document.addEventListener('DOMContentLoaded', init);
 
-  xLuIncludeFile();
-
+  function init() {
+    loadTemplate('/templates/header.html', 'header');
+    loadTemplate('/templates/profile.html', 'profile');
+    loadTemplate('/templates/comentaries.html', 'comentaries');
+    loadTemplate('/templates/footer.html', 'footer');
+  }
 </script>
 </body>
 </html>

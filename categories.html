@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="xlu-include-file.js"></script>
+    <script src="js/load-template.js"></script>
 </head>
 <body>
 
-<header xlu-include-file="/templates/header.html">
+<header id="header">
 </header>
 
-<main xlu-include-file="/templates/carousel.html">
+<main id="carousel">
 </main>
 
-<main xlu-include-file="/templates/carousel.html">
+<main id="carousel2">
 </main>
 
-<main xlu-include-file="/templates/carousel.html">
+<main id="carousel3">
 </main>
 
-<main xlu-include-file="/templates/carousel.html">
-</main>
-
-<main xlu-include-file="/templates/carousel.html">
-</main>
-
-<footer xlu-include-file="/templates/footer.html">
+<footer id="footer">
 </footer>
 
 <script>
+    document.addEventListener('DOMContentLoaded', init);
 
-  xLuIncludeFile();
-
+    function init() {
+        loadTemplate('/templates/header.html', 'header');
+        loadTemplate('/templates/carousel.html', 'carousel');
+        loadTemplate('/templates/carousel.html', 'carousel2');
+        loadTemplate('/templates/carousel.html', 'carousel3');
+        loadTemplate('/templates/footer.html', 'footer');
+    }
 </script>
 </body>
 </html>
