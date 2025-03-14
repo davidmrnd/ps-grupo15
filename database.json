@@ -1,0 +1,59 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "David Miranda",
+        "email": "david@example.com",
+        "password": "password123",
+        "followers": [2],
+        "following": [2]
+      },
+      {
+        "id": 2,
+        "name": "Esteban Trujillo",
+        "email": "esteban@example.com",
+        "password": "password456",
+        "followers": [1],
+        "following": [1]
+      },
+      {
+        "id": 3,
+        "name": "Alejandro Guerra",
+        "email": "alejandro@example.com",
+        "password": "password789",
+        "followers": [7],
+        "following": [8]
+      }
+    ],
+    "videogames": [
+      {
+        "id": 1,
+        "title": "Game One",
+        "description": "Description for Game One",
+        "category": "Action"
+      },
+      {
+        "id": 2,
+        "title": "Game Two",
+        "description": "Description for Game Two",
+        "category": "Adventure"
+      }
+    ],
+    "comments": [
+      {
+        "id": 1,
+        "userId": 1,
+        "videogameId": 1,
+        "content": "Great game!",
+        "rating": 5
+      },
+      {
+        "id": 2,
+        "userId": 2,
+        "videogameId": 2,
+        "content": "Not bad.",
+        "rating": 3
+      }
+    ]
+  }
+  
