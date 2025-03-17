@@ -62,21 +62,7 @@
 .rating input#star0:checked ~ label {
     color: #ccc;
 }
-.new-comment {
-    justify-content: center;
-    background-color: #ECD54C;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 20px;
-    margin-left: 200px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    font-size: 15px;
-    margin-bottom: 20px;
-}
-.new-comment:hover {
-    background-color: #d1b842;
-}
+
 
 .send-rating {
     justify-content: center;

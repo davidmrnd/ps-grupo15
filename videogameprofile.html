@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <script src="js/load-template.js"></script>
+    <script src="js/load-template.js"></script>
+    <script src="js/load-comments.js"></script>
+    <script src="js/load-videogame-profile.js"></script>
 </head>
 <body>
 
@@ -17,13 +19,9 @@
     </main>
 </div>
 
-<a href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
+<a id="add-comment" href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
 
 <main id="comentaries"></main>
-
-<main id="comentaries2"></main>
-
-<main id="comentaries3"></main>
 
 <footer id="footer"></footer>
 
@@ -32,12 +30,10 @@
 
     function init() {
         loadTemplate('/templates/header.html', 'header');
-        loadTemplate('/templates/profile.html', 'profile');
+        loadVideogameProfile();
         loadTemplate('/templates/stars.html', 'stars');
-        loadTemplate('/templates/comentaries.html', 'comentaries');
-        loadTemplate('/templates/comentaries.html', 'comentaries2');
-        loadTemplate('/templates/comentaries.html', 'comentaries3');
         loadTemplate('/templates/footer.html', 'footer');
+        loadComments();
     }
 </script>
 </body>

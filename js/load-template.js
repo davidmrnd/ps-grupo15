@@ -4,8 +4,6 @@ function loadTemplate(fileName, id, callback) {
         return res.text();
     }).then((text) => {
         document.getElementById(id).innerHTML = text;
-        //console.log(text)
-
         if(callback){
             callback();
         }

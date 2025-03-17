@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="js/load-template.js"></script>
+  <script src="js/load-userprofile.js"></script>
+  <script src="js/user-stats.js"></script>
 </head>
 <body>
 
@@ -27,8 +29,8 @@
 
   function init() {
     loadTemplate('/templates/header.html', 'header');
-    loadTemplate('/templates/profile.html', 'profile');
-    loadTemplate('/templates/socialstats.html', 'socialstats');
+    loadUserProfile();
+    loadUserStats();
     loadTemplate('/templates/comentaries.html', 'comentaries');
     loadTemplate('/templates/comentaries.html', 'comentaries2');
     loadTemplate('/templates/comentaries.html', 'comentaries3');
