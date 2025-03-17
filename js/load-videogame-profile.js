@@ -20,7 +20,7 @@ function loadVideogameProfile() {
                 fetch('/templates/videogameprofile.html?id=${videogame.id}')
                     .then(response => response.text())
                     .then(template => {
-                        document.getElementById('add-comment').href = `/newcomment.html?id=${videogame.id}`;
+                        document.getElementById('add-comment').href = `newcomment.html?id=${videogame.id}`;
                         
                     });
             }

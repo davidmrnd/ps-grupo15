@@ -21,7 +21,7 @@ function loadComments() {
                         const profileImage = commentElement.querySelector('.avatar');
                         profileImage.src = user.profileicon;
                         profileImage.alt = `${user.name}'s profile picture`;
-                        commentElement.querySelector('#userlink').href = `/userprofile.html?id=${user.id}`;
+                        commentElement.querySelector('#userlink').href = `userprofile.html?id=${user.id}`;
                         commentsContainer.appendChild(commentElement);
                     });
             });

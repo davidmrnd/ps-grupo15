@@ -10,7 +10,7 @@ function loadVideogames() {
                         const carousel = document.createElement('div');
                         carousel.innerHTML = template;
                         carousel.querySelector('.carousel-title h1').innerText = videogame.title;
-                        carousel.querySelector('#videogameimage').href = `/videogameprofile.html?id=${videogame.id}`;
+                        carousel.querySelector('#videogameimage').href = `videogameprofile.html?id=${videogame.id}`;
                         carousel.querySelector('#videogame1').src = videogame.imagecarousel;
                         carousel.querySelector('#videogame1').alt = `${videogame.title} image`;
                         carouselsContainer.appendChild(carousel);
