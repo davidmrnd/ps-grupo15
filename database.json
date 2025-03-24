@@ -1,59 +1,258 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "name": "David Miranda",
-        "email": "david@example.com",
-        "password": "password123",
-        "followers": [2],
-        "following": [2]
-      },
-      {
-        "id": 2,
-        "name": "Esteban Trujillo",
-        "email": "esteban@example.com",
-        "password": "password456",
-        "followers": [1],
-        "following": [1]
-      },
-      {
-        "id": 3,
-        "name": "Alejandro Guerra",
-        "email": "alejandro@example.com",
-        "password": "password789",
-        "followers": [7],
-        "following": [8]
-      }
-    ],
-    "videogames": [
-      {
-        "id": 1,
-        "title": "Game One",
-        "description": "Description for Game One",
-        "category": "Action"
-      },
-      {
-        "id": 2,
-        "title": "Game Two",
-        "description": "Description for Game Two",
-        "category": "Adventure"
-      }
-    ],
-    "comments": [
-      {
-        "id": 1,
-        "userId": 1,
-        "videogameId": 1,
-        "content": "Great game!",
-        "rating": 5
-      },
-      {
-        "id": 2,
-        "userId": 2,
-        "videogameId": 2,
-        "content": "Not bad.",
-        "rating": 3
-      }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": 1,
+      "name": "David Miranda",
+      "email": "david@example.com",
+      "password": "1",
+      "profileicon": "/images/5951752.png",
+      "followers": [2, 3],
+      "following": [2, 3]
+    },
+    {
+      "id": 2,
+      "name": "Esteban Trujillo",
+      "email": "esteban@example.com",
+      "password": "password456",
+      "profileicon": "/images/5951752.png",
+      "followers": [1, 3],
+      "following": [1]
+    },
+    {
+      "id": 3,
+      "name": "Alejandro Guerra",
+      "email": "alejandro@example.com",
+      "password": "password789",
+      "profileicon": "/images/5951752.png",
+      "followers": [1, 2],
+      "following": [1]
+    }
+  ],
+  "videogames": [
+    {
+      "id": 1,
+      "title": "Grand Theft Auto V",
+      "subtitle": "Crimen, caos y libertad sin límites",
+      "description": "Grand Theft Auto V es un videojuego de acción-aventura de mundo abierto desarrollado por Rockstar North y distribuido por Rockstar Games. Este título revolucionario hizo su debut el 17 de septiembre de 2013 en las consolas Xbox 360 y PlayStation 3",
+      "category": ["Action", "Novedades"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
+      "imageprofile": "/images/GTA-5-Emblem.png"
+    },
+    {
+      "id": 2,
+      "title": "Marvel’s Spider-Man Remastered",
+      "subtitle": "libertad sin límites",
+      "description": "In Marvel’s Spider-Man Remastered, the worlds of Peter Parker and Spider-Man collide in an original action-packed story. Play as an experienced Peter Parker, fighting big crime and iconic villains in Marvel’s New York. Web-swing through vibrant neighborhoods and defeat villains with epic takedowns.",
+      "category": ["Action"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/1817070/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/1817070/header.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Marvel's Spider-Man 2",
+      "subtitle": "libertad sin límites",
+      "description": "Be Greater. Together. The incredible power of the symbiote forces Peter Parker and Miles Morales into a desperate fight as they balance their lives, friendships, and their duty to protect in an exciting chapter of the critically acclaimed Spider-Man franchise on PC.",
+      "category": ["Action"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2651280/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2651280/header.jpg"
+    },
+    {
+      "id": 4,
+      "title": "God of War Ragnarök",
+      "subtitle": "Caos y una gran historia",
+      "description": "Kratos and Atreus embark on a mythic journey for answers before Ragnarök arrives – now on PC.",
+      "category": ["Action", "Novedades"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2322010/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2322010/header.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Assassin's Creed Odyssey",
+      "subtitle": "Caos y libertad sin límites",
+      "description": "Assassin's Creed Odyssey is an action-adventure game where you choose the hero you want to become. Embark on an epic journey from outcast to living legend to uncover the secrets of your past and change the fate of Ancient Greece. Fight in visceral battles on both land and sea to become a true hero",
+      "category": ["Action"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/812140/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/812140/header.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Far Cry 6",
+      "subtitle": "Supervivencia y libertad sin límites",
+      "description": "Enter the adrenaline-filled world of a modern-day guerrilla revolution. With stunning vistas, visceral gunplay, and a huge variety of gameplay experiences, there's never been a better time to join the fight.",
+      "category": ["Survival", "Novedades"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2369390/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2369390/header.jpg"
+    },
+    {
+      "id": 7,
+      "title": "The Forest",
+      "subtitle": "Supervivencia y libertad sin límites",
+      "description": "As the lone survivor of a passenger jet crash, you find yourself in a mysterious forest battling to stay alive against a society of cannibalistic mutants. Build, explore, survive in this terrifying first person survival horror simulator.",
+      "category": ["Survival"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/242760/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/242760/header.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Minecraft",
+      "subtitle": "Supervivencia y libertad sin límites",
+      "description": "Minecraft es un videojuego de mundo abierto donde la exploración y las construcciones son fundamentales. Creado por Markus <<Notch>> Persson, nos permite desarrollar nuestros propios universos fantásticos y artísticos, mediante la colocación y destrucción de bloques.",
+      "category": ["Survival", "Novedades"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/3049290/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/3049290/header.jpg"
+    },
+    {
+      "id": 9,
+      "title": "Terraria",
+      "subtitle": "Supervivencia y libertad sin límites",
+      "description": "Dig, fight, explore, build! Nothing is impossible in this action-packed adventure game. Four Pack also available!",
+      "category": ["Survival"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg"
+    },
+    {
+      "id": 10,
+      "title": "ARK: Survival Evolved",
+      "subtitle": "Supervivencia y libertad sin límites",
+      "description": "Stranded on the shores of a mysterious island, you must learn to survive. Use your cunning to kill or tame the primeval creatures roaming the land, and encounter other players to survive, dominate... and escape!",
+      "category": ["Survival"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/346110/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/346110/header.jpg"
+    },
+    {
+      "id": 11,
+      "title": "Call of Duty: Black Ops III",
+      "subtitle": "Disparos y estrategias",
+      "description": "Call of Duty®: Black Ops III Zombies Chronicles Edition includes the full base game plus the Zombies Chronicles content expansion.",
+      "category": ["Shooter"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/311210/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/311210/header.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Counter-Strike 2",
+      "subtitle": "Disparos y estrategias",
+      "description": "For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS story is about to begin. This is Counter-Strike 2.",
+      "category": ["Shooter", "Novedades"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/730/header.jpg"
+    },
+    {
+      "id": 13,
+      "title": "Apex Legends",
+      "subtitle": "Disparos y estrategias",
+      "description": "Apex Legends is the award-winning, free-to-play Hero Shooter from Respawn Entertainment. Master an ever-growing roster of legendary characters with powerful abilities, and experience strategic squad play and innovative gameplay in the next evolution of Hero Shooter and Battle Royale.",
+      "category": ["Shooter"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg"
+    },
+    {
+      "id": 14,
+      "title": "Battlefield™ V",
+      "subtitle": "Disparos y estrategias",
+      "description": "This is the ultimate Battlefield V experience. Enter mankind’s greatest conflict with the complete arsenal of weapons, vehicles, and gadgets plus the best customization content of Year 1 and 2.",
+      "category": ["Shooter"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/1238810/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/1238810/header.jpg"
+    },
+    {
+      "id": 15,
+      "title": "Krunker",
+      "subtitle": "Disparos y estrategias",
+      "description": "An easy to get into fully moddable First Person Shooter with advanced movement mechanics. Fully Customizable with Mods, Custom Maps and Thousands of Items to Unlock.",
+      "category": ["Shooter"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/1408720/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/1408720/header.jpg"
+    },
+    {
+      "id": 16,
+      "title": "EA SPORTS FC 25",
+      "subtitle": "Deportes y estrategias",
+      "description": "EA SPORTS FC™ 25 gives you more ways to win for the club. Team up with friends in your favourite modes with the new 5v5 Rush, and manage your club to victory as FC IQ delivers more tactical control than ever before.",
+      "category": ["Sport"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2669320/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2669320/header.jpg"
+    },
+    {
+      "id": 17,
+      "title": "NBA 2K25",
+      "subtitle": "Deportes y estrategias",
+      "description": "Command every court with authenticity and realism Powered by ProPLAY™, giving you ultimate control over how you play in NBA 2K25. Define your legacy in MyCAREER, MyTEAM, MyNBA, and The W.",
+      "category": ["Sport"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2878980/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2878980/header.jpg"
+    },
+    {
+      "id": 18,
+      "title": "Golf With Your Friends",
+      "subtitle": "Deportes y estrategias",
+      "description": "Why have friends if not to play Golf... With Your Friends! Nothing is out of bounds as you take on courses filled with fast paced, exciting, simultaneous mini golf for up to 12 players!",
+      "category": ["Sport"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/431240/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/431240/header.jpg"
+    },
+    {
+      "id": 19,
+      "title": "Steep",
+      "subtitle": "Deportes y estrategias",
+      "description": "Ride a massive open world across the Alps, where the powder is always fresh and the run never ends. Defy and master the mountain alone or with friends on skis, wingsuits, snowboards and paragliders. Record and share your best stunts.",
+      "category": ["Sport"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/460920/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/460920/header.jpg"
+    },
+    {
+      "id": 20,
+      "title": "Riders Republic",
+      "subtitle": "Deportes y estrategias",
+      "description": "Jump into a massive multiplayer playground! Bike, ski, snowboard, or wingsuit across an open world sports paradise.",
+      "category": ["Sport"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2290180/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2290180/header.jpg"
+    }
+  ],
+  "comments": [
+    {"id": 1, "userId": 1, "videogameId": 1, "content": "Great game!", "rating": 5},
+    {"id": 2, "userId": 3, "videogameId": 1, "content": "Amazing!", "rating": 3},
+    {"id": 3, "userId": 3, "videogameId": 2, "content": "Amazing!", "rating": 5},
+    {"id": 4, "userId": 2, "videogameId": 2, "content": "Not bad.", "rating": 3},
+    {"id": 5, "userId": 2, "videogameId": 1, "content": "Increíble historia y jugabilidad.", "rating": 5},
+    {"id": 6, "userId": 1, "videogameId": 1, "content": "La mejor experiencia de mundo abierto.", "rating": 4},
+    {"id": 7, "userId": 1, "videogameId": 2, "content": "La mecánica de combate es fluida.", "rating": 4},
+    {"id": 8, "userId": 3, "videogameId": 2, "content": "Historia atrapante y gráficos impresionantes.", "rating": 5},
+    {"id": 9, "userId": 2, "videogameId": 3, "content": "Mejoró mucho respecto al primero.", "rating": 5},
+    {"id": 10, "userId": 1, "videogameId": 3, "content": "Los trajes y habilidades son geniales.", "rating": 4},
+    {"id": 11, "userId": 3, "videogameId": 3, "content": "La acción es increíble.", "rating": 5},
+    {"id": 12, "userId": 2, "videogameId": 4, "content": "La mejor entrega de la saga.", "rating": 5},
+    {"id": 13, "userId": 1, "videogameId": 4, "content": "Kratos nunca decepciona.", "rating": 5},
+    {"id": 14, "userId": 3, "videogameId": 4, "content": "Historia muy emotiva y combates épicos.", "rating": 5},
+    {"id": 15, "userId": 2, "videogameId": 5, "content": "El mundo abierto es impresionante.", "rating": 4},
+    {"id": 16, "userId": 1, "videogameId": 5, "content": "Las decisiones impactan el juego.", "rating": 5},
+    {"id": 17, "userId": 3, "videogameId": 5, "content": "Mejor de lo esperado.", "rating": 4},
+    {"id": 18, "userId": 2, "videogameId": 6, "content": "Acción sin descanso.", "rating": 4},
+    {"id": 19, "userId": 1, "videogameId": 6, "content": "Historia entretenida y buenos personajes.", "rating": 4},
+    {"id": 20, "userId": 3, "videogameId": 6, "content": "Un shooter muy divertido.", "rating": 4},
+    {"id": 21, "userId": 2, "videogameId": 7, "content": "Sustos y tensión constante.", "rating": 4},
+    {"id": 22, "userId": 1, "videogameId": 7, "content": "Un survival horror excelente.", "rating": 5},
+    {"id": 23, "userId": 3, "videogameId": 7, "content": "Jugabilidad inmersiva.", "rating": 4},
+    {"id": 24, "userId": 2, "videogameId": 8, "content": "Creatividad sin límites.", "rating": 5},
+    {"id": 25, "userId": 1, "videogameId": 8, "content": "Siempre se puede hacer algo nuevo.", "rating": 5},
+    {"id": 26, "userId": 3, "videogameId": 8, "content": "Un clásico que nunca muere.", "rating": 5},
+    {"id": 27, "userId": 2, "videogameId": 9, "content": "Pixel art hermoso y gran jugabilidad.", "rating": 5},
+    {"id": 28, "userId": 1, "videogameId": 9, "content": "Exploración infinita.", "rating": 5},
+    {"id": 29, "userId": 3, "videogameId": 9, "content": "Perfecto para jugar con amigos.", "rating": 5},
+    {"id": 30, "userId": 2, "videogameId": 10, "content": "Criaturas increíbles.", "rating": 4},
+    {"id": 31, "userId": 1, "videogameId": 10, "content": "Supervivencia extrema.", "rating": 4},
+    {"id": 32, "userId": 3, "videogameId": 10, "content": "Un mundo gigantesco por explorar.", "rating": 4},
+    {"id": 33, "userId": 1, "videogameId": 11, "content": "Intenso y emocionante.", "rating": 4},
+    {"id": 34, "userId": 2, "videogameId": 11, "content": "Gran experiencia multijugador.", "rating": 5},
+    {"id": 35, "userId": 3, "videogameId": 12, "content": "El mejor shooter competitivo.", "rating": 5},
+    {"id": 36, "userId": 1, "videogameId": 13, "content": "Personajes únicos y habilidades impresionantes.", "rating": 4},
+    {"id": 37, "userId": 2, "videogameId": 14, "content": "Gráficos impresionantes y jugabilidad fluida.", "rating": 5},
+    {"id": 38, "userId": 3, "videogameId": 15, "content": "Muy divertido y adictivo.", "rating": 4},
+    {"id": 39, "userId": 1, "videogameId": 16, "content": "El mejor juego de fútbol.", "rating": 5},
+    {"id": 40, "userId": 2, "videogameId": 17, "content": "Realismo y autenticidad en cada partido.", "rating": 5},
+    {"id": 41, "userId": 3, "videogameId": 18, "content": "Perfecto para jugar con amigos.", "rating": 4},
+    {"id": 42, "userId": 1, "videogameId": 19, "content": "Desafiante y emocionante.", "rating": 4},
+    {"id": 43, "userId": 2, "videogameId": 20, "content": "Gran variedad de deportes extremos.", "rating": 5}
+  ]
+}
