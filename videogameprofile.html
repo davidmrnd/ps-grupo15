@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <script src="js/load-template.js"></script>
+    <script src="js/load-template.js"></script>
+    <script src="js/videogame-profile.js"></script>
 </head>
 <body>
 
@@ -17,7 +18,7 @@
     </main>
 </div>
 
-<a href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
+<a id="add-comment" href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
 
 <main id="comentaries"></main>
 
@@ -32,7 +33,7 @@
 
     function init() {
         loadTemplate('/templates/header.html', 'header');
-        loadTemplate('/templates/profile.html', 'profile');
+        videogameProfile()
         loadTemplate('/templates/stars.html', 'stars');
         loadTemplate('/templates/comentaries.html', 'comentaries');
         loadTemplate('/templates/comentaries.html', 'comentaries2');
