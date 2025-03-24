@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Game-Critic</title>
     <script src="js/load-template.js"></script>
+    <script src="js/load-videogames.js"></script>
 </head>
 <body>
 
@@ -11,7 +12,7 @@
 
 <main id="welcome"></main>
 
-<main id="carousel"></main>
+<main id="Novedades"></main>
 
 <a href="categories.html"><button class="start-rating">Start rating</button></a>
 
@@ -24,7 +25,7 @@
     function init() {
         loadTemplate('/templates/header.html', 'header');
         loadTemplate('/templates/welcome.html', 'welcome');
-        loadTemplate('/templates/carousel.html', 'carousel');
+        loadVideogames('Novedades');
         loadTemplate('/templates/footer.html', 'footer');
     }
 </script>
