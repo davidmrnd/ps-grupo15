@@ -4,23 +4,22 @@
     <meta charset="UTF-8">
     <title>Game-Critic</title>
     <script src="js/load-template.js"></script>
-    <script src="js/videogame-profile.js"></script>
-    <script src="js/user-comment.js"></script>
+    <script src="js/load-videogames.js"></script>
     <script src="js/header-login-logout.js"></script>
     <script src="js/search.js"></script>
+    
 </head>
 <body>
 
 <header id="header"></header>
 
-<div class="videogameprofile-container">
-    <main id="profile"> </main>
-    <main id="stars"></main>
-</div>
+<main id="Action"></main>
 
-<a id="add-comment" href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
+<main id="Survival"></main>
 
-<main id="comentaries"></main>
+<main id="Shooter"></main>
+
+<main id="Sport"></main>
 
 <footer id="footer"></footer>
 
@@ -29,10 +28,11 @@
 
     function init() {
         loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); });
-        videogameProfile()
-        loadTemplate('/templates/stars.html', 'stars');
         loadTemplate('/templates/footer.html', 'footer');
-        userComment()
+        loadVideogames('Action');
+        loadVideogames('Survival');
+        loadVideogames('Shooter');
+        loadVideogames('Sport');
     }
 </script>
 </body>
