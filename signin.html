@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="js/load-template.js"></script>
+    <script src="js/login.js"></script>
 </head>
 <body>
 
@@ -18,7 +19,7 @@
 
     function init() {
         loadTemplate('/templates/header.html', 'header');
-        loadTemplate('/templates/login.html', 'login');
+        loadTemplate('/templates/login.html', 'login', function() { handleLogin(); });
         loadTemplate('/templates/footer.html', 'footer');
     }
 </script>
