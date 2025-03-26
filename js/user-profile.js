@@ -1,7 +1,6 @@
 function userProfile() {
     const urlParams = new URLSearchParams(window.location.search);
     const userId = urlParams.get('id');
-    console.log(`userProfile: ${userId}`);
 
     fetch('/database.json')
         .then(response => response.json())
