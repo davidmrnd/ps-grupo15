@@ -30,10 +30,10 @@ function modifyHeader() {
 function addLogoutButton() {
     const userId = new URLSearchParams(window.location.search).get('id');
     const loggedInUser = sessionStorage.getItem('loggedInUser');
-    
+
     if (userId && loggedInUser && userId === loggedInUser) {
         const profileContainer = document.querySelector('.profilesocialstats-container');
-        
+
         if (profileContainer) {
             const logoutButton = document.createElement('button');
             logoutButton.classList.add('cta-button');
@@ -45,5 +45,22 @@ function addLogoutButton() {
             };
             profileContainer.appendChild(logoutButton);
         }
+    }
+}
+
+function checkLoginForComment() {
+    const addCommentButton = document.querySelector('.new-comment');
+    const isLoggedIn = sessionStorage.getItem('loggedInUser');
+
+    if (addCommentButton) {
+        addCommentButton.addEventListener('click', (event) => {
+            if (!isLoggedIn) {
+                event.preventDefault();
+                const messageElement = document.createElement('p');
+                messageElement.textContent = "Debes iniciar sesión para añadir un comentario.";
+                document.body.appendChild(messageElement);
+                window.location.href = 'signin.html';
+            }
+        });
     }
 }

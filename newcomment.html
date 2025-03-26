@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <link rel="stylesheet" href="css/inputcomment.css">
   <script src="js/load-template.js"></script>
+  <script src="js/videogame-profile.js"></script>
   <script src="js/header-login-logout.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/newcomment.js"></script>
 </head>
 <body>
 
@@ -14,7 +18,7 @@
 
 <main id="comentaries"></main>
 
-<a href="videogameprofile.html"><button class="send-rating">Enviar Comentario</button></a>
+<button class="send-rating" id="send-comment">Enviar Comentario</button>
 
 <footer id="footer"></footer>
 
@@ -22,9 +26,9 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); });
-    loadTemplate('/templates/profile.html', 'profile');
-    loadTemplate('/templates/comentaries.html', 'comentaries');
+    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); });
+    videogameProfile();
+    loadTemplate('/templates/comentaries.html', 'comentaries', function() { prepareCommentForm(); });
     loadTemplate('/templates/footer.html', 'footer');
   }
 </script>
