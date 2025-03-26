@@ -71,10 +71,32 @@ body {
     background: #d1b842;
 }
 
+.search-results {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.search-results a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-results a:hover {
+    background-color: #f0f0f0;
+}
+
 .right-container {
     display: flex;
     align-items: center;
     gap: 15px;
+    position: relative;
 }
 
 .cta-button {
