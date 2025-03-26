@@ -7,6 +7,7 @@
   <script src="js/user-profile.js"></script>
   <script src="js/videogame-comment.js"></script>
   <script src="js/user-stats.js"></script>
+  <script src="js/header-login-logout.js"></script>
 </head>
 <body>
 
@@ -25,11 +26,12 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    loadTemplate('/templates/header.html', 'header');
+    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); });
     userProfile();
     loadUserStats();
     loadVideogameComments();
     loadTemplate('/templates/footer.html', 'footer');
+    addLogoutButton();
   }
 </script>
 </body>

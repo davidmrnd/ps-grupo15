@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <script src="js/load-template.js"></script>
+  <script src="js/header-login-logout.js"></script>
 </head>
 <body>
 
@@ -21,7 +22,7 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    loadTemplate('/templates/header.html', 'header');
+    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); });
     loadTemplate('/templates/profile.html', 'profile');
     loadTemplate('/templates/comentaries.html', 'comentaries');
     loadTemplate('/templates/footer.html', 'footer');
