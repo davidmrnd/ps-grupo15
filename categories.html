@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <title>Game-Critic</title>
     <script src="js/load-template.js"></script>
-    <script src="js/load-videogames.js"></script>
+    <script src="js/videogame-profile.js"></script>
+    <script src="js/user-comment.js"></script>
     <script src="js/header-login-logout.js"></script>
-    
+    <script src="js/search.js"></script>
 </head>
 <body>
 
 <header id="header"></header>
 
-<main id="Action"></main>
+<div class="videogameprofile-container">
+    <main id="profile"> </main>
+    <main id="stars"></main>
+</div>
 
-<main id="Survival"></main>
+<a id="add-comment" href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
 
-<main id="Shooter"></main>
-
-<main id="Sport"></main>
+<main id="comentaries"></main>
 
 <footer id="footer"></footer>
 
@@ -26,12 +28,11 @@
     document.addEventListener('DOMContentLoaded', init);
 
     function init() {
-        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); });
+        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); });
+        videogameProfile()
+        loadTemplate('/templates/stars.html', 'stars');
         loadTemplate('/templates/footer.html', 'footer');
-        loadVideogames('Action');
-        loadVideogames('Survival');
-        loadVideogames('Shooter');
-        loadVideogames('Sport');
+        userComment()
     }
 </script>
 </body>
