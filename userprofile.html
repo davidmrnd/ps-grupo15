@@ -2,8 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Game-Critic</title>
   <script src="js/load-template.js"></script>
+  <script src="js/user-profile.js"></script>
 </head>
 <body>
 
@@ -27,7 +28,7 @@
 
   function init() {
     loadTemplate('/templates/header.html', 'header');
-    loadTemplate('/templates/profile.html', 'profile');
+    userProfile();
     loadTemplate('/templates/socialstats.html', 'socialstats');
     loadTemplate('/templates/comentaries.html', 'comentaries');
     loadTemplate('/templates/comentaries.html', 'comentaries2');
