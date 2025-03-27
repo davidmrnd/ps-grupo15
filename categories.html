@@ -7,6 +7,7 @@
     <script src="js/load-videogames.js"></script>
     <script src="js/header-login-logout.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/carousel.js"></script>
     
 </head>
 <body>
@@ -32,7 +33,7 @@
         loadVideogames('Action');
         loadVideogames('Survival');
         loadVideogames('Shooter');
-        loadVideogames('Sport');
+        loadVideogames('Sport', function() { initCarousel(); });
     }
 </script>
 </body>

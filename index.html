@@ -7,6 +7,7 @@
     <script src="js/load-videogames.js"></script>
     <script src="js/header-login-logout.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/carousel.js"></script>
 </head>
 <body>
 
@@ -27,7 +28,7 @@
     function init() {
         loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); });
         loadTemplate('/templates/welcome.html', 'welcome');
-        loadVideogames('Novedades');
+        loadVideogames('Novedades', function() { initCarousel(); });
         loadTemplate('/templates/footer.html', 'footer');
     }
 </script>

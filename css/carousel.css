@@ -1,82 +1,71 @@
-body {
-    font-family: Oswald, sans-serif;
-    height: 100vh;
-    margin: 0;
-}
-
 .carousel-title {
     text-align: center;
 }
+
 .carousel-container {
-    position: relative;
-    width: 60%;
-    max-width: 1000px;
-    margin: auto;
+    width: 90%;
+    margin: 0 auto;
     overflow: hidden;
+    position: relative;
 }
 
 .carousel {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    overflow: visible;
+    position: relative;
+    width: 100%;
 }
 
 .carousel-track {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    gap: 28px;
     transition: transform 0.5s ease-in-out;
-    gap: 15px;
+    padding: 10px 0;
+    overflow: visible;
 }
 
 .carousel-slide {
-    flex: 0 0 auto;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+    flex: 0 0 calc(100% / 4 - 25px);
+    max-width: calc(100% / 4 - 25px);
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    overflow: visible;
 }
 
-.carousel-slide:nth-child(1),
-.carousel-slide:nth-child(5) {
-    width: 15%;
-    opacity: 0.6;
-}
-
-.carousel-slide:nth-child(2),
-.carousel-slide:nth-child(4) {
-    width: 20%;
-    opacity: 0.8;
-}
-
-.carousel-slide:nth-child(3) {
-    width: 30%;
-    opacity: 1;
-    transform: scale(1);
-}
-
-.carousel-slide img {
+.carosel-images {
     width: 100%;
-    height: 40%;
-    display: block;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.carosel-images:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 10;
 }
 
 .carousel-buttons {
     text-align: center;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .carousel-button {
     background-color: #ECD54C;
     border: none;
     color: black;
-    padding: 2px 5px;
+    padding: 5px 10px;
     cursor: pointer;
     border-radius: 50%;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: solid;
 }
 
 .carousel-button:hover {
     background-color: #d1b842;
+    transform: scale(1.1);
 }
 
 .carousel-button:focus {
@@ -92,22 +81,12 @@ body {
     display: block;
     margin: auto;
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     font-size: 15px;
     margin-bottom: 20px;
 }
+
 .start-rating:hover {
     background-color: #d1b842;
+    transform: scale(1.05);
 }
-
-.carosel-images{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px;
-}
-
-a {
-    text-decoration: none;
-}
-

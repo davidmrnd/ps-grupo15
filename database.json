@@ -54,15 +54,6 @@
       "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/1817070/header.jpg"
     },
     {
-      "id": 3,
-      "title": "Marvel's Spider-Man 2",
-      "subtitle": "libertad sin límites",
-      "description": "Be Greater. Together. The incredible power of the symbiote forces Peter Parker and Miles Morales into a desperate fight as they balance their lives, friendships, and their duty to protect in an exciting chapter of the critically acclaimed Spider-Man franchise on PC.",
-      "category": ["Action"],
-      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2651280/header.jpg",
-      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2651280/header.jpg"
-    },
-    {
       "id": 4,
       "title": "God of War Ragnarök",
       "subtitle": "Caos y una gran historia",
@@ -79,6 +70,15 @@
       "category": ["Action"],
       "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/812140/header.jpg",
       "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/812140/header.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Marvel's Spider-Man 2",
+      "subtitle": "libertad sin límites",
+      "description": "Be Greater. Together. The incredible power of the symbiote forces Peter Parker and Miles Morales into a desperate fight as they balance their lives, friendships, and their duty to protect in an exciting chapter of the critically acclaimed Spider-Man franchise on PC.",
+      "category": ["Action"],
+      "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/2651280/header.jpg",
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/2651280/header.jpg"
     },
     {
       "id": 6,

@@ -1,4 +1,4 @@
-function loadVideogames(categoryName) {
+function loadVideogames(categoryName, callback) {
     fetch('/templates/carousel.html')
         .then(response => response.text())
         .then(template => {
@@ -18,6 +18,9 @@ function loadVideogames(categoryName) {
                     });
                     carousel.querySelector('.carousel-title h1').innerText = categoryName;
                     carouselsContainer.appendChild(carousel);
+                    if (callback) {
+                        callback();
+                    }
                 });
         });
 }
