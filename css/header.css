@@ -13,6 +13,7 @@ body {
 }
 
 .left-container {
+    margin-right: auto;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -25,7 +26,7 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 35px;
+    gap: 50px;
 }
 
 .nav-links a {
@@ -93,6 +94,7 @@ body {
 }
 
 .right-container {
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 15px;
@@ -149,4 +151,36 @@ a {
 
 #logoutButton:hover {
     background-color: #f34141;
+}
+
+.profile-img {
+    margin-left: auto;
+    display:none;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.menu-button {
+    border: none;
+    display: none;
+    font-size: 30px;
+}
+
+@media (max-width: 767px) {
+    .logo-container{
+        display: none;
+    }
+    .nav-links{
+        display: none;
+    }
+    .right-container {
+        display: none;
+    }
+    .menu-button{
+        display: block;
+    }
+    .profile-img {
+        display: block;
+    }
 }
