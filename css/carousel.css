@@ -90,3 +90,56 @@
     background-color: #d1b842;
     transform: scale(1.05);
 }
+
+@media (max-width: 1024px) {
+    .carousel-track {
+        gap: 20px;
+    }
+
+    .carousel-slide {
+        flex: 0 0 calc(100% / 3 - 20px);
+        max-width: calc(100% / 3 - 20px);
+    }
+
+    .carosel-images {
+        transform: scale(1);
+    }
+
+    .carousel-button {
+        padding: 5px 8px;
+    }
+
+    .start-rating {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 440px) {
+    .carousel-container {
+        width: 100%;
+        padding: 0 5px;
+    }
+
+    .carousel-track {
+        gap: 10px;
+    }
+
+    .carousel-slide {
+        flex: 0 0 calc(100% / 2 - 10px);
+        max-width: calc(100% / 2 - 10px);
+    }
+
+    .carosel-images {
+        transform: scale(1);
+    }
+
+    .carousel-button {
+        padding: 4px 7px;
+    }
+
+    .start-rating {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
