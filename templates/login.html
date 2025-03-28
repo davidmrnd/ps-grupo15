@@ -2,19 +2,22 @@
 
 <div class="form-container">
   <div class="form-box">
-    <span class="register-title">Iniciar sesión</span>
+    <h2 class="register-title">Iniciar sesión</h2>
+    <p id="message" class="error-message"></p>
 
-    <label class="label">Correo</label>
-    <input type="email" class="input" placeholder="Correo">
+    <form id="login-form">
+      <label for="email-input" class="label">Correo</label>
+      <input type="email" class="input" id="email-input" placeholder="Correo" required>
 
-    <label class="label">Contraseña</label>
-    <input type="password" class="input" placeholder="Contraseña">
+      <label for="password-input" class="label">Contraseña</label>
+      <input type="password" class="input" id="password-input" placeholder="Contraseña" required>
 
-    <button class="button">Iniciar sesión</button>
+      <button class="button" type="submit" id="login-button">Iniciar sesión</button>
+    </form>
 
     <div class="register-footer">
-      <span class="bold-text">Si no tienes cuenta</span>
-      <a href="signup.html"><button class="shadow-text">Registrarse</button></a>
+      <span class="bold-text">¿No tienes cuenta?</span>
+      <a href="signup.html" class="register-link">Registrarse</a>
     </div>
   </div>
 </div>

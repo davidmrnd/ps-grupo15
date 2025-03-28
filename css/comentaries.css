@@ -7,7 +7,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
+    padding: 20px;
     margin: 10px 0;
     width: 100%;
 }
@@ -63,7 +63,6 @@
     color: #ccc;
 }
 
-
 .send-rating {
     justify-content: center;
     background-color: #ECD54C;
@@ -80,4 +79,21 @@
 
 a{
     text-decoration: none;
+    color: black;
+}
+
+@media (max-width:767px){
+
+    .rating {
+        font-size: 30px;
+    }
+
+}
+
+@media (min-width:767px) and (max-width: 1023px) {
+
+    .rating {
+        font-size: 40px;
+    }
+
 }

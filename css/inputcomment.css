@@ -1,0 +1,15 @@
+.styled-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 500px;
+
+}
+
+#message {
+    color: #CD4D4D;
+    text-align: center;
+    margin-top: 10px;
+}
