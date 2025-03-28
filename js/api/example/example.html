@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="../api.js"></script>
+        <script src="example.js"></script>
+    </head>
+
+    <body>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', init);
+
+            function init() {
+                const divInput = document.querySelector('input');
+                divInput.addEventListener('keyup', ev => {
+                    if (ev.key === 'Enter') search();
+                });
+            }
+        </script>
+
+        <label>
+            Nombre del juego: <input type="text">
+        </label>
+
+        <button onclick="search()">Buscar</button>
+
+        <div id="searching"></div>
+
+        <table id="result"></table>
+
+    </body>
+</html>
