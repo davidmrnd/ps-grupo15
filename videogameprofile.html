@@ -2,21 +2,21 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Game-Critic</title>
     <script src="js/load-template.js"></script>
-    <script src="js/load-comments.js"></script>
-    <script src="js/load-videogame-profile.js"></script>
+    <script src="js/videogame-profile.js"></script>
+    <script src="js/user-comment.js"></script>
+    <script src="js/header-login-logout.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/toggle.js"></script>
 </head>
 <body>
 
 <header id="header"></header>
 
 <div class="videogameprofile-container">
-    <main id="profile">
-    </main>
-
-    <main id="stars">
-    </main>
+    <main id="profile"> </main>
+    <main id="stars"></main>
 </div>
 
 <a id="add-comment" href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
@@ -29,11 +29,12 @@
     document.addEventListener('DOMContentLoaded', init);
 
     function init() {
-        loadTemplate('/templates/header.html', 'header');
-        loadVideogameProfile();
+        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
+        videogameProfile()
         loadTemplate('/templates/stars.html', 'stars');
         loadTemplate('/templates/footer.html', 'footer');
-        loadComments();
+        userComment()
+        checkLoginForComment();
     }
 </script>
 </body>

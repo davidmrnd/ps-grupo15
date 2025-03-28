@@ -2,10 +2,14 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Game-Critic</title>
   <script src="js/load-template.js"></script>
-  <script src="js/load-userprofile.js"></script>
+  <script src="js/user-profile.js"></script>
+  <script src="js/videogame-comment.js"></script>
   <script src="js/user-stats.js"></script>
+  <script src="js/header-login-logout.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/toggle.js"></script>
 </head>
 <body>
 
@@ -18,23 +22,18 @@
 
 <main id="comentaries"></main>
 
-<main id="comentaries2"></main>
-
-<main id="comentaries3"></main>
-
 <footer id="footer"></footer>
 
 <script>
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    loadTemplate('/templates/header.html', 'header');
-    loadUserProfile();
+    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
+    userProfile();
     loadUserStats();
-    loadTemplate('/templates/comentaries.html', 'comentaries');
-    loadTemplate('/templates/comentaries.html', 'comentaries2');
-    loadTemplate('/templates/comentaries.html', 'comentaries3');
+    loadVideogameComments();
     loadTemplate('/templates/footer.html', 'footer');
+    addLogoutButton();
   }
 </script>
 </body>

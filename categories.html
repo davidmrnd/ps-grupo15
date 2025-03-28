@@ -2,28 +2,39 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Game-Critic</title>
     <script src="js/load-template.js"></script>
     <script src="js/load-videogames.js"></script>
+    <script src="js/header-login-logout.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/carousel.js"></script>
+    <script src="js/toggle.js"></script>
+    
 </head>
 <body>
 
-<header id="header">
-</header>
+<header id="header"></header>
 
-<main id="carousels">
-</main>
+<main id="Action"></main>
 
-<footer id="footer">
-</footer>
+<main id="Survival"></main>
+
+<main id="Shooter"></main>
+
+<main id="Sport"></main>
+
+<footer id="footer"></footer>
 
 <script>
     document.addEventListener('DOMContentLoaded', init);
 
     function init() {
-        loadTemplate('/templates/header.html', 'header');
+        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
         loadTemplate('/templates/footer.html', 'footer');
-        loadVideogames();
+        loadVideogames('Action');
+        loadVideogames('Survival');
+        loadVideogames('Shooter');
+        loadVideogames('Sport', function() { initCarousel(); });
     }
 </script>
 </body>

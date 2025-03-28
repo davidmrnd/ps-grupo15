@@ -2,8 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Game-Critic</title>
     <script src="js/load-template.js"></script>
+    <script src="js/load-videogames.js"></script>
+    <script src="js/header-login-logout.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/carousel.js"></script>
+    <script src="js/toggle.js"></script>
 </head>
 <body>
 
@@ -11,7 +16,7 @@
 
 <main id="welcome"></main>
 
-<main id="carousel"></main>
+<main id="Novedades"></main>
 
 <a href="categories.html"><button class="start-rating">Start rating</button></a>
 
@@ -22,9 +27,9 @@
     document.addEventListener('DOMContentLoaded', init);
 
     function init() {
-        loadTemplate('/templates/header.html', 'header');
+        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
         loadTemplate('/templates/welcome.html', 'welcome');
-        loadTemplate('/templates/carousel.html', 'carousel');
+        loadVideogames('Novedades', function() { initCarousel(); });
         loadTemplate('/templates/footer.html', 'footer');
     }
 </script>

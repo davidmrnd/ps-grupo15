@@ -13,6 +13,7 @@ body {
 }
 
 .left-container {
+    margin-right: auto;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -25,7 +26,7 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 35px;
+    gap: 50px;
 }
 
 .nav-links a {
@@ -71,10 +72,33 @@ body {
     background: #d1b842;
 }
 
+.search-results {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.search-results a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-results a:hover {
+    background-color: #f0f0f0;
+}
+
 .right-container {
+    margin-left: auto;
     display: flex;
     align-items: center;
     gap: 15px;
+    position: relative;
 }
 
 .cta-button {
@@ -103,4 +127,60 @@ body {
 
 .login-text:hover {
     color: #d1b842;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-img {
+    margin-left: auto;
+    display:none;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+.menu-button {
+    border: none;
+    display: none;
+    font-size: 30px;
+}
+
+@media (max-width: 767px) {
+    .logo-container{
+        display: none;
+    }
+    .nav-links{
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px 0;
+        text-align: center;
+        z-index: 1000;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .right-container {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+    }
+    
+    .menu-button{
+        display: block;
+        background: transparent;
+        z-index: 1100;
+    }
+    .profile-img {
+        display: block;
+    }
 }

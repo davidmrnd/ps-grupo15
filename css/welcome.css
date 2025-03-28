@@ -18,13 +18,13 @@ header, footer {
     margin: 100px auto;
 }
 
-.title {
+.welcome-title {
     font-size: 24px;
     font-weight: bold;
     text-align: left;
 }
 
-.description {
+.welcome-description {
     font-size: 16px;
     color: #555;
     margin-top: 5px;
@@ -32,6 +32,41 @@ header, footer {
 }
 
 .image-container img {
-    width: 500px;
+    width: 300px;
     object-fit: cover;
+    border-radius: 50px;
+}
+
+@media (max-width: 1024px) {
+    .welcome-title {
+        font-size: 19px;
+    }
+    .welcome-description {
+        font-size: 14px;
+        margin-right: 70px;
+    }
+    .image-container img {
+        width: 200px;
+        border-radius: 40px;
+    }
+}
+
+@media (max-width: 440px) {
+    .main-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .welcome-title {
+        font-size: 15px;
+        text-align: left;
+    }
+    .welcome-description {
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    .image-container img {
+        width: 100px;
+        border-radius: 20px;
+    }
 }
