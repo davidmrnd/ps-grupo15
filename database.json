@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "David Miranda",
       "username": "david.mc",
       "description": "I'm a software developer and I love playing video games.",
@@ -12,7 +12,7 @@
       "following": [2, 3]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Esteban Trujillo",
       "email": "esteban@example.com",
       "username": "esteban.ts",
@@ -23,7 +23,7 @@
       "following": [1]
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Alejandro Guerra",
       "email": "alejandro@example.com",
       "username": "alejandro.gj",

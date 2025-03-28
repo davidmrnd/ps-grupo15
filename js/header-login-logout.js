@@ -6,6 +6,20 @@ function modifyHeader() {
         rightContainer.innerHTML = '';
 
         if (isLoggedIn) {
+            const iconbutton = document.querySelector('#iconbutton');
+            iconbutton.href = 'userprofile.html?id=' + isLoggedIn;
+            const iconsource = document.querySelector('.profile-img');
+            fetch('/database.json')
+                .then(response => response.json())
+                .then(data => {
+                    const user = data.users.find(user => user.id === isLoggedIn);
+                    console.log(user); console.log(isLoggedIn);
+                    if (user && user.profileicon) {
+                        iconsource.src = user.profileicon;
+                    } else {
+                        iconsource.src = 'images/logo.webp';
+                    }
+                })
             const profileButton = document.createElement('a');
             profileButton.href = 'userprofile.html?id=' + isLoggedIn;
             profileButton.classList.add('cta-button');
