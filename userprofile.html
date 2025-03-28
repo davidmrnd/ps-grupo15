@@ -9,6 +9,7 @@
   <script src="js/user-stats.js"></script>
   <script src="js/header-login-logout.js"></script>
   <script src="js/search.js"></script>
+  <script src="js/toggle.js"></script>
 </head>
 <body>
 
@@ -27,7 +28,7 @@
   document.addEventListener('DOMContentLoaded', init);
 
   function init() {
-    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); });
+    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
     userProfile();
     loadUserStats();
     loadVideogameComments();

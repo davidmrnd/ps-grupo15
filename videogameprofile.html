@@ -8,6 +8,7 @@
     <script src="js/user-comment.js"></script>
     <script src="js/header-login-logout.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/toggle.js"></script>
 </head>
 <body>
 
@@ -28,7 +29,7 @@
     document.addEventListener('DOMContentLoaded', init);
 
     function init() {
-        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); });
+        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
         videogameProfile()
         loadTemplate('/templates/stars.html', 'stars');
         loadTemplate('/templates/footer.html', 'footer');

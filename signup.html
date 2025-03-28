@@ -5,6 +5,7 @@
     <title>Title</title>
     <script src="js/load-template.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/toggle.js"></script>
 </head>
 <body>
 
@@ -18,7 +19,7 @@
     document.addEventListener('DOMContentLoaded', init);
 
     function init() {
-        loadTemplate('/templates/header.html', 'header', function() { search(); });
+        loadTemplate('/templates/header.html', 'header', function() { search(); toggle(); });
         loadTemplate('/templates/registration.html', 'registration');
         loadTemplate('/templates/footer.html', 'footer');
     }

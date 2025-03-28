@@ -174,13 +174,14 @@ a {
     .nav-links{
         display: none;
         flex-direction: column;
-        position: absolute;
+        position: fixed;
         top: 60px;
         left: 0;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.9);
         padding: 20px 0;
         text-align: center;
+        z-index: 1000;
     }
 
     .nav-links.open {
@@ -189,11 +190,14 @@ a {
 
     .right-container {
         display: none;
+        position: fixed;
+        z-index: 1000;
     }
     
     .menu-button{
         display: block;
         background: transparent;
+        z-index: 1100;
     }
     .profile-img {
         display: block;
