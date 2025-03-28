@@ -173,12 +173,27 @@ a {
     }
     .nav-links{
         display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 20px 0;
+        text-align: center;
     }
+
+    .nav-links.open {
+        display: flex;
+    }
+
     .right-container {
         display: none;
     }
+    
     .menu-button{
         display: block;
+        background: transparent;
     }
     .profile-img {
         display: block;
