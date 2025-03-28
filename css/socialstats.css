@@ -1,7 +1,8 @@
 .stats-container {
     display: flex;
     gap: 40px;
-    margin-left: 250px;
+    margin-right: 100px;
+    margin-top: 20px;
 }
 
 .column {
@@ -22,5 +23,68 @@
 
 .profilesocialstats-container {
     display: flex;
+    gap: 400px;
+    margin-bottom: 50px;
     align-items: center;
+}
+
+#logoutButton {
+    background-color: #ff7c7c;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: absolute;
+    left: 160px;
+    margin-top: 35vh;
+}
+
+#logoutButton:hover {
+    background-color: #f34141;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .profilesocialstats-container {
+        display: flex;
+        gap: 200px;
+    }
+    #logoutButton {
+        left: 95px;
+        margin-top: 20vh;
+    }
+}
+
+@media (max-width: 767px) {
+    .profilesocialstats-container {
+        display: block;
+        justify-content: center;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .stats-container {
+        display: flex;
+        margin-left: 0;
+        margin-right: 0;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .small-text {
+        font-size: 14px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .large-text {
+        font-size: 14px;
+    }
+
+    #logoutButton {
+        left: 90px;
+        margin-top: 0vh;
+    }
 }

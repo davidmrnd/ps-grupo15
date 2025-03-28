@@ -134,25 +134,6 @@ a {
     color: #333;
 }
 
-#logoutButton {
-    background-color: #ff7c7c;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    position: absolute;
-    left: 190px;
-    top: 55%;
-    transform: translateY(-50%);
-}
-
-#logoutButton:hover {
-    background-color: #f34141;
-}
-
 .profile-img {
     margin-left: auto;
     display:none;
