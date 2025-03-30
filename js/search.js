@@ -4,30 +4,15 @@ async function search() {
     const searchResults = document.createElement('div');
     searchResults.classList.add('search-results');
     document.body.appendChild(searchResults);
+    const useApi = false;
 
     searchButton.addEventListener('click', () => {
-        const query = searchBox.value.trim().toLowerCase();
-        if (query) {
-            fetch('/database.json')
-                .then(response => response.json())
-                .then(data => {
-                    const results = data.videogames.filter(videogame => videogame.title.toLowerCase().includes(query));
-                    displayResults(results);
-                });
-        }
+        getResults();
     });
 
     searchBox.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
-            const query = searchBox.value.trim().toLowerCase();
-            if (query) {
-                fetch('/database.json')
-                    .then(response => response.json())
-                    .then(data => {
-                        const results = data.videogames.filter(videogame => videogame.title.toLowerCase().includes(query));
-                        displayResults(results);
-                    });
-            }
+            getResults();
         }
     });
 
@@ -36,8 +21,18 @@ async function search() {
         if (results.length > 0) {
             results.forEach(videogame => {
                 const resultItem = document.createElement('a');
-                resultItem.href = `videogameprofile.html?id=${videogame.id}`;
-                resultItem.innerText = videogame.title;
+                if (useApi) {
+                    resultItem.href = `videogameprofile.html?id=${videogame.id}&api=true`;
+                    resultItem.innerText = `${videogame.name}`;
+                    const releaseYear = getReleaseYear(videogame.first_release_date);
+                    if (!isNaN(releaseYear)) {
+                        resultItem.innerText += ` (${releaseYear})`;
+                    }
+                }
+                else {
+                    resultItem.href = `videogameprofile.html?id=${videogame.id}`;
+                    resultItem.innerText = videogame.title;
+                }
                 searchResults.appendChild(resultItem);
             });
         } else {
@@ -59,4 +54,28 @@ async function search() {
             searchResults.style.display = 'none';
         }
     });
+
+    function getResults() {
+        const query = searchBox.value.trim().toLowerCase();
+        if (query) {
+            if (useApi) {
+                readKeys()
+                    .then(keys => {
+                        const clientID = keys["client-id"];
+                        const accessToken = keys["access-token"];
+                        searchByGenreAndName(clientID, accessToken, 10, query)
+                            .then(results => {
+                                displayResults(results);
+                            })
+                    });
+            } else {
+                fetch('/database.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const results = data.videogames.filter(videogame => videogame.title.toLowerCase().includes(query));
+                        displayResults(results);
+                    });
+            }
+        }
+    }
 }
