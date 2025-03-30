@@ -146,3 +146,19 @@ async function getCovers(clientID, accessToken, idList) {
     let query = `fields game,image_id; where game = (${idString.substring(0, idString.length - 1)}); limit 500;`;
     return await makeQuery(clientID, accessToken, query, url);
 }
+
+async function getCoverAndGameInfo(clientID, accessToken, id) {
+    let url = "http://localhost:8080/https://api.igdb.com/v4/multiquery";
+
+    let query = `query games "Info de Juego" {
+    fields id,name,storyline,summary;
+    where id = ${id};
+};
+
+query covers "Portada de Juego" {
+    fields game,image_id;
+    where game = ${id};
+};`;
+
+    return await makeQuery(clientID, accessToken, query, url);
+}
