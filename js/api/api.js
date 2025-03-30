@@ -151,7 +151,7 @@ async function getCoverAndGameInfo(clientID, accessToken, id) {
     let url = "http://localhost:8080/https://api.igdb.com/v4/multiquery";
 
     let query = `query games "Info de Juego" {
-    fields id,name,storyline,summary;
+    fields id,name,storyline,summary,first_release_date;
     where id = ${id};
 };
 

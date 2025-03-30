@@ -19,9 +19,27 @@ function videogameProfile() {
                                 .then(template => {
                                     const profileContainer = document.getElementById('profile');
                                     profileContainer.innerHTML = template;
-                                    profileContainer.querySelector('h1').innerText = videogame.name;
-                                    profileContainer.querySelector('.subtitle').innerText = videogame.summary;
-                                    profileContainer.querySelector('.description').innerText = videogame.storyline;
+
+                                    let title = videogame.name;
+                                    const releaseYear = getReleaseYear(videogame.first_release_date);
+                                    if (!isNaN(releaseYear)) {
+                                        title += ` (${releaseYear})`;
+                                    }
+                                    profileContainer.querySelector('h1').innerText = title;
+
+                                    if (videogame.summary) {
+                                        profileContainer.querySelector('.subtitle').innerText = videogame.summary;
+                                    } else {
+                                        profileContainer.querySelector('.subtitle').innerText = "";
+                                    }
+
+                                    if (videogame.storyline) {
+                                        profileContainer.querySelector('.description').innerText = videogame.storyline;
+                                    }
+                                    else {
+                                        profileContainer.querySelector('.description').innerText = "";
+                                    }
+
                                     profileContainer.querySelector('.usericon').src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${portada["image_id"]}.png`;
                                 });
                             const addCommentButton = document.getElementById('add-comment');

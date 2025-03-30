@@ -4,7 +4,7 @@ async function search() {
     const searchResults = document.createElement('div');
     searchResults.classList.add('search-results');
     document.body.appendChild(searchResults);
-    const useApi = false;
+    const useApi = true;
 
     searchButton.addEventListener('click', () => {
         getResults();
