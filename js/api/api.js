@@ -86,7 +86,7 @@ async function searchByGenreAndName(
     string = undefined,
     genreList = undefined
 ) {
-    let query = `fields name,id,genres; limit ${limit};`;
+    let query = `fields name,id,genres,first_release_date; limit ${limit};`;
 
     // Realiza la búsqueda por nombre
     if (string !== undefined) {
@@ -161,4 +161,8 @@ query covers "Portada de Juego" {
 };`;
 
     return await makeQuery(clientID, accessToken, query, url);
+}
+
+function getReleaseYear(releaseDate) {
+    return new Date(releaseDate * 1000).getFullYear();
 }
