@@ -12,6 +12,6 @@
   },
   "private": true,
   "dependencies": {
-    "cors-anywhere": "^0.4.4"
+    "express": "^5.1.0"
   }
 }
