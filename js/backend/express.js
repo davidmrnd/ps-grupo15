@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 const apiFunctions = require('./api/api.cjs');
 const keys = require('./api/keys.json');
 const app = express();
 const port = 4000;
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.status(418).send('GameCritic backend working');
