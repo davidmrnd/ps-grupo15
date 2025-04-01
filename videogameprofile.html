@@ -9,6 +9,9 @@
     <script src="js/header-login-logout.js"></script>
     <script src="js/search.js"></script>
     <script src="js/toggle.js"></script>
+    <script src="js/dynamic-id.js"></script>
+    <script src="js/videogame-comment.js"></script>
+    <script src="js/calculate-average-rating.js"></script>
 </head>
 <body>
 
@@ -16,7 +19,7 @@
 
 <div class="videogameprofile-container">
     <main id="profile"> </main>
-    <main id="stars"></main>
+    <main id="stars" class="non-editable"></main>
 </div>
 
 <a id="add-comment" href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
@@ -30,12 +33,22 @@
 
     function init() {
         loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
-        videogameProfile()
-        loadTemplate('/templates/stars.html', 'stars');
+        videogameProfile();
+        fetch('/templates/stars.html')
+            .then(response => response.text())
+            .then(template => {
+                const uniqueId = 'videogame-profile'; // Unique ID for the videogame profile stars
+                const renderedTemplate = replaceDynamicIds(template, uniqueId);
+                document.getElementById('stars').innerHTML = renderedTemplate;
+
+                const videogameId = new URLSearchParams(window.location.search).get('id');
+                calculateAndDisplayAverageRating(videogameId);
+            });
         loadTemplate('/templates/footer.html', 'footer');
-        userComment()
+        userComment();
         checkLoginForComment();
     }
 </script>
+
 </body>
 </html>

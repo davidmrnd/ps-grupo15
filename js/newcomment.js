@@ -11,6 +11,8 @@ function prepareCommentForm() {
                 .then(response => response.text())
                 .then(starsTemplate => {
                     commentElement.querySelector('.rating').innerHTML = starsTemplate;
+                    const starInputs = commentElement.querySelectorAll('.rating input');
+                    starInputs.forEach(input => input.removeAttribute('disabled'));
                 });
 
             const userId = sessionStorage.getItem('loggedInUser');

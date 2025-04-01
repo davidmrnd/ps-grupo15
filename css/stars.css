@@ -15,8 +15,17 @@
     transition: color 0.3s;
 }
 
-.rating input:checked ~ label,
-.rating label:hover,
-.rating label:hover ~ label {
+.rating input:not(:disabled) + label:hover,
+.rating input:not(:disabled) + label:hover ~ label {
     color: gold;
+}
+
+.rating input:checked ~ label {
+    color: gold;
+}
+
+.rating input:disabled + label {
+    pointer-events: none;
+    cursor: default;
+    transition: none;
 }
