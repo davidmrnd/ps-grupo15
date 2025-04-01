@@ -90,6 +90,9 @@ async function searchByGenreAndName(
         query += ` search "${string}";`;
     }
 
+    // Filtros para refinar la búsqueda
+    query += " where game_type = (0, 2, 4, 8, 9) & (game_status = (0, 2, 4) | game_status = null)  & version_parent = null";
+
     // Realiza la búsqueda por genero
     if (genreList !== undefined) {
         if (!(genreList instanceof Array)) {
@@ -105,11 +108,10 @@ async function searchByGenreAndName(
             genreString += genre + ",";
         }
 
-        query += " where genres = (" + genreString.substring(0, genreString.length - 1) + ");";
+        query += " & genres = (" + genreString.substring(0, genreString.length - 1) + ");";
     }
+    else query += ";";
 
-    // Filtros para refinar la búsqueda
-    query += "where game_type = (0, 2, 4, 8, 9);"
     return await makeQuery(clientID, accessToken, query);
 }
 
@@ -166,6 +168,12 @@ async function getCovers(clientID, accessToken, idList) {
     return await makeQuery(clientID, accessToken, query, url);
 }
 
+/**
+ * Devuelve información sobre un videojuego para mustra en la página de información:
+ * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
+ * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
+ * @param id {number} ID del videojuego
+ */
 async function getCoverAndGameInfo(clientID, accessToken, id) {
     let url = "https://api.igdb.com/v4/multiquery";
 
@@ -182,6 +190,11 @@ query covers "Portada de Juego" {
     return await makeQuery(clientID, accessToken, query, url);
 }
 
+/**
+ * Obtiene el año de salida de una fecha de salida en formato Epoch
+ * @param releaseDate {number} Fecha de salida en formato Epoch
+ * @returns {number} Año de salida en formato legible
+ */
 function getReleaseYear(releaseDate) {
     return new Date(releaseDate * 1000).getFullYear();
 }
