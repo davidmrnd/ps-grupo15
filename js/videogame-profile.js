@@ -4,53 +4,55 @@ function videogameProfile() {
     const useAPI = urlParams.get('api');
 
     if (useAPI === "true") {
-        readKeys()
-            .then(keys => {
-                const clientID = keys["client-id"];
-                const accessToken = keys["access-token"];
-                getCoverAndGameInfo(clientID, accessToken, parseInt(videogameId))
-                    .then(multiquery => {
-                        const videogame = multiquery[0].result[0];
-                        const portada = multiquery[1].result[0];
+        fetch(`http://localhost:4000/game/${videogameId}`)
+            .then(response => response.json())
+            .then(data => {
+                const videogame = data["apiResponse"][0].result[0];
+                const cover = data.apiResponse[1].result[0];
 
-                        if (videogame) {
-                            fetch('/templates/profile.html')
-                                .then(response => response.text())
-                                .then(template => {
-                                    const profileContainer = document.getElementById('profile');
-                                    profileContainer.innerHTML = template;
+                if (videogame) {
+                    fetch('/templates/profile.html')
+                        .then(response => response.text())
+                        .then(template => {
+                            const profileContainer = document.getElementById('profile');
+                            profileContainer.innerHTML = template;
 
+                            let title = videogame.name;
+
+                            fetch(`http://localhost:4000/release-year/${videogame.first_release_date}`)
+                                .then(response => response.json())
+                                .then(data => {
                                     let title = videogame.name;
-                                    const releaseYear = getReleaseYear(videogame.first_release_date);
+                                    const releaseYear = data["releaseYear"];
                                     if (!isNaN(releaseYear)) {
                                         title += ` (${releaseYear})`;
                                     }
                                     profileContainer.querySelector('h1').innerText = title;
-
-                                    if (videogame.summary) {
-                                        profileContainer.querySelector('.subtitle').innerText = videogame.summary;
-                                    } else {
-                                        profileContainer.querySelector('.subtitle').innerText = "";
-                                    }
-
-                                    if (videogame.storyline) {
-                                        profileContainer.querySelector('.description').innerText = videogame.storyline;
-                                    }
-                                    else {
-                                        profileContainer.querySelector('.description').innerText = "";
-                                    }
-
-                                    profileContainer.querySelector('.usericon').src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${portada["image_id"]}.png`;
                                 });
-                            const addCommentButton = document.getElementById('add-comment');
-                            if(addCommentButton) {
-                                addCommentButton.href = `newcomment.html?id=${videogame.id}&api=true`;
+
+
+                            if (videogame.summary) {
+                                profileContainer.querySelector('.subtitle').innerText = videogame.summary;
+                            } else {
+                                profileContainer.querySelector('.subtitle').innerText = "";
                             }
-                        }
-                    });
+
+                            if (videogame.storyline) {
+                                profileContainer.querySelector('.description').innerText = videogame.storyline;
+                            }
+                            else {
+                                profileContainer.querySelector('.description').innerText = "";
+                            }
+
+                            profileContainer.querySelector('.usericon').src = `https://images.igdb.com/igdb/image/upload/t_cover_big/${cover["image_id"]}.png`;
+                        });
+                    const addCommentButton = document.getElementById('add-comment');
+                    if(addCommentButton) {
+                        addCommentButton.href = `newcomment.html?id=${videogame.id}&api=true`;
+                    }
+                }
             });
     }
-
     else {
         fetch('/database.json')
             .then(response => response.json())
