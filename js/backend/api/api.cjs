@@ -13,14 +13,11 @@ async function readKeys(path = "/js/api/keys.json") {
  */
 async function readJSON(url, params) {
     const response = await fetch(url, params);
-
-    // Muestra de errores de la petición
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}, Text: ${response.statusText}\n 
-        ${await response.text()}`);
-    }
-
-    return await response.json();
+    return {
+        status: response.status,
+        statusText: response.statusText,
+        apiResponse: await response.json(),
+    };
 }
 
 /**
@@ -45,7 +42,7 @@ async function getAccessToken(clientID, secret) {
  * @param query {string} Consulta a realizar (Más info: https://api-docs.igdb.com/#apicalypse-1)
  * @param url {string} Url del endpoint al que realizar la petición (Lista de endpoints: https://api-docs.igdb.com/#endpoints)
  */
-async function makeQuery(clientID, accessToken, query, url = "http://localhost:8080/https://api.igdb.com/v4/games") {
+async function makeQuery(clientID, accessToken, query, url = "https://api.igdb.com/v4/games") {
     const params = {
         method: 'POST',
         headers: {
@@ -95,6 +92,14 @@ async function searchByGenreAndName(
 
     // Realiza la búsqueda por genero
     if (genreList !== undefined) {
+        if (!(genreList instanceof Array)) {
+            return {
+                status: 400,
+                statusText: "Bad Request",
+                message: "genreList must be an array of numbers (ex: [12, 16])"
+            }
+        }
+
         let genreString = "";
         for (const genre of genreList) {
             genreString += genre + ",";
@@ -121,12 +126,18 @@ async function searchByGenreAndName(
  * @param sizeType {string} Tamaño de imagen (Más info: https://api-docs.igdb.com/#images)
  */
 async function getCoverURL(clientID, accessToken, id, sizeType) {
-    let url="http://localhost:8080/https://api.igdb.com/v4/covers";
+    let url="https://api.igdb.com/v4/covers";
     let query = `fields game,image_id; where game = ${id};`;
 
     let response = await makeQuery(clientID, accessToken, query, url);
+    if (response["apiResponse"][0]) {
+        response.fullURL = `https://images.igdb.com/igdb/image/upload/t_${sizeType}/${response["apiResponse"][0]["image_id"]}.png`;
+    }
+    else {
+        response.fullURL = "";
+    }
 
-    return `https://images.igdb.com/igdb/image/upload/t_${sizeType}/${response[0]["image_id"]}.png`
+    return response;
 }
 
 /**
@@ -136,7 +147,15 @@ async function getCoverURL(clientID, accessToken, id, sizeType) {
  * @param idList {Array<number>} Lista con los ID de los videojuegos de los que se desea obtener la portada
  */
 async function getCovers(clientID, accessToken, idList) {
-    let url="http://localhost:8080/https://api.igdb.com/v4/covers";
+    let url="https://api.igdb.com/v4/covers";
+
+    if (!(idList instanceof Array)) {
+        return {
+            status: 400,
+            statusText: "Bad Request",
+            message: "idList must be an array of numbers (ex: [12, 16])"
+        }
+    }
 
     let idString = "";
     for (const id of idList) {
@@ -148,7 +167,7 @@ async function getCovers(clientID, accessToken, idList) {
 }
 
 async function getCoverAndGameInfo(clientID, accessToken, id) {
-    let url = "http://localhost:8080/https://api.igdb.com/v4/multiquery";
+    let url = "https://api.igdb.com/v4/multiquery";
 
     let query = `query games "Info de Juego" {
     fields id,name,storyline,summary,first_release_date;
@@ -166,3 +185,11 @@ query covers "Portada de Juego" {
 function getReleaseYear(releaseDate) {
     return new Date(releaseDate * 1000).getFullYear();
 }
+
+exports.makeQuery = makeQuery;
+exports.getVideogameData = getVideogameData;
+exports.searchByGenreAndName = searchByGenreAndName;
+exports.getCoverURL = getCoverURL;
+exports.getCovers = getCovers;
+exports.getCoverAndGameInfo = getCoverAndGameInfo;
+exports.getReleaseYear = getReleaseYear;
