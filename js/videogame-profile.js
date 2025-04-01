@@ -17,8 +17,6 @@ function videogameProfile() {
                             const profileContainer = document.getElementById('profile');
                             profileContainer.innerHTML = template;
 
-                            let title = videogame.name;
-
                             fetch(`http://localhost:4000/release-year/${videogame.first_release_date}`)
                                 .then(response => response.json())
                                 .then(data => {
