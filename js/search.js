@@ -24,9 +24,13 @@ async function search() {
                 if (useApi) {
                     resultItem.href = `videogameprofile.html?id=${videogame.id}&api=true`;
                     resultItem.innerText = `${videogame.name}`;
-                    const releaseYear = getReleaseYear(videogame.first_release_date);
-                    if (!isNaN(releaseYear)) {
-                        resultItem.innerText += ` (${releaseYear})`;
+                    if (!isNaN(videogame.first_release_date)) {
+                        fetch(`http://localhost:4000/release-year/${videogame.first_release_date}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                const releaseYear = data["releaseYear"];
+                                resultItem.innerText += ` (${releaseYear})`;
+                            });
                     }
                 }
                 else {
@@ -59,15 +63,18 @@ async function search() {
         const query = searchBox.value.trim().toLowerCase();
         if (query) {
             if (useApi) {
-                readKeys()
-                    .then(keys => {
-                        const clientID = keys["client-id"];
-                        const accessToken = keys["access-token"];
-                        searchByGenreAndName(clientID, accessToken, 10, query)
-                            .then(results => {
-                                displayResults(results);
-                            })
-                    });
+                fetch("http://localhost:4000/search", {
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        limit: 10,
+                        query: query,
+                    }),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        displayResults(data["apiResponse"]);
+                    })
             } else {
                 fetch('/database.json')
                     .then(response => response.json())
