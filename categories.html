@@ -15,13 +15,13 @@
 
 <header id="header"></header>
 
-<main id="Action"></main>
+<main id="Acción"></main>
 
-<main id="Survival"></main>
+<main id="Supervivencia"></main>
 
-<main id="Shooter"></main>
+<main id="Disparos"></main>
 
-<main id="Sport"></main>
+<main id="Deportes"></main>
 
 <footer id="footer"></footer>
 
@@ -31,10 +31,10 @@
     function init() {
         loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
         loadTemplate('/templates/footer.html', 'footer');
-        loadVideogames('Action');
-        loadVideogames('Survival');
-        loadVideogames('Shooter');
-        loadVideogames('Sport', function() { initCarousel(); });
+        loadVideogames('Acción');
+        loadVideogames('Supervivencia');
+        loadVideogames('Disparos');
+        loadVideogames('Deportes', function() { initCarousel(); });
     }
 </script>
 </body>
