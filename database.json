@@ -32,6 +32,17 @@
       "profileicon": "https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png",
       "followers": [1, 2],
       "following": [1]
+    },
+    {
+      "id": "4",
+      "name": "Agustín González",
+      "email": "agustin@example.com",
+      "username": "aagiribar",
+      "description": "i like games",
+      "password": "agustin",
+      "profileicon": "https://www.shareicon.net/data/512x512/2016/08/05/806962_user_512x512.png",
+      "followers": [1, 2],
+      "following": [1]
     }
   ],
   "videogames": [
