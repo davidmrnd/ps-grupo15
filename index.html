@@ -27,6 +27,7 @@
     document.addEventListener('DOMContentLoaded', init);
 
     function init() {
+
         loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
         loadTemplate('/templates/welcome.html', 'welcome');
         loadVideogames('Novedades', function() { initCarousel(); });

@@ -2,27 +2,31 @@
 
 <div class="form-container">
   <div class="form-box">
-    <span class="register-title">Registrarse</span>
+      <form>
+        <span class="register-title">Registrarse</span>
+        <label class="label">Correo</label>
+        <input type="email" class="input" id="email-input" placeholder="Correo" required>
 
-    <label class="label">Correo</label>
-    <input type="email" class="input" placeholder="Correo" required>
+        <label class="label">Nombre</label>
+        <input type="text" class="input" id="name" placeholder="Nombre" required>
 
-    <label class="label">Nombre</label>
-    <input type="text" class="input" placeholder="Nombre" required>
+        <label class="label">Nombre de usuario</label>
+        <input type="text" class="input" id="username" placeholder="Nombre de usuario" required>
 
-    <label class="label">Contraseña</label>
-    <input type="password" class="input" placeholder="Contraseña" required>
+        <label class="label">Contraseña</label>
+        <input type="password" class="input" id="password-input" placeholder="Contraseña" required>
 
-    <div class="checkbox-container">
-      <input type="checkbox" id="checkbox" required>
-      <label for="checkbox">Acepto todos los Términos de Servicio y la Política de Privacidad</label>
-    </div>
+        <div class="checkbox-container">
+          <input type="checkbox" id="checkbox" required>
+          <label for="checkbox">Acepto todos los Términos de Servicio y la Política de Privacidad</label>
+        </div>
 
-    <button class="button">Registrarse</button>
+        <button class="button" type="submit" id="submit">Registrarse</button>
 
     <div class="register-footer">
       <span class="bold-text">Si ya tienes cuenta</span>
       <a href="signin.html"><button class="shadow-text">Iniciar sesión</button></a>
     </div>
+      </form>
   </div>
 </div>
