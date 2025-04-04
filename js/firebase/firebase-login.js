@@ -44,7 +44,7 @@ const observer = new MutationObserver(() => {
                     // ..
                 });
         });
-        observer.disconnect(); // Detener la observación una vez encontrado
+        observer.disconnect();
     }
 });
 

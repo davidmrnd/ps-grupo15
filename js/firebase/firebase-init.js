@@ -25,6 +25,13 @@ const observer = new MutationObserver(() => {
         submit.addEventListener("click", function (event) {
             event.preventDefault();
 
+            const form = document.getElementById("register-form");
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
             const email = document.getElementById("email-input").value;
             const password = document.getElementById("password-input").value;
             const name = document.getElementById("name").value;
