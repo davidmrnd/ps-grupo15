@@ -13,6 +13,8 @@
   },
   "private": true,
   "dependencies": {
+    "@firebase/app": "^0.11.3",
+    "firebase": "^11.5.0",
     "cors": "^2.8.5",
     "express": "^5.1.0"
   }

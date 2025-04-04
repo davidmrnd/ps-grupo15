@@ -53,10 +53,6 @@ function addLogoutButton() {
             logoutButton.classList.add('cta-button');
             logoutButton.id = 'logoutButton';
             logoutButton.innerText = 'Cerrar sesión';
-            logoutButton.onclick = function() {
-                sessionStorage.removeItem('loggedInUser');
-                window.location.href = 'index.html';
-            };
             profileContainer.appendChild(logoutButton);
         }
     }
