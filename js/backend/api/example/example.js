@@ -1,9 +1,4 @@
 async function search() {
-    // Se leen las claves de acceso
-    const keys = await readKeys();
-    const clientID = keys["client-id"];
-    const accessToken = keys["access-token"];
-
     // Input de búsqueda
     const gameNameInput = document.querySelector("input");
 
@@ -23,7 +18,16 @@ async function search() {
     gameNameInput.disabled = true;
 
     // Se realiza la búsqueda
-    let searchResults = await searchByGenreAndName(clientID, accessToken, 30, gameNameInput.value);
+    let searchResponse = await fetch("http://localhost:4000/search", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            limit: 30,
+            query: gameNameInput.value,
+        }),
+    }).then(res => res.json());
+
+    const searchResults = searchResponse["apiResponse"];
 
     // Si hay resultados, se muestran
     if (searchResults.length > 0) {
@@ -34,7 +38,15 @@ async function search() {
         }
 
         // Se obtienen las portadas de los videojuegos obtenidos con la búsqueda
-        let covers = await getCovers(clientID, accessToken, idList);
+        const coversResponse = await fetch("http://localhost:4000/covers", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                idList: idList
+            })
+        }).then(res => res.json());
+
+        const covers = coversResponse["apiResponse"];
 
         // Se elimina el mensaje mostrado durante la búsqueda
         divSearching.innerHTML = "";

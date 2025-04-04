@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,4 +39,59 @@
     }
 </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Game-Critic</title>
+    <script src="js/load-template.js"></script>
+    <script src="js/videogame-profile.js"></script>
+    <script src="js/user-comment.js"></script>
+    <script src="js/header-login-logout.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/toggle.js"></script>
+    <script src="js/dynamic-id.js"></script>
+    <script src="js/videogame-comment.js"></script>
+    <script src="js/calculate-average-rating.js"></script>
+</head>
+<body>
+
+<header id="header"></header>
+
+<div class="videogameprofile-container">
+    <main id="profile"> </main>
+    <main id="stars" class="non-editable"></main>
+</div>
+
+<a id="add-comment" href="newcomment.html"><button class="new-comment">Añadir valoración</button></a>
+
+<main id="comentaries"></main>
+
+<footer id="footer"></footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', init);
+
+    function init() {
+        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
+        videogameProfile();
+        fetch('/templates/stars.html')
+            .then(response => response.text())
+            .then(template => {
+                const uniqueId = 'videogame-profile'; // Unique ID for the videogame profile stars
+                const renderedTemplate = replaceDynamicIds(template, uniqueId);
+                document.getElementById('stars').innerHTML = renderedTemplate;
+
+                const videogameId = new URLSearchParams(window.location.search).get('id');
+                calculateAndDisplayAverageRating(videogameId);
+            });
+        loadTemplate('/templates/footer.html', 'footer');
+        userComment();
+        checkLoginForComment();
+    }
+</script>
+
+</body>
+>>>>>>> 429f1a2161b3decefcdcb6b3e3b8067079e21bb5
 </html>

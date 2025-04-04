@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,4 +38,46 @@
   }
 </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Game-Critic</title>
+  <script src="js/load-template.js"></script>
+  <script src="js/user-profile.js"></script>
+  <script src="js/dynamic-id.js"></script>
+  <script src="js/videogame-comment.js"></script>
+  <script src="js/user-stats.js"></script>
+  <script src="js/header-login-logout.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/toggle.js"></script>
+</head>
+<body>
+
+<header id="header"></header>
+
+<div class="profilesocialstats-container">
+  <main id="profile"></main>
+  <main id="socialstats"></main>
+</div>
+
+<main id="comentaries"></main>
+
+<footer id="footer"></footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', init);
+
+  function init() {
+    loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
+    userProfile();
+    loadUserStats();
+    loadVideogameComments();
+    loadTemplate('/templates/footer.html', 'footer');
+    addLogoutButton();
+  }
+</script>
+</body>
+>>>>>>> 429f1a2161b3decefcdcb6b3e3b8067079e21bb5
 </html>

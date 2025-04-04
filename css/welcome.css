@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     margin: 0;
     padding: 0;
@@ -70,3 +71,77 @@ header, footer {
         border-radius: 20px;
     }
 }
+=======
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+header, footer {
+    background-color: #F0ECE3;
+    text-align: center;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 100px auto;
+}
+
+.welcome-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.welcome-description {
+    font-size: 16px;
+    color: #555;
+    margin-top: 5px;
+    margin-right: 250px;
+}
+
+.image-container img {
+    width: 400px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+@media (max-width: 1024px) {
+    .welcome-title {
+        font-size: 19px;
+    }
+    .welcome-description {
+        font-size: 14px;
+        margin-right: 70px;
+    }
+    .image-container img {
+        width: 250px;
+        border-radius: 40px;
+    }
+}
+
+@media (max-width: 440px) {
+    .main-content {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .welcome-title {
+        font-size: 15px;
+        text-align: left;
+    }
+    .welcome-description {
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    .image-container img {
+        width: 200px;
+        border-radius: 20px;
+    }
+}
+>>>>>>> 429f1a2161b3decefcdcb6b3e3b8067079e21bb5

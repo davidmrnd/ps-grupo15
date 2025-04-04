@@ -12,12 +12,15 @@ function loadVideogameComments() {
                 fetch('/templates/comentaries.html')
                     .then(response => response.text())
                     .then(template => {
+                        const uniqueId = `comment-${comment.id}`;
+                        const renderedTemplate = replaceDynamicIds(template, uniqueId);
                         const commentElement = document.createElement('div');
-                        commentElement.innerHTML = template;
+                        commentElement.innerHTML = renderedTemplate;
+
                         const videogame = data.videogames.find(videogame => videogame.id == comment.videogameId);
                         commentElement.querySelector('.info h3').innerText = videogame.title;
                         commentElement.querySelector('.info p').innerText = comment.content;
-                        commentElement.querySelector(`input#star${comment.rating}`).checked = true;
+                        commentElement.querySelector(`input#star${comment.rating}-${uniqueId}`).checked = true;
                         const profileImage = commentElement.querySelector('.avatar');
                         profileImage.src = videogame.imageprofile;
                         profileImage.alt = `${videogame.title} image`;

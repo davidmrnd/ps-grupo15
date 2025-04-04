@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,4 +39,46 @@
     }
 </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Game-Critic</title>
+    <script src="js/load-template.js"></script>
+    <script src="js/load-videogames.js"></script>
+    <script src="js/header-login-logout.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/carousel.js"></script>
+    <script src="js/toggle.js"></script>
+    
+</head>
+<body>
+
+<header id="header"></header>
+
+<main id="Acción"></main>
+
+<main id="Supervivencia"></main>
+
+<main id="Disparos"></main>
+
+<main id="Deportes"></main>
+
+<footer id="footer"></footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', init);
+
+    function init() {
+        loadTemplate('/templates/header.html', 'header', function() { modifyHeader(); search(); toggle(); });
+        loadTemplate('/templates/footer.html', 'footer');
+        loadVideogames('Acción');
+        loadVideogames('Supervivencia');
+        loadVideogames('Disparos');
+        loadVideogames('Deportes', function() { initCarousel(); });
+    }
+</script>
+</body>
+>>>>>>> 429f1a2161b3decefcdcb6b3e3b8067079e21bb5
 </html>
