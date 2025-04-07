@@ -1,0 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: Oswald, sans-serif;
+  background-color: #F0ECE3;
+
+  padding: 0;
+}
