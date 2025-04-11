@@ -1,0 +1,19 @@
+<div class="carousel-container">
+    <span class="carousel-title"><h1>{{ category }}</h1></span>
+    <div class="carousel">
+      <div class="carousel-track">
+        <a *ngFor="let videogame of data; let index = index" class="carousel-slide" href="#">
+          <img
+            class="carosel-images"
+            [id]="'videogame' + (index + 1)"
+            [src]="videogame.imagecarousel"
+            [alt]="videogame.title + ' image'"
+          >
+        </a>
+      </div>
+    </div>
+    <div class="carousel-buttons">
+      <button class="carousel-button prev-button"><</button>
+      <button class="carousel-button next-button">></button>
+    </div>
+</div>
