@@ -1,7 +1,8 @@
 import { Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { CategoriesPageComponent} from './pages/categories-page/categories-page.component';
+import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
+import { VideogameprofilePageComponent } from './pages/videogameprofile-page/videogameprofile-page.component';
 
 export const routes: Routes = [
   {
@@ -15,5 +16,9 @@ export const routes: Routes = [
   {
     path: 'categories',
     component: CategoriesPageComponent,
+  },
+  {
+    path: 'videogame/:id', // Ruta dinámica para el perfil del videojuego
+    component: VideogameprofilePageComponent,
   }
 ];
