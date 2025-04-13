@@ -1,27 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../../services/data.service';
+import { Component } from '@angular/core';
+import {ProfileComponent} from '../../components/profile/profile.component';
+import {StarsComponent} from '../../components/stars/stars.component';
 
 @Component({
   selector: 'app-videogameprofile-page',
-  imports: [],
+  imports: [
+    ProfileComponent,
+    StarsComponent
+  ],
   templateUrl: './videogameprofile-page.component.html',
-  styleUrl: './videogameprofile-page.component.css'
+  styleUrls: ['./videogameprofile-page.component.css']
 })
-export class VideogameprofilePageComponent implements OnInit {
-  videogame: any = null;
-
-  constructor(private route: ActivatedRoute, private dataService: DataService) {}
-
-  ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id !== null) {
-      this.dataService.getAllData().subscribe(data => {
-        this.videogame = data.videogames.find((game: any) => game.id === parseInt(id, 10));
-      });
-    } else {
-      console.error('ID parameter is missing');
-    }
-  }
-
-}
+export class VideogamePageComponent {}

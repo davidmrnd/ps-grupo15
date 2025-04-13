@@ -10,3 +10,46 @@ body {
 
   padding: 0;
 }
+
+h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+h2 {
+  font-size: 18px;
+  color: #706b6b;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  h1 {
+    font-size: 24px;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 5px;
+  }
+}
