@@ -19,7 +19,7 @@ export const routes: Routes = [
     component: CategoriesPageComponent,
   },
   {
-    path: 'videogame/:id',
+    path: 'videogame',
     component: VideogamePageComponent,
   },
   {

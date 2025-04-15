@@ -19,13 +19,12 @@ export class ProfileComponent  implements OnInit {
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    console.log(this.type);
     if(this.type === 'videogame'){
-      this.id = Number(this.route.snapshot.paramMap.get('id'));
-      console.log(this.id);
+      this.route.queryParams.subscribe(params => {
+        this.id = Number(params['id']);
+      });
       this.dataService.getVideogameById(this.id).subscribe(response => {
         this.data = response;
-        console.log(this.data);
       });
     }
   }

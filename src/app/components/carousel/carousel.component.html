@@ -2,7 +2,7 @@
   <span class="carousel-title"><h1>{{ category }}</h1></span>
   <div class="carousel">
     <div class="carousel-track">
-      <a *ngFor="let videogame of data; let index = index" class="carousel-slide" [routerLink]="['/videogame', videogame.id]">
+      <a *ngFor="let videogame of data; let index = index" class="carousel-slide" [routerLink]="['/videogame']" [queryParams]="{ id: videogame.id }">
         <img
           class="carosel-images"
           [id]="'videogame' + (index + 1)"
