@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
 import {DataService} from '../../services/data.service';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +19,17 @@ export class ProfileComponent  implements OnInit {
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.id = Number(params['id']);
+    });
+    console.log(this.id);
+
     if(this.type === 'videogame'){
-      this.route.queryParams.subscribe(params => {
-        this.id = Number(params['id']);
-      });
       this.dataService.getVideogameById(this.id).subscribe(response => {
+        this.data = response;
+      });
+    }else{
+      this.dataService.getUsersById(this.id).subscribe(response => {
         this.data = response;
       });
     }

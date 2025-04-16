@@ -1,48 +1,42 @@
 .stats-container {
   display: flex;
-  gap: 40px;
-  margin-right: 100px;
+  justify-content: center;
+  gap: 60px;
   margin-top: 20px;
 }
 
 .column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+}
+
+.column h1 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.column p {
+  font-size: 18px;
+  margin: 0;
 }
 
 .profilesocialstats-container {
   display: flex;
-  gap: 400px;
-  margin-bottom: 60px;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-#logoutButton {
-  background-color: #ff7c7c;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 20px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  position: absolute;
-  left: 160px;
-  margin-top: 35vh;
-}
-
-#logoutButton:hover {
-  background-color: #f34141;
-}
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .profilesocialstats-container {
     display: flex;
     gap: 70px;
   }
-  #logoutButton {
-    left: 95px;
-    margin-top: 20vh;
-  }
+
   .stats-container {
     gap: 20px;
     margin-right: 70px;
@@ -65,8 +59,4 @@
     justify-content: center;
   }
 
-  #logoutButton {
-    left: 90px;
-    margin-top: 0vh;
-  }
 }

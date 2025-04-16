@@ -1,4 +1,33 @@
-:host {
-  display: block;
+main {
+  display: flex;
   padding: 1rem;
+  align-items: center;
+}
+
+app-profile {
+  width: 40%;
+  margin-right: 2rem;
+}
+
+app-socialstats {
+  margin-left: auto;
+  margin-right: 100px;
+}
+
+app-commentaries {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+  flex-basis: 100%;
+}
+
+@media (max-width:767px){
+
+  main {
+    display: block;
+  }
+  app-profile {
+    width: 20%;
+    margin-right: 2rem;
+  }
 }

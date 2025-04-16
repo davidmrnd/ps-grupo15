@@ -1,11 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import {DataService} from '../../services/data.service';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-stars',
-  imports: [],
+  standalone: true,
   templateUrl: './stars.component.html',
-  styleUrl: './stars.component.css'
+  styleUrls: ['./stars.component.css']
 })
-export class StarsComponent {
+export class StarsComponent implements OnInit {
+  @Input() type: string = '';
+  @Input() rating: number = 0;
+  id!: number;
 
+  constructor(private dataService: DataService, private route: ActivatedRoute) {}
+
+  ngOnInit() {
+  }
 }

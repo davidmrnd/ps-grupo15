@@ -1,9 +1,12 @@
-<div class="profile-container" *ngIf="data">
-  <img [src]="data.imageprofile" [alt]="data.title" class="profile-image">
+<div class="profile-container" *ngIf="data && (data.title || data.name)">
+  <img
+    [src]="data.imageprofile || data.profileicon"
+    [alt]="data.title || data.name"
+    class="profile-image">
 
   <div class="profile-info">
-    <h2 class="profile-title">{{ data.title }}</h2>
-    <h3 class="profile-subtitle">{{ data.subtitle }}</h3>
-    <p class="profile-description">{{ data.description }}</p>
+    <h2 class="profile-title">{{ data.title || data.name }}</h2>
+    <h3 class="profile-subtitle">{{ data.subtitle || data.username }}</h3>
+    <p class="profile-description" *ngIf="data.description">{{ data.description }}</p>
   </div>
 </div>

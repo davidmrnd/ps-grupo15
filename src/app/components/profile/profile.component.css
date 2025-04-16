@@ -1,27 +1,46 @@
 .profile-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 50px;
-  margin-left: 100px;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  gap: 3vw;
+  margin: 10px 0 10px clamp(20px, 5vw, 100px);
+  transition: gap 0.3s ease-in-out, margin 0.3s ease-in-out;
 }
 
-.image-container img {
-  width: 250px; /* Tamaño base */
+.profile-image {
+  width: 100%;
+  min-width: 250px;
   height: auto;
-  min-width: 50px;
   transition: width 0.3s ease-in-out;
-  border-radius: 10px; /* Bordes redondeados como en la imagen */
+  border-radius: 10px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-title {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: bold;
+  margin: 0;
+}
+
+.profile-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  margin: 5px 0;
+}
+
+.profile-description {
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  margin-top: 10px;
+  color: #333;
 }
 
 .videogameprofile-container {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 50px;
-  margin-right: 100px;
+  gap: 1vw;
+  margin: 0 clamp(20px, 5vw, 100px) 50px 0;
 }
 
 .new-comment {
@@ -29,50 +48,47 @@
   border: none;
   padding: 10px 15px;
   border-radius: 20px;
-  margin-left: 200px;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-  font-size: 15px;
+  margin-left: clamp(50px, 10vw, 200px);
   margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
 }
+
 .new-comment:hover {
   background-color: #d1b842;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .image-container img {
-    width: 120px;
+  .profile-image {
+    min-width: 180px;
+  }
+
+  .profile-container {
+    margin-left: 30px;
   }
 }
 
 @media (max-width: 767px) {
   .profile-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 10px;
-    margin-left: 40px;
-    margin-right: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin: 20px;
   }
 
-  .image-container img {
-    width: 100px;
-    min-width: 60px;
-    border-radius: 10px;
-    margin-right: 10px;
+  .profile-image {
+    min-width: 160px;
   }
 
   .videogameprofile-container {
-    gap: 2px;
-    margin-bottom: 10px;
     flex-direction: column;
-    margin-right: 0;
+    gap: 10px;
+    margin: 0;
   }
 
   .new-comment {
-    margin-top: 10px;
-    display: block;
-    margin-left: 0px;
-    justify-self: center;
+    margin: 10px 0 0 0;
+    align-self: center;
   }
 }

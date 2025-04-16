@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "1",
+      "id": 1,
       "name": "David Miranda",
       "username": "david.mc",
       "description": "Soy un desarrollador de software y me encanta jugar videojuegos.",
@@ -12,7 +12,7 @@
       "following": [2, 3]
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Esteban Trujillo",
       "email": "esteban@example.com",
       "username": "esteban.ts",
@@ -23,7 +23,7 @@
       "following": [1]
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Alejandro Guerra",
       "email": "alejandro@example.com",
       "username": "alejandro.gj",
@@ -42,7 +42,7 @@
       "description": "Grand Theft Auto V es un videojuego de acción y aventura en un mundo abierto desarrollado por Rockstar North y distribuido por Rockstar Games. Este título revolucionario debutó el 17 de septiembre de 2013 en las consolas Xbox 360 y PlayStation 3, ofreciendo una experiencia inmersiva de crimen y caos.",
       "category": ["Acción", "Novedades"],
       "imagecarousel": "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
-      "imageprofile": "/images/GTA-5-Emblem.png"
+      "imageprofile": "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg"
     },
     {
       "id": 2,
@@ -237,7 +237,7 @@
     {"id": 18, "userId": 2, "videogameId": 6, "content": "Acción sin descanso.", "rating": 4},
     {"id": 19, "userId": 1, "videogameId": 6, "content": "Historia entretenida y buenos personajes.", "rating": 4},
     {"id": 20, "userId": 3, "videogameId": 6, "content": "Un shooter muy divertido.", "rating": 4},
-    {"id": 21, "userId": 2, "videogameId": 7, "content": "Sustos y tensión constante.", "rating": 4},
+    {"id": 21, "userId": 2, "videogameId": 7, "content": "Sustos y tensión co   nstante.", "rating": 4},
     {"id": 22, "userId": 1, "videogameId": 7, "content": "Un survival horror excelente.", "rating": 5},
     {"id": 23, "userId": 3, "videogameId": 7, "content": "Jugabilidad inmersiva.", "rating": 4},
     {"id": 24, "userId": 2, "videogameId": 8, "content": "Creatividad sin límites.", "rating": 5},

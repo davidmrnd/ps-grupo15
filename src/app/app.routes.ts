@@ -4,6 +4,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { VideogamePageComponent } from './pages/videogameprofile-page/videogameprofile-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { UserPageComponent } from './pages/userprofile-page/userprofile-page.component';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,10 @@ export const routes: Routes = [
   {
     path: 'registration',
     component: RegisterPageComponent,
+  },
+  {
+    path: 'user',
+    component: UserPageComponent,
   }
+
 ];

@@ -1,4 +1,29 @@
-:host {
+main {
   display: flex;
   padding: 1rem;
+  align-items: center;
+}
+
+app-profile {
+  width: 70%;
+  margin-right: 2rem;
+}
+
+app-stars {
+  margin-left: auto;
+  margin-right: 100px;
+}
+
+app-commentaries {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+  flex-basis: 100%;
+}
+
+@media (max-width:767px){
+
+  main {
+    display: block;
+  }
 }

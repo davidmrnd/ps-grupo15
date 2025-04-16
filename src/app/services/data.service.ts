@@ -21,9 +21,22 @@ export class DataService {
     );
   }
 
-  getUsers(): Observable<any[]> {
+  getUsersById(id: number ): Observable<any[]> {
     return this.http.get<any>(this.jsonUrl).pipe(
-      map(data => data.users)
+      map(data => data.users.find((user: any) => user.id === id))
     );
   }
+
+  getCommentsByVideogameId(id: number): Observable<any[]> {
+    return this.http.get<any>(this.jsonUrl).pipe(
+      map(data => data.comments.filter((comment: any) => comment.videogameId === id))
+    );
+  }
+
+  getCommentsByUserId(id: number): Observable<any[]> {
+    return this.http.get<any>(this.jsonUrl).pipe(
+      map(data => data.comments.filter((comment: any) => comment.userId === id))
+    );
+  }
+
 }
