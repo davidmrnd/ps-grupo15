@@ -2,15 +2,15 @@
   <div class="form-box">
     <span class="register-title">Registrarse</span>
 
-    <form id="login-form">
+    <form (ngSubmit)="register()">
       <label class="label">Correo</label>
-      <input type="email" class="input" placeholder="Correo" required>
+      <input type="email" class="input" [(ngModel)]="email" name="email" placeholder="Correo" required>
 
       <label class="label">Nombre</label>
-      <input type="text" class="input" placeholder="Nombre" required>
+      <input type="text" class="input" [(ngModel)]="name" name="name" placeholder="Nombre" required>
 
       <label class="label">Contraseña</label>
-      <input type="password" class="input" placeholder="Contraseña" required>
+      <input type="password" class="input" [(ngModel)]="password" name="password" placeholder="Contraseña" required>
 
       <div class="checkbox-container">
         <input type="checkbox" id="checkbox" required>
@@ -19,6 +19,8 @@
 
       <button type="submit" class="button">Registrarse</button>
     </form>
+
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
     <div class="register-footer">
       <span class="bold-text">Si ya tienes cuenta</span>
