@@ -3,10 +3,10 @@
   <div class="header-container">
     <div class="left-container">
       <div class="logo-container">
-        <a href="index.html"><img src="/assets/images/logo.webp" alt="Logo"></a>
+        <a routerLink="/"><img src="/assets/images/logo.webp" alt="Logo"></a>
       </div>
       <nav class="nav-links">
-        <a routerLink="">Inicio</a>
+        <a routerLink="/">Inicio</a>
         <a routerLink="/categories">Explorar</a>
         <a href="#">Amigos</a>
       </nav>
@@ -26,13 +26,16 @@
     </div>
 
     <div class="right-container">
-      <a routerLink="/registration"><button class="cta-button">Registrarse</button></a>
-      <a routerLink="/login" class="login-text">Iniciar sesión</a>
-
+      <ng-container *ngIf="isLoggedIn; else guestButtons">
+        <a [routerLink]="['/user']" [queryParams]="{ id: userId }"><button class="cta-button">Mi Perfil</button></a>
+      </ng-container>
+      <ng-template #guestButtons>
+        <a routerLink="/registration"><button class="cta-button">Registrarse</button></a>
+        <a routerLink="/login" class="login-text">Iniciar sesión</a>
+      </ng-template>
     </div>
-    <a id="iconbutton" href="signin.html">
+    <a id="iconbutton" href="/registration">
       <img class="profile-img" src="/assets/images/usericondefault.png" alt="Perfil">
     </a>
-
   </div>
 </header>

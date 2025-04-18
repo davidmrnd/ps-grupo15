@@ -3,3 +3,4 @@
   <app-socialstats></app-socialstats>
 </main>
 <app-commentaries [type]="'user'"></app-commentaries>
+<button *ngIf="isCurrentUserProfile" (click)="logout()" class="logout-button">Cerrar sesión</button>

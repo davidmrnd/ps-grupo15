@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from '@angular/fire/auth';
+import { Auth, User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private auth: Auth, private firestore: Firestore) {}
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
+
+  constructor(private auth: Auth, private firestore: Firestore) {
+    onAuthStateChanged(this.auth, (user) => {
+      this.currentUserSubject.next(user);
+    });
+  }
 
   async register(email: string, password: string, name: string) {
     const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
@@ -18,13 +25,17 @@ export class AuthService {
     return user;
   }
 
-  async login(email: string, password: string): Promise<User> {
-    const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
-    return userCredential.user;
+  getCurrentUserObservable() {
+    return this.currentUserSubject.asObservable();
   }
 
   getCurrentUser(): User | null {
-    return this.auth.currentUser;
+    return this.currentUserSubject.value;
+  }
+
+  async login(email: string, password: string): Promise<User> {
+    const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+    return userCredential.user;
   }
 
   logout(): Promise<void> {
