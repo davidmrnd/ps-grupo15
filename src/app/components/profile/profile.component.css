@@ -78,6 +78,8 @@
   }
 
   .profile-image {
+    width: 50%;
+    align-self: center;
     min-width: 160px;
   }
 
