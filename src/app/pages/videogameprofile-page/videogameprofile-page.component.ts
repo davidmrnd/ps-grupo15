@@ -30,8 +30,10 @@ export class VideogamePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.videogameId = params['id'];
-      this.loadComments();
+      this.videogameId = +params['id'];
+      if (this.videogameId) {
+        this.loadComments();
+      }
     });
   }
 
@@ -43,11 +45,12 @@ export class VideogamePageComponent implements OnInit {
   }
 
   calculateAverage(): void {
-    if (this.comments.length === 0) {
+    if (!this.comments.length) {
       this.averageRating = 0;
       return;
     }
     const total = this.comments.reduce((sum, c) => sum + c.rating, 0);
-    this.averageRating = total / this.comments.length;
+    this.averageRating = Math.round(total / this.comments.length);
   }
+
 }
