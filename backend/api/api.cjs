@@ -1,12 +1,4 @@
 /**
- * Lee y devuelve las claves del fichero keys.json
- * @param path {string} Ruta al fichero que contiene las claves
- */
-async function readKeys(path = "/js/api/keys.json") {
-    return await readJSON(path);
-}
-
-/**
  * Lee y devuelve el contenido JSON de una URL
  * @param url {string} URL a la que se desea realizar la petición
  * @param params {Object} Parámetros de la petición
@@ -18,21 +10,6 @@ async function readJSON(url, params) {
         statusText: response.statusText,
         apiResponse: await response.json(),
     };
-}
-
-/**
- * Realiza la petición para generar una clave de acceso y la devuelve
- * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
- * @param secret {string} Secreto (se encuentra en el fichero keys.json)
- */
-async function getAccessToken(clientID, secret) {
-    const url = `https://id.twitch.tv/oauth2/token?client_id=${clientID}&client_secret=${secret}&grant_type=client_credentials`;
-    const params = {
-        method: 'POST',
-    }
-
-    let response = await readJSON(url, params);
-    return response["access_token"];
 }
 
 /**
