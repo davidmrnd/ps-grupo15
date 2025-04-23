@@ -1,7 +1,7 @@
 <div class="carousel-container">
   <span class="carousel-title"><h1>{{ category }}</h1></span>
   <div class="carousel">
-    <div class="carousel-track">
+    <div class="carousel-track" #carouselTrack>
       <a *ngFor="let videogame of data; let index = index" class="carousel-slide" [routerLink]="['/videogame']" [queryParams]="{ id: videogame.id }">
         <img
           class="carosel-images"
@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="carousel-buttons">
-    <button class="carousel-button prev-button"><</button>
-    <button class="carousel-button next-button">></button>
+    <button class="carousel-button prev-button" (click)="moveCarousel('prev')"><</button>
+    <button class="carousel-button next-button" (click)="moveCarousel('next')">></button>
   </div>
 </div>
