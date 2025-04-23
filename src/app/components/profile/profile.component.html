@@ -2,8 +2,9 @@
   <img
     [src]="data.imageprofile || data.profileicon"
     [alt]="data.title || data.name"
+    [class.videogame-profile-image]="type === 'videogame'"
+    [class.user-profile-image]="type === 'user'"
     class="profile-image">
-
   <div class="profile-info">
     <h2 class="profile-title">{{ data.title || data.name }}</h2>
     <h3 class="profile-subtitle">{{ data.subtitle || data.username }}</h3>

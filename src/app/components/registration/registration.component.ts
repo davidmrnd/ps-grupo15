@@ -13,12 +13,13 @@ export class RegistrationComponent {
   email: string = '';
   password: string = '';
   name: string = '';
+  username: string = ''; // Nuevo campo
   errorMessage: string = '';
 
   constructor(private authService: AuthService) {}
 
   register() {
-    this.authService.register(this.email, this.password, this.name)
+    this.authService.register(this.email, this.password, this.name, this.username) // Pasar username
       .then(() => {
         document.body.innerHTML = '<div style="font-size: 8rem; text-align: center;">✅</div>';
         setTimeout(() => {

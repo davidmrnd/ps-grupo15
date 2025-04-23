@@ -8,14 +8,24 @@
 
 .profile-image {
   width: 100%;
-  min-width: 250px;
   height: auto;
   transition: width 0.3s ease-in-out;
+}
+
+.videogame-profile-image {
+  min-width: 250px;
   border-radius: 10px;
+}
+
+.user-profile-image {
+  width: 225px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
 }
 
 .profile-info {
   display: flex;
+  object-fit: cover;
   flex-direction: column;
 }
 

@@ -15,12 +15,22 @@ export class AuthService {
     });
   }
 
-  async register(email: string, password: string, name: string) {
+  async register(email: string, password: string, name: string, username: string) {
     const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
     const user = userCredential.user;
 
     const userDocRef = doc(this.firestore, `users/${user.uid}`);
-    await setDoc(userDocRef, { email, name });
+    await setDoc(userDocRef, {
+      email,
+      name,
+      username,
+      profileicon: 'assets/images/usericondefault.png',
+      followers: [],
+      following: [],
+      description: '',
+      id: user.uid,
+      createdAt: new Date().toISOString()
+    });
 
     return user;
   }
