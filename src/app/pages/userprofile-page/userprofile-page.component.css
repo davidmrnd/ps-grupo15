@@ -1,23 +1,25 @@
 main {
   display: flex;
-  padding: 1rem;
+  padding: clamp(0.5rem, 2vw, 2rem); /* Padding adaptable entre 8px y 32px */
   align-items: center;
+  flex-wrap: wrap;
 }
 
 app-profile {
   width: 40%;
-  margin-right: 2rem;
+  margin-right: clamp(1rem, 3vw, 2rem);
+  gap: clamp(1rem, 4vw, 2rem);
 }
 
 app-socialstats {
   margin-left: auto;
-  margin-right: 100px;
+  margin-right: clamp(2rem, 6vw, 6.25rem);
 }
 
 app-commentaries {
   display: block;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: clamp(1rem, 4vw, 2rem);
   flex-basis: 100%;
 }
 
@@ -38,13 +40,13 @@ app-commentaries {
   background-color: #d32f2f;
 }
 
-@media (max-width:767px){
-
+/* Móviles */
+@media (max-width: 767px) {
   main {
     display: block;
   }
+
   app-profile {
-    width: 20%;
-    margin-right: 2rem;
+    margin-right: clamp(1rem, 3vw, 2rem);
   }
 }

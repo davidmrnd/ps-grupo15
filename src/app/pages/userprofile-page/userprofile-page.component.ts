@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileComponent } from "../../components/profile/profile.component";
 import { SocialstatsComponent } from "../../components/socialstats/socialstats.component";
 import { CommentariesComponent } from '../../components/commentaries/commentaries.component';
-import { StarsComponent } from '../../components/stars/stars.component';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -13,8 +12,7 @@ import { CommonModule } from '@angular/common';
     ProfileComponent,
     SocialstatsComponent,
     CommentariesComponent,
-    CommonModule,
-    StarsComponent
+    CommonModule
   ],
   templateUrl: './userprofile-page.component.html',
   styleUrl: './userprofile-page.component.css'

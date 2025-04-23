@@ -217,7 +217,7 @@
     }
   ],
   "comments": [
-    {"id": 1, "userId": 1, "videogameId": 1, "content": "Great game!", "rating": 5},
+    {"id": 1, "userId": 1, "videogameId": 1, "content": "Great game!", "rating": 3.5},
     {"id": 2, "userId": 3, "videogameId": 1, "content": "Amazing!", "rating": 3},
     {"id": 3, "userId": 3, "videogameId": 2, "content": "Amazing!", "rating": 5},
     {"id": 4, "userId": 2, "videogameId": 2, "content": "Not bad.", "rating": 3},
