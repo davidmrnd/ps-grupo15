@@ -14,13 +14,13 @@ export class ProfileComponent  implements OnInit {
 
   @Input() type: string = '';
   data: any = null;
-  id!: number;
+  id!: string;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.id = Number(params['id']);
+      this.id = params['id'];
     });
     console.log(this.id);
 

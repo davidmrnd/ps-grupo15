@@ -14,13 +14,13 @@ import { StarsComponent } from '../stars/stars.component';
 export class CommentariesComponent implements OnInit {
   @Input() type: string = '';
   comments: any[] = [];
-  id!: number;
+  id!: string;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.id = Number(params['id']);
+      this.id = params['id'];
       if (!this.id) return;
 
       if (this.type === 'videogame') {

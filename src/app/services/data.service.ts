@@ -1,42 +1,43 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Firestore, collection, collectionData, doc, docData, query, where } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private jsonUrl = '/assets/database.json';
-  constructor(private http: HttpClient) {}
+  constructor(private firestore: Firestore) {}
 
+  // Obtener todos los videojuegos de una categoría
   getVideogames(category: string): Observable<any[]> {
-    return this.http.get<any>(this.jsonUrl).pipe(
-      map(data => data.videogames.filter((game: any) => game.category.includes(category)))
-    );
+    const videogamesRef = collection(this.firestore, 'videogames');
+    const q = query(videogamesRef, where('category', 'array-contains', category));
+    return collectionData(q, { idField: 'id' });
   }
 
-  getVideogameById(id: number): Observable<any[]> {
-    return this.http.get<any>(this.jsonUrl).pipe(
-      map(data => data.videogames.find((game: any) => game.id === id))
-    );
+  // Obtener un videojuego por su ID
+  getVideogameById(id: string): Observable<any> {
+    const videogameDoc = doc(this.firestore, `videogames/${id}`);
+    return docData(videogameDoc, { idField: 'id' });
   }
 
-  getUsersById(id: number ): Observable<any[]> {
-    return this.http.get<any>(this.jsonUrl).pipe(
-      map(data => data.users.find((user: any) => user.id === id))
-    );
+  // Obtener un usuario por su ID
+  getUsersById(id: string): Observable<any> {
+    const userDoc = doc(this.firestore, `users/${id}`);
+    return docData(userDoc, { idField: 'id' });
   }
 
-  getCommentsByVideogameId(id: number): Observable<any[]> {
-    return this.http.get<any>(this.jsonUrl).pipe(
-      map(data => data.comments.filter((comment: any) => comment.videogameId === id))
-    );
+  // Obtener comentarios por el ID del videojuego
+  getCommentsByVideogameId(videogameId: string): Observable<any[]> {
+    const commentsRef = collection(this.firestore, 'comments');
+    const q = query(commentsRef, where('videogameId', '==', videogameId));
+    return collectionData(q, { idField: 'id' });
   }
 
-  getCommentsByUserId(id: number): Observable<any[]> {
-    return this.http.get<any>(this.jsonUrl).pipe(
-      map(data => data.comments.filter((comment: any) => comment.userId === id))
-    );
+  // Obtener comentarios por el ID del usuario
+  getCommentsByUserId(userId: string): Observable<any[]> {
+    const commentsRef = collection(this.firestore, 'comments');
+    const q = query(commentsRef, where('userId', '==', userId));
+    return collectionData(q, { idField: 'id' });
   }
-
 }

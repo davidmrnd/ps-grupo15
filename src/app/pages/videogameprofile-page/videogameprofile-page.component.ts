@@ -21,7 +21,7 @@ import { CommentariesComponent } from '../../components/commentaries/commentarie
 export class VideogamePageComponent implements OnInit {
   comments: any[] = [];
   averageRating: number = 0;
-  videogameId!: number;
+  videogameId!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +30,7 @@ export class VideogamePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.videogameId = +params['id'];
+      this.videogameId = params['id'];
       if (this.videogameId) {
         this.loadComments();
       }
