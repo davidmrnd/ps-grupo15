@@ -5,6 +5,7 @@ import { DataService } from '../../services/data.service';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { StarsComponent } from '../../components/stars/stars.component';
 import { CommentariesComponent } from '../../components/commentaries/commentaries.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-videogameprofile-page',
@@ -25,7 +26,8 @@ export class VideogamePageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +53,16 @@ export class VideogamePageComponent implements OnInit {
     }
     const total = this.comments.reduce((sum, c) => sum + c.rating, 0);
     this.averageRating = Math.round(total / this.comments.length);
+  }
+
+  navigateToAddComment() {
+    this.authService.getCurrentUserObservable().subscribe((user) => {
+      if (user === null) {
+        window.location.href = '/login';
+      } else {
+        window.location.href = '/newcoment?id=' + this.videogameId;
+      }
+    });
   }
 
 }

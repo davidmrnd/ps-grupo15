@@ -21,6 +21,22 @@ app-commentaries {
   flex-basis: 100%;
 }
 
+.add-comment-button {
+  background-color: #ECD54C;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 100px;
+}
+
+.add-comment-button:hover {
+  background-color: #d1b842;
+}
+
 @media (max-width:767px){
 
   main {
