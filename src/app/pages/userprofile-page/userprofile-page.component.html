@@ -2,5 +2,12 @@
   <app-profile [type]="'user'"></app-profile>
   <app-socialstats></app-socialstats>
 </main>
+
+<!-- Conditionally render Follow or Unfollow button only if it's not the current user's profile -->
+<div *ngIf="!isCurrentUserProfile">
+  <button *ngIf="!isFollowing" (click)="followUser()" class="follow-button">Seguir</button>
+  <button *ngIf="isFollowing" (click)="unfollowUser()" class="unfollow-button">Dejar de seguir</button>
+</div>
+
 <app-commentaries [type]="'user'"></app-commentaries>
 <button *ngIf="isCurrentUserProfile" (click)="logout()" class="logout-button">Cerrar sesión</button>

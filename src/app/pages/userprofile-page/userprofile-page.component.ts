@@ -5,6 +5,7 @@ import { CommentariesComponent } from '../../components/commentaries/commentarie
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Firestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-user-page',
@@ -19,14 +20,27 @@ import { CommonModule } from '@angular/common';
 })
 export class UserPageComponent implements OnInit {
   isCurrentUserProfile: boolean = false;
+  viewedProfileId!: string;
+  isFollowing: boolean = false; // New property to track follow status
 
-  constructor(private authService: AuthService, private route: ActivatedRoute) {}
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private firestore: Firestore
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((queryParams) => {
-      const viewedProfileId = queryParams['id'];
-      this.authService.getCurrentUserObservable().subscribe((user) => {
-        this.isCurrentUserProfile = user?.uid === viewedProfileId;
+      this.viewedProfileId = queryParams['id'];
+      this.authService.getCurrentUserObservable().subscribe(async (user) => {
+        if (user) {
+          this.isCurrentUserProfile = user.uid === this.viewedProfileId;
+
+          // Check if the current user is following the viewed user
+          const userDoc = await getDoc(doc(this.firestore, `users/${user.uid}`));
+          const userData = userDoc.data();
+          this.isFollowing = userData?.['following']?.includes(this.viewedProfileId) || false; // Use bracket notation
+        }
       });
     });
   }
@@ -34,6 +48,60 @@ export class UserPageComponent implements OnInit {
   logout() {
     this.authService.logout().then(() => {
       window.location.href = '/';
+    });
+  }
+
+  followUser(): void {
+    this.authService.getCurrentUserObservable().subscribe((currentUser) => {
+      if (!currentUser || !this.viewedProfileId) {
+        window.location.href = '/login';
+        return;
+      }
+
+      const currentUserId = currentUser.uid;
+
+      const updates = [
+        updateDoc(doc(this.firestore, `users/${currentUserId}`), {
+          following: arrayUnion(this.viewedProfileId)
+        }),
+        updateDoc(doc(this.firestore, `users/${this.viewedProfileId}`), {
+          followers: arrayUnion(currentUserId)
+        })
+      ];
+
+      Promise.all(updates)
+        .then(() => {
+          console.log('Follow action completed successfully');
+          this.isFollowing = true; // Update the state
+        })
+        .catch((error) => console.error('Error updating follow data:', error));
+    });
+  }
+
+  unfollowUser(): void {
+    this.authService.getCurrentUserObservable().subscribe((currentUser) => {
+      if (!currentUser || !this.viewedProfileId) {
+        window.location.href = '/login';
+        return;
+      }
+
+      const currentUserId = currentUser.uid;
+
+      const updates = [
+        updateDoc(doc(this.firestore, `users/${currentUserId}`), {
+          following: arrayRemove(this.viewedProfileId)
+        }),
+        updateDoc(doc(this.firestore, `users/${this.viewedProfileId}`), {
+          followers: arrayRemove(currentUserId)
+        })
+      ];
+
+      Promise.all(updates)
+        .then(() => {
+          console.log('Unfollow action completed successfully');
+          this.isFollowing = false; // Update the state
+        })
+        .catch((error) => console.error('Error updating unfollow data:', error));
     });
   }
 }
