@@ -6,7 +6,7 @@ import { VideogamePageComponent } from './pages/videogameprofile-page/videogamep
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { UserPageComponent } from './pages/userprofile-page/userprofile-page.component';
 import { NewcomentPageComponent } from './pages/newcoment-page/newcoment-page.component';
-
+import { FollowingPageComponent } from './pages/following-page/following-page.component';
 export const routes: Routes = [
   {
     path: '',
@@ -35,5 +35,9 @@ export const routes: Routes = [
   {
     path: 'newcoment',
     component: NewcomentPageComponent,
+  },
+  {
+    path: 'following',
+    component: FollowingPageComponent,
   }
 ];

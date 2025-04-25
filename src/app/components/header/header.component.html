@@ -8,7 +8,10 @@
       <nav class="nav-links">
         <a routerLink="/">Inicio</a>
         <a routerLink="/categories">Explorar</a>
-        <a href="#">Amigos</a>
+        <a *ngIf="isLoggedIn; else redirectToLogin" routerLink="/following">Siguiendo</a>
+        <ng-template #redirectToLogin>
+          <a routerLink="/login">Siguiendo</a>
+        </ng-template>
       </nav>
       <button class="menu-button">☰</button>
 

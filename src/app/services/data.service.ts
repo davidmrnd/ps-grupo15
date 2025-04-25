@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, query, where } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +34,22 @@ export class DataService {
     return collectionData(q, { idField: 'id' });
   }
 
+  getFollowingComments(userId: string): Observable<any[]> {
+    const userDoc = doc(this.firestore, `users/${userId}`);
+    return docData(userDoc).pipe(
+      switchMap((user: any) => {
+        const followingIds = user.following || [];
+        const commentsRef = collection(this.firestore, 'comments');
+        const commentsQuery = query(commentsRef, where('userId', 'in', followingIds));
+        return collectionData(commentsQuery, { idField: 'id' });
+      })
+    );
+  }
+
   // Obtener comentarios por el ID del usuario
   getCommentsByUserId(userId: string): Observable<any[]> {
     const commentsRef = collection(this.firestore, 'comments');
-    const q = query(commentsRef, where('userId', '==', userId));
-    return collectionData(q, { idField: 'id' });
+    const commentsQuery = query(commentsRef, where('userId', '==', userId));
+    return collectionData(commentsQuery, { idField: 'id' });
   }
 }
