@@ -1,0 +1,438 @@
+openapi: "3.1.10"
+info:
+  version: "1.0.0"
+  title: "GameCritic backend"
+  description: "Backend que maneja las peticiones a la API de IGDB."
+servers:
+  - url: "http://localhost:4000"
+paths:
+  /:
+    get:
+      description: "Endpoint de prueba."
+      responses:
+        418:
+          description: "Respuesta del endpoint de prueba."
+          content:
+            text/plain:
+              schema:
+                type: text/plain
+              example:
+                "GameCritic backend working"
+
+  /query:
+    post:
+      description: "Realiza una consulta a la base de datos de IGDB."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  description: "Consulta a realizar a la base de datos. Para más información sobre las consultas: https://api-docs.igdb.com/#apicalypse-1"
+                  type: string
+                url:
+                  description: "Endpoint de la API de IGDB al que realizar la consulta. Lista de endpoints: https://api-docs.igdb.com/#endpoints"
+                  type: string
+              example:
+                query: "fields id,name; where id = 533;"
+                url: "https://api.igdb.com/v4/games"
+      responses:
+        200:
+          description: "Consulta realizada correctamente."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    id: 533,
+                    name: Dishonored
+                  }
+                ]
+        400:
+          description: "Petición no valida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                apiResponse: []
+        404:
+          description: "Endpoint de la API no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 404
+                statusText: Not Found
+                apiReponse: []
+  /get-game/{id}:
+    get:
+      description: "Obtiene toda la información de un videojuego disponible en la base de datos. Más información: "
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 533
+          required: true
+          description: "ID del videojuego en la base de datos de IGDB"
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    id: 533,
+                    age_ratings: [
+                      44464,
+                      67951,
+                      188924
+                    ],
+                    aggregated_rating: 90.35714285714286,
+                    aggregated_rating_count: 14,
+                    alternative_names: [
+                      69752
+                    ],
+                    "...": "..."
+                  }
+                ]
+        400:
+          description: "Petición no valida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                apiRequest: [
+                  {
+                    title: Syntax Error,
+                    status: 400,
+                    cause: "Expecting a STRING as input, surround your input with quotes starting at 'd' expecting {'{', 'f', '(', '[', 'true', 't', 'false', 'null', 'n'"
+                  }
+                ]
+
+  /search:
+    post:
+      description: "Realiza una búsqueda utilizando el parámetro de búsquedas de la API de IGDB"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                limit:
+                  type: integer
+                  description: "Número límite de videojuegos en la búsqueda"
+                query:
+                  type: string
+                  description: "Nombre del videojuego que incluir en la búsqueda"
+                  required: false
+                genreList:
+                  type: array
+                  description: "Array con los ID de los generos a incluir en la búsqueda"
+                  required: false
+              example:
+                limit: 10
+                query: Dishonored
+                genreList: [5, 12]
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    id: 533,
+                    first_release_date: 1349740800,
+                    genres: [
+                      9,
+                      12,
+                      31
+                    ],
+                    name: "Dishonored"
+                  },
+                  "...": "..."
+                ]
+        400:
+          description: "Petición no valida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                message: Limit not specified
+
+  /cover/{id}/{sizeType}:
+    get:
+      description: "Obtiene la URL de una portada de un videojuego en un tamaño especifico"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 533
+          required: true
+          description: "ID del videojuego en la base de datos de IGDB"
+        - in: path
+          name: sizeType
+          schema:
+            type: string
+            enum:
+              - "cover_small"
+              - "screenshot_med"
+              - "cover_big"
+              - "logo_med"
+              - "screenshot_big"
+              - "screenshot_huge"
+              - "thumb"
+              - "micro"
+              - "720p"
+              - "1080p"
+          required: true
+          description: "Tipo de tamaño de imagen"
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: "Código de estado HTTP"
+                  statusText:
+                    type: string
+                    description: "Mensaje de estado HTTP"
+                  apiResponse:
+                    type: array
+                    description: "Respuesta de la API de IGDB"
+                  fullURL:
+                    type: string
+                    description: "URL de la portada en el tipo de tamaño especificado"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    id: 266140,
+                    game: 533,
+                    image_id: "co5pcs"
+                  }
+                ]
+                fullURL: https://images.igdb.com/igdb/image/upload/t_cover_small/co5pcs.png
+        400:
+          description: Petición no valida
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                message: "sizeType is not valid. Available sizeType: https://api-docs.igdb.com/#images"
+
+  /covers:
+    post:
+      description: "Devuelve una lista de portadas a partir de una lista de IDs."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idList:
+                  type: array
+                  description: "Lista de IDs de videojuegos de los que se desea obtener la portada"
+              example:
+                idList: [533, 11118]
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    id: 266140,
+                    game: 533,
+                    image_id: "co5pcs"
+                  },
+                  {
+                    id: 438129,
+                    game: 11118,
+                    image_id: "co9e29"
+                  }
+                ]
+        400:
+          description: "Petición no valida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                apiResponse: [
+                  {
+                    title: "Syntax Error",
+                    status: 400,
+                    cause: "Expecting a STRING as input, surround your input with quotes starting at ')' expecting {'{', 'f', '(', '[', 'true', 't', 'false', 'null', 'n'"
+                  }
+                ]
+
+  /get-game-profile/{id}:
+    get:
+      description: "Devuelve la información para utilizarla en el perfil de un videojuego."
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+            example: 533
+          required: true
+          description: "ID del videojuego en la base de datos de IGDB"
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    name: "Info de Juego",
+                    result: [
+                      {
+                        id: 533,
+                        first_release_date: 1349740800,
+                        genres: [
+                          9,
+                          12,
+                          31
+                        ],
+                        name: "Dishonored",
+                        platforms: [
+                          9,
+                          6,
+                          12
+                        ],
+                        storyline: "...",
+                        summary: "..."
+                      }
+                    ]
+                  },
+                  {
+                    name: "Portada de Juego",
+                    result: [
+                      {
+                        id: 266140,
+                        game: 533,
+                        image_id: "co5pcs"
+                      }
+                    ]
+                  }
+                ]
+
+  /release-year/{releaseDate}:
+    get:
+      description: "Devuelve el año de salida de un videojuego."
+      parameters:
+        - in: path
+          name: releaseDate
+          schema:
+            type: integer
+            example: 1349740800
+          required: true
+          description: "ID del videojuego en la base de datos de IGDB"
+      responses:
+        200:
+          description: "Petición realizada correctamente."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    description: "Código de estado HTTP"
+                  statusText:
+                    type: string
+                    description: "Mensaje de estado HTTP"
+                  releaseYear:
+                    type: integer
+                    description: "Año de salida en formato legible"
+                example:
+                  status: 200
+                  statusText: OK
+                  releaseYear: 2012
+        400:
+          description: "Petición no valida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                message: Release Date is invalid
+
+components:
+  schemas:
+    Response:
+      description: "Respuesta del backend"
+      type: object
+      properties:
+        status:
+          type: integer
+          description: "Código de estado HTTP"
+        statusText:
+          type: string
+          description: "Mensaje de estado HTTP"
+        apiResponse:
+          type: array
+          description: "Respuesta de la API de IGDB"
+    CoversResponse:
+      description: "Respuesta del endpoint /covers"
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID de la imagen de portada en la base de datos de portadas de IGDB
+        game:
+          type: integer
+          description: ID del videojuego en la base de datos de videojuegos de IGDB
+        image_id:
+          type: string
+          description: Identificador utilizado para contruir la URL de las imágenes
+          example: "co9e29"
