@@ -13,7 +13,8 @@
       </div>
     </div>
     <aside>
-      <app-stars></app-stars>
+      <app-stars [(rating)]="rating"></app-stars>
     </aside>
   </div>
+  <button (click)="submitComment()" class="submit-button">Enviar Comentario</button>
 </div>
