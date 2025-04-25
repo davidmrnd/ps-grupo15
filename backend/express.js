@@ -104,7 +104,7 @@ app.post('/covers', (req, res) => {
         });
 });
 
-app.get('/game/:id', (req, res) => {
+app.get('/get-game-profile/:id', (req, res) => {
     apiFunctions.getCoverAndGameInfo(
         keys["client-id"],
         keys["access-token"],
@@ -134,6 +134,15 @@ app.get('/release-year/:releaseDate', (req, res) => {
     }
 });
 
+app.get('/docs', (req, res) => {
+  res.sendFile(__dirname + '/docs/docs.html');
+});
+
+app.get('/docs/spec', (req, res) => {
+  res.sendFile(__dirname + '/docs/spec.yaml');
+});
+
 app.listen(port, () => {
     console.log(`GameCritic backend listening on port ${port}`)
+    console.log(`Backend Documentation available at http://localhost:${port}/docs`)
 });

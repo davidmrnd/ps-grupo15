@@ -71,7 +71,7 @@ async function searchByGenreAndName(
     query += " where game_type = (0, 2, 4, 8, 9) & (game_status = (0, 2, 4) | game_status = null)  & version_parent = null";
 
     // Realiza la búsqueda por genero
-    if (genreList !== undefined) {
+    if (genreList !== undefined && genreList.length > 0) {
         if (!(genreList instanceof Array)) {
             return {
                 status: 400,
@@ -155,7 +155,7 @@ async function getCoverAndGameInfo(clientID, accessToken, id) {
     let url = "https://api.igdb.com/v4/multiquery";
 
     let query = `query games "Info de Juego" {
-    fields id,name,storyline,summary,first_release_date;
+    fields id,name,storyline,summary,first_release_date,genres,platforms;
     where id = ${id};
 };
 
