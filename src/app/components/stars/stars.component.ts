@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,5 +9,11 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./stars.component.css']
 })
 export class StarsComponent {
-  @Input() rating: number = 0;
+  @Input() rating: number = 0; 
+  @Output() ratingChange = new EventEmitter<number>();
+
+  onStarClick(star: number): void {
+    this.rating = star;
+    this.ratingChange.emit(this.rating);
+  }
 }

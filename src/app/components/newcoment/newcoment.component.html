@@ -1,0 +1,19 @@
+<div class="comments-container">
+  <div class="comment">
+    <div class="user">
+      <img [src]="user?.profileicon" [alt]="user?.username" class="profile-image">
+      <div class="info">
+        <h3>{{ user?.username }}</h3>
+        <input
+          [(ngModel)]="commentContent"
+          placeholder="Escribe tu comentario aquí..."
+          class="comment-input"
+          type="text"
+        />
+      </div>
+    </div>
+    <aside>
+      <app-stars></app-stars>
+    </aside>
+  </div>
+</div>
