@@ -16,14 +16,16 @@
     </div>
 
     <div class="search-container">
-      <input type="text" class="search-box" placeholder="Buscar">
-      <button class="search-button">
+      <input type="text" class="search-box" placeholder="Buscar" [(ngModel)]="searchText" (keydown)="onKeyDowmInSearchInput($event)">
+      <button class="search-button" (click)="onSearchButtonClicked()">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="9" cy="9" r="8" stroke="black" stroke-width="2"/>
           <line x1="14" y1="14" x2="19" y2="19" stroke="black" stroke-width="2"/>
         </svg>
       </button>
     </div>
+
+    <app-search-results [searchResults]="this.searchResults"></app-search-results>
 
     <div class="right-container">
       <ng-container *ngIf="isLoggedIn; else guestButtons">
