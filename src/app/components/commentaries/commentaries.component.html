@@ -17,5 +17,12 @@
     <aside>
       <app-stars [rating]="comment.rating"></app-stars>
     </aside>
+    <button
+      *ngIf="comment.userId === currentUserId"
+      (click)="navigateToEditComment(comment.videogameId)"
+      class="edit-button"
+      title="Editar comentario">
+      ✏️
+    </button>
   </div>
 </div>

@@ -111,6 +111,12 @@ export class NewcomentComponent implements OnInit {
       return;
     }
   
+    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este comentario?');
+    if (!confirmDelete) {
+      // Si el usuario cancela, no se realiza ninguna acción
+      return;
+    }
+
     try {
       const commentDoc = doc(this.firestore, 'comments', this.existingCommentId);
       await deleteDoc(commentDoc); // Elimina el comentario de la base de datos

@@ -51,6 +51,19 @@ aside app-stars {
   justify-content: center;
 }
 
+.edit-button {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.edit-button:hover {
+  color: #0056b3;
+}
 
 @media (max-width: 1023px) {
   .comment {
