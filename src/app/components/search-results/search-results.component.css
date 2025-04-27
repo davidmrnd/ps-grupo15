@@ -1,6 +1,6 @@
 #search-results {
+  position: absolute;
   background: white;
-  border: 1px solid #ddd;
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
@@ -8,6 +8,7 @@
 
 #search-results ul {
   list-style-type: none;
+  border: 1px solid #ddd;
 }
 
 #search-results li {
