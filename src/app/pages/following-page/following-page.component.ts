@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
   imports: [StarsComponent, CommonModule, RouterLink],
 })
 export class FollowingPageComponent implements OnInit {
-  comments: any[] = [];
+  groupedComments: any[] = [];
 
   constructor(private authService: AuthService, private dataService: DataService) {}
 
@@ -20,20 +20,48 @@ export class FollowingPageComponent implements OnInit {
     this.authService.getCurrentUserObservable().subscribe((user) => {
       if (user) {
         this.dataService.getFollowingComments(user.uid).subscribe((comments) => {
-          this.comments = [];
+          const grouped = comments.reduce((acc: any, comment: any) => {
+            const userId = comment.userId;
+            if (!acc[userId]) {
+              acc[userId] = {
+                username: comment.user?.username,
+                profileicon: comment.user?.profileicon,
+                comments: [],
+              };
+            }
+            acc[userId].comments.push(comment);
+            return acc;
+          }, {});
 
-          for (let comment of comments) {
-            this.dataService.getUsersById(comment.userId).subscribe(user => {
-              comment.user = user;
-            });
-            this.dataService.getVideogameById(comment.videogameId).subscribe(videogame => {
-              comment.videogame = videogame;
-            });
-            this.comments.push(comment);
-          }
+          this.groupedComments = Object.values(grouped);
         });
       }
     });
   }
 
+  moveCarousel(username: string, direction: 'prev' | 'next'): void {
+    const carouselTrack = document.querySelector(`.carousel-track[data-username="${username}"]`) as HTMLElement;
+
+    if (!carouselTrack) {
+      console.error(`Carousel track for user "${username}" not found.`);
+      return;
+    }
+
+    const slideWidth = carouselTrack.firstElementChild?.clientWidth || 0;
+    const currentTransform = parseFloat(
+      getComputedStyle(carouselTrack).transform.split(',')[4] || '0'
+    );
+
+    const maxTransform = -(slideWidth * (carouselTrack.children.length - 1)); // Total width of all slides minus one visible slide
+
+    let newTransform = currentTransform;
+
+    if (direction === 'prev') {
+      newTransform = Math.min(currentTransform + slideWidth, 0); // Prevent moving beyond the first slide
+    } else if (direction === 'next') {
+      newTransform = Math.max(currentTransform - slideWidth, maxTransform); // Prevent moving beyond the last slide
+    }
+
+    carouselTrack.style.transform = `translateX(${newTransform}px)`;
+  }
 }

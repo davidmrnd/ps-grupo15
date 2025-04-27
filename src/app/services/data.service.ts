@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData,getDoc, doc, docData, query, where } from '@angular/fire/firestore';
 import { Observable, switchMap } from 'rxjs';
 
 @Injectable({
@@ -41,7 +41,20 @@ export class DataService {
         const followingIds = user.following || [];
         const commentsRef = collection(this.firestore, 'comments');
         const commentsQuery = query(commentsRef, where('userId', 'in', followingIds));
-        return collectionData(commentsQuery, { idField: 'id' });
+        return collectionData(commentsQuery, { idField: 'id' }).pipe(
+          switchMap((comments: any[]) => {
+            const enrichedComments = comments.map(async (comment) => {
+              const user = await getDoc(doc(this.firestore, `users/${comment.userId}`));
+              const videogame = await getDoc(doc(this.firestore, `videogames/${comment.videogameId}`));
+              return {
+                ...comment,
+                user: user.data(),
+                videogame: videogame.data(),
+              };
+            });
+            return Promise.all(enrichedComments);
+          })
+        );
       })
     );
   }

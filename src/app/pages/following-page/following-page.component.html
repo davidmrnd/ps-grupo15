@@ -1,26 +1,30 @@
 <div class="comments-container">
-    <h2>Comentarios de las personas que sigues</h2>
-    <div class="comment" *ngFor="let comment of comments">
-      <div class="user">
-        <a routerLink="/videogame" [queryParams]="{ id: comment.videogame?.id }">
-            <img [src]="comment.videogame?.imageprofile" [alt]="comment.videogame?.title" class="profilevideogame-image">
-        </a>
-
-        <a routerLink="/user" [queryParams]="{ id: comment.user?.id }">
-          <img [src]="comment.user?.profileicon" [alt]="comment.user?.username" class="profileuser-image">
-        </a>
-
-        <aside class="info">
-          <h3>{{ comment.user?.username }}</h3>
-          <h3>{{ comment.videogame?.title }}</h3>
-          <p>{{ comment.content }}</p>
-          
-        </aside>
-
+  <h2>comentarios de las personas que sigues</h2>
+  <div *ngFor="let user of groupedComments">
+    <div class="carousel-title">
+      <img [src]="user.profileicon" [alt]="user.username" class="profileuser-image">
+      <h3>{{ user.username }}</h3>
+    </div>
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="carousel-track" [attr.data-username]="user.username">
+          <div class="carousel-slide" *ngFor="let comment of user.comments">
+            <div class="comment-columns">
+              <div class="comment-text-stars">
+                <p class="comment-content">{{ comment.content }}</p>
+                <app-stars [rating]="comment.rating"></app-stars>
+              </div>
+              <div class="comment-image">
+                <img [src]="comment.videogame?.imageprofile" [alt]="comment.videogame?.title" class="carousel-image">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <aside>
-        <app-stars [rating]="comment.rating"></app-stars>
-      </aside>
+      <div class="carousel-buttons">
+        <button class="carousel-button prev-button" (click)="moveCarousel(user.username, 'prev')"><</button>
+        <button class="carousel-button next-button" (click)="moveCarousel(user.username, 'next')">></button>
+      </div>
     </div>
   </div>
-  
+</div>
