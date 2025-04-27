@@ -16,5 +16,8 @@
       <app-stars [(rating)]="rating"></app-stars>
     </aside>
   </div>
-  <button (click)="submitComment()" class="submit-button">Enviar Comentario</button>
+  <div class="button-container">
+    <button (click)="submitComment()" class="submit-button">Enviar Comentario</button>
+    <button *ngIf="existingCommentId" (click)="deleteComment()" class="delete-button">Eliminar Comentario</button>
+  </div>
 </div>

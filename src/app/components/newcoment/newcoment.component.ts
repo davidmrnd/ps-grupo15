@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../../services/auth.service';
 import { StarsComponent } from '../stars/stars.component';
-import { Firestore, collection, addDoc, Timestamp } from '@angular/fire/firestore';
+import { Firestore, collection, query, where, getDocs, updateDoc, doc, addDoc, deleteDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-newcoment',
@@ -18,13 +18,15 @@ export class NewcomentComponent implements OnInit {
   user: any = null;
   commentContent: string = '';
   rating: number = 0;
-  videogameId: string = ''; 
+  videogameId: string = '';
+  existingCommentId: string | null = null; // ID del comentario existente, si lo hay
 
   constructor(
     private authService: AuthService,
     private dataService: DataService,
     private route: ActivatedRoute,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,9 +40,29 @@ export class NewcomentComponent implements OnInit {
       if (user) {
         this.dataService.getUsersById(user.uid).subscribe((userData) => {
           this.user = userData;
+          this.checkExistingComment(); // Verificar si ya existe un comentario
         });
       }
     });
+  }
+
+  async checkExistingComment(): Promise<void> {
+    const commentsCollection = collection(this.firestore, 'comments');
+    const q = query(
+      commentsCollection,
+      where('userId', '==', this.user?.id),
+      where('videogameId', '==', this.videogameId)
+    );
+
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      // Si ya existe un comentario, guarda su ID
+      const existingComment = querySnapshot.docs[0];
+      this.existingCommentId = existingComment.id;
+      const data = existingComment.data();
+      this.commentContent = data['content']; // Rellenar el contenido existente
+      this.rating = data['rating']; // Rellenar la calificación existente
+    }
   }
 
   async submitComment(): Promise<void> {
@@ -59,13 +81,46 @@ export class NewcomentComponent implements OnInit {
 
     try {
       const commentsCollection = collection(this.firestore, 'comments');
-      await addDoc(commentsCollection, newComment);
-      alert('Comentario enviado con éxito.');
-      this.commentContent = ''; // Limpia el campo de texto
-      this.rating = 0; // Reinicia las estrellas
+
+      if (this.existingCommentId) {
+        // Si ya existe un comentario, actualízalo
+        const commentDoc = doc(this.firestore, 'comments', this.existingCommentId);
+        await updateDoc(commentDoc, newComment);
+        alert('Comentario actualizado con éxito.');
+      } else {
+        // Si no existe un comentario, crea uno nuevo
+        await addDoc(commentsCollection, newComment);
+        alert('Comentario enviado con éxito.');
+      }
+
+      // Redirige a la página del videojuego
+      this.router.navigate(['/videogameprofile'], { queryParams: { id: this.videogameId } });
+
+      // Limpia los campos
+      this.commentContent = '';
+      this.rating = 0;
     } catch (error) {
       console.error('Error al enviar el comentario:', error);
       alert('Hubo un error al enviar el comentario. Inténtalo de nuevo.');
+    }
+  }
+
+  async deleteComment(): Promise<void> {
+    if (!this.existingCommentId) {
+      console.error('No hay un comentario existente para eliminar.');
+      return;
+    }
+  
+    try {
+      const commentDoc = doc(this.firestore, 'comments', this.existingCommentId);
+      await deleteDoc(commentDoc); // Elimina el comentario de la base de datos
+      alert('Comentario eliminado con éxito.');
+  
+      // Redirige a la página del videojuego después de eliminar
+      this.router.navigate(['/videogameprofile'], { queryParams: { id: this.videogameId } });
+    } catch (error) {
+      console.error('Error al eliminar el comentario:', error);
+      alert('Hubo un error al eliminar el comentario. Inténtalo de nuevo.');
     }
   }
 }
