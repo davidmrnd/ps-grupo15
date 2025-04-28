@@ -101,5 +101,16 @@ describe('ApiService', () => {
 
   it('should return expected release year', () => {
     expect(service.getReleaseYear(1349740800)).toEqual(2012);
+  });
+
+  it('should return expected videogame profile from slug', (done: DoneFn) => {
+    service.getVideogameProfileFromSlug("dishonored").subscribe((response) => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      const apiResponse = response.apiResponse[0];
+      expect(apiResponse.id).toEqual(533);
+      expect(apiResponse.name).toEqual("Dishonored");
+      done();
+    });
   })
 });
