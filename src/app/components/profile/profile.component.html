@@ -13,7 +13,7 @@
 
 <div class="profile-container" *ngIf="data && (type === 'videogame')">
   <img
-    [src]="getVideogameCoverURL()"
+    [src]="this.gameCover"
     [alt]="gameInfo.name"
     [class.videogame-profile-image]="type === 'videogame'"
     >

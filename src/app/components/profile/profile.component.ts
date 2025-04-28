@@ -16,23 +16,31 @@ export class ProfileComponent  implements OnInit {
   @Input() type: string = '';
   data: any = null;
   gameInfo: any = null;
-  gameCover: any = null;
+  gameCover: string = "";
   id!: string;
   apiService: ApiService = inject(ApiService);
+  slug!: string;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.id = params['id'];
+      this.slug = params['name'];
     });
 
     if(this.type === 'videogame'){
-      this.apiService.getVideogameProfile(parseInt(this.id)).subscribe((response) => {
-        this.data = response;
-        this.gameInfo = response.apiResponse[0].result[0];
-        this.gameCover = response.apiResponse[1].result[0];
-      })
+      if (this.slug !== undefined) {
+        this.apiService.getVideogameProfileFromSlug(this.slug).subscribe((response) => {
+          this.data = response;
+          this.gameInfo = response.apiResponse[0];
+          this.id = this.gameInfo.id;
+
+          this.apiService.getCoverURL(parseInt(this.id), "cover_big").subscribe((response) => {
+            this.gameCover = response.fullURL;
+          });
+        });
+      }
       /**
       this.dataService.getVideogameById(this.id).subscribe(response => {
         this.data = response;
@@ -43,10 +51,6 @@ export class ProfileComponent  implements OnInit {
         this.data = response;
       });
     }
-  }
-
-  protected getVideogameCoverURL() : string{
-    return `https://images.igdb.com/igdb/image/upload/t_cover_big/${this.gameCover.image_id}.jpg`
   }
 
   protected showReleaseYear() {
