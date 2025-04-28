@@ -34,7 +34,16 @@ export class FollowingPageComponent implements OnInit {
             return acc;
           }, {});
 
-          this.groupedComments = Object.values(grouped);
+          this.groupedComments = Object.values(grouped).map((group: any) => {
+            group.comments.sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
+            return group;
+          });
+
+          this.groupedComments.sort((a: any, b: any) => {
+            const mostRecentA = a.comments[0].createdAt;
+            const mostRecentB = b.comments[0].createdAt;  
+            return mostRecentB.localeCompare(mostRecentA);
+          });
         });
       }
     });
@@ -49,18 +58,27 @@ export class FollowingPageComponent implements OnInit {
     }
 
     const slideWidth = carouselTrack.firstElementChild?.clientWidth || 0;
+    const totalSlides = carouselTrack.children.length;
     const currentTransform = parseFloat(
       getComputedStyle(carouselTrack).transform.split(',')[4] || '0'
     );
 
-    const maxTransform = -(slideWidth * (carouselTrack.children.length - 1)); // Total width of all slides minus one visible slide
+    const maxTransform = -(slideWidth * (totalSlides - 1));
 
     let newTransform = currentTransform;
 
     if (direction === 'prev') {
-      newTransform = Math.min(currentTransform + slideWidth, 0); // Prevent moving beyond the first slide
+      if (currentTransform === 0) {
+        newTransform = maxTransform;
+      } else {
+        newTransform = Math.min(currentTransform + slideWidth, 0);
+      }
     } else if (direction === 'next') {
-      newTransform = Math.max(currentTransform - slideWidth, maxTransform); // Prevent moving beyond the last slide
+      if (currentTransform === maxTransform) {
+        newTransform = 0;
+      } else {
+        newTransform = Math.max(currentTransform - slideWidth, maxTransform);
+      }
     }
 
     carouselTrack.style.transform = `translateX(${newTransform}px)`;
