@@ -134,6 +134,17 @@ app.get('/release-year/:releaseDate', (req, res) => {
     }
 });
 
+app.get('/get-videogame-profile-from-slug/:slug', (req, res) => {
+    apiFunctions.getVideogameProfileFromSlug(
+        keys["client-id"],
+        keys["access-token"],
+        req.params.slug,
+      )
+        .then((result) => {
+            res.status(result.status).send(result);
+        });
+})
+
 app.get('/docs', (req, res) => {
   res.sendFile(__dirname + '/docs/docs.html');
 });

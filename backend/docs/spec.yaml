@@ -310,7 +310,7 @@ paths:
 
   /get-game-profile/{id}:
     get:
-      description: "Devuelve la información para utilizarla en el perfil de un videojuego."
+      description: "Devuelve la información para utilizarla en el perfil de un videojuego a partir de un ID numérico."
       parameters:
         - in: path
           name: id
@@ -406,6 +406,49 @@ paths:
                 status: 400
                 statusText: Bad Request
                 message: Release Date is invalid
+
+  /get-videogame-profile-from-slug/{slug}:
+    get:
+      description: "Devuelve la información para el perfil del videojuego a partir de un nombre en la URL. Sin información sobre la portada."
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+            example: "dishonored"
+          required: true
+          description: "Nombre del videojuego en formato válido para una URL"
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    id: 533,
+                    first_release_date: 1349740800,
+                    genres: [
+                      9,
+                      12,
+                      31
+                    ],
+                    name: "Dishonored",
+                    platforms: [
+                      9,
+                      6,
+                      12
+                    ],
+                    storyline: "...",
+                    summary: "..."
+                  }
+                ]
+
+
 
 components:
   schemas:
