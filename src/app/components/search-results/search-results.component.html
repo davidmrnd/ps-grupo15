@@ -1,7 +1,7 @@
 <div id="search-results">
   <ul *ngIf="searchResults().length !== 0">
     <li *ngFor="let videogame of searchResults()">
-      <a href="/videogame?id={{videogame.id}}">{{videogame.name}}
+      <a href="/videogame?name={{videogame.slug}}">{{videogame.name}}
         <span *ngIf="showYear(this.apiService.getReleaseYear(videogame.first_release_date))">
           ({{this.apiService.getReleaseYear(videogame.first_release_date)}})
         </span>

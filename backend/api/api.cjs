@@ -63,7 +63,7 @@ async function searchByGenreAndName(
     string = undefined,
     genreList = undefined
 ) {
-    let query = `fields name,id,genres,first_release_date; limit ${limit};`;
+    let query = `fields name,id,genres,first_release_date,slug; limit ${limit};`;
 
     // Realiza la búsqueda por nombre
     if (string !== undefined) {
