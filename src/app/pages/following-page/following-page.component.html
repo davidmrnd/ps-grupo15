@@ -17,6 +17,7 @@
               <div class="comment-text-stars">
                 <p class="comment-content">{{ comment.content }}</p>
                 <app-stars [rating]="comment.rating"></app-stars>
+                <p class="comment-date">{{ comment.createdAt | date: 'dd/MM/yyyy, HH:mm' }}</p>
               </div>
               <div class="comment-image">
                 <a [routerLink]="['/videogame']" [queryParams]="{ id: comment.videogame?.id }">
