@@ -1,5 +1,3 @@
-const url = require("node:url");
-
 /**
  * Lee y devuelve el contenido JSON de una URL
  * @param url {string} URL a la que se desea realizar la petición
