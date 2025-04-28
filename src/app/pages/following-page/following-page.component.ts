@@ -26,6 +26,7 @@ export class FollowingPageComponent implements OnInit {
               acc[userId] = {
                 username: comment.user?.username,
                 profileicon: comment.user?.profileicon,
+                id: userId,
                 comments: [],
               };
             }

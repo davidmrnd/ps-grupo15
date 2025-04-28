@@ -2,8 +2,12 @@
   <h2>comentarios de las personas que sigues</h2>
   <div *ngFor="let user of groupedComments">
     <div class="carousel-title">
+      <a [routerLink]="['/user']" [queryParams]="{ id: user.id }">
       <img [src]="user.profileicon" [alt]="user.username" class="profileuser-image">
+      </a>
+      <a [routerLink]="['/user']" [queryParams]="{ id: user.id }">
       <h3>{{ user.username }}</h3>
+      </a>
     </div>
     <div class="carousel-container">
       <div class="carousel">
@@ -15,7 +19,9 @@
                 <app-stars [rating]="comment.rating"></app-stars>
               </div>
               <div class="comment-image">
-                <img [src]="comment.videogame?.imageprofile" [alt]="comment.videogame?.title" class="carousel-image">
+                <a [routerLink]="['/videogame']" [queryParams]="{ id: comment.videogame?.id }">
+                  <img [src]="comment.videogame?.imageprofile" [alt]="comment.videogame?.title" class="carousel-image">
+                </a>
               </div>
             </div>
           </div>
