@@ -39,3 +39,4 @@ Thumbs.db
 
 src/environments/environment.ts
 /package-lock.json
+/backend/api/keys.json

@@ -32,7 +32,7 @@ app-commentaries {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 100px;
+  margin-left: 12rem;
 }
 
 .follow-button:hover {
@@ -41,6 +41,7 @@ app-commentaries {
 
 .unfollow-button {
   background-color: #f44336;
+  color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
@@ -48,7 +49,7 @@ app-commentaries {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-left: 100px;
+  margin-left: 10.5rem;
 }
 
 .unfollow-button:hover {
@@ -61,12 +62,12 @@ app-commentaries {
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 20px auto;
-  display: block;
+  border-radius: 20px;
   font-size: 16px;
   font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 10.5rem;
 }
 
 .logout-button:hover {

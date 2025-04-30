@@ -8,6 +8,9 @@
   <button *ngIf="!isFollowing" (click)="followUser()" class="follow-button">Seguir</button>
   <button *ngIf="isFollowing" (click)="unfollowUser()" class="unfollow-button">Dejar de seguir</button>
 </div>
+<div *ngIf="isCurrentUserProfile">
+  <button (click)="logout()" class="logout-button">Cerrar sesión</button>
+</div>
+
 
 <app-commentaries [type]="'user'"></app-commentaries>
-<button *ngIf="isCurrentUserProfile" (click)="logout()" class="logout-button">Cerrar sesión</button>

@@ -1,12 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, inject} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
+import {FormsModule} from '@angular/forms';
+import {ApiService} from '../../services/api.service';
+import {SearchResultsComponent} from '../search-results/search-results.component';
 
 @Component({
   selector: 'app-header',
-  imports: [ CommonModule, RouterLink ],
+  imports: [CommonModule, RouterLink, FormsModule, SearchResultsComponent],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
@@ -15,6 +18,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userName: string | null = null;
   private userSubscription: Subscription | null = null;
   userId: any|string;
+  searchText: string = "";
+  apiService: ApiService = inject(ApiService);
+  searchResults: any[] = [];
 
   constructor(private authService: AuthService) {}
 
@@ -23,6 +29,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isLoggedIn = !!user;
       this.userId = user?.uid || null;
     });
+
+    window.addEventListener("resize", (event) => {
+      this.positionSearchResults();
+    })
   }
 
   logout() {
@@ -34,5 +44,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.userSubscription?.unsubscribe();
+  }
+
+  onSearchButtonClicked() {
+    this.apiService.search(10, this.searchText).subscribe((result) => {
+      this.searchResults = result.apiResponse;
+    });
+    this.positionSearchResults();
+  }
+
+  private positionSearchResults() {
+    const searchResultsElement = document.getElementById('search-results');
+    const searchContainerElement = document.querySelector(".search-container");
+
+    if (searchResultsElement && searchContainerElement) {
+      const boundingRect = searchContainerElement.getBoundingClientRect();
+      searchResultsElement.style.width = `${boundingRect.width}px`;
+      searchResultsElement.style.top = `${boundingRect.bottom + window.scrollY}px`;
+      searchResultsElement.style.left = `${boundingRect.left}px`;
+    }
+  }
+
+  onKeyDowmInSearchInput(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.onSearchButtonClicked();
+    }
   }
 }
