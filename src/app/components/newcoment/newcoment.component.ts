@@ -19,7 +19,8 @@ export class NewcomentComponent implements OnInit {
   commentContent: string = '';
   rating: number = 0;
   videogameId: string = '';
-  existingCommentId: string | null = null; // ID del comentario existente, si lo hay
+  existingCommentId: string | null = null; 
+  message: string = '';
 
   constructor(
     private authService: AuthService,
@@ -30,17 +31,15 @@ export class NewcomentComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener el ID del videojuego desde los parámetros de la URL
     this.route.queryParams.subscribe((params) => {
       this.videogameId = params['id'];
     });
 
-    // Obtener la información del usuario autenticado
     this.authService.getCurrentUserObservable().subscribe((user) => {
       if (user) {
         this.dataService.getUsersById(user.uid).subscribe((userData) => {
           this.user = userData;
-          this.checkExistingComment(); // Verificar si ya existe un comentario
+          this.checkExistingComment(); 
         });
       }
     });
@@ -56,18 +55,17 @@ export class NewcomentComponent implements OnInit {
 
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
-      // Si ya existe un comentario, guarda su ID
       const existingComment = querySnapshot.docs[0];
       this.existingCommentId = existingComment.id;
       const data = existingComment.data();
-      this.commentContent = data['content']; // Rellenar el contenido existente
-      this.rating = data['rating']; // Rellenar la calificación existente
+      this.commentContent = data['content']; 
+      this.rating = data['rating'];
     }
   }
 
   async submitComment(): Promise<void> {
     if (!this.commentContent || this.rating === 0 || !this.videogameId) {
-      alert('Por favor, completa todos los campos antes de enviar el comentario.');
+      this.message = 'Por favor, completa todos los campos antes de enviar el comentario.';
       return;
     }
 
@@ -83,20 +81,16 @@ export class NewcomentComponent implements OnInit {
       const commentsCollection = collection(this.firestore, 'comments');
 
       if (this.existingCommentId) {
-        // Si ya existe un comentario, actualízalo
         const commentDoc = doc(this.firestore, 'comments', this.existingCommentId);
         await updateDoc(commentDoc, newComment);
-        alert('Comentario actualizado con éxito.');
+        this.message = 'Comentario actualizado con éxito.';
       } else {
-        // Si no existe un comentario, crea uno nuevo
         await addDoc(commentsCollection, newComment);
-        alert('Comentario enviado con éxito.');
+        this.message = 'Comentario enviado con éxito.';
       }
 
-      // Redirige a la página del videojuego
       this.router.navigate(['/videogameprofile'], { queryParams: { id: this.videogameId } });
 
-      // Limpia los campos
       this.commentContent = '';
       this.rating = 0;
     } catch (error) {
@@ -113,20 +107,18 @@ export class NewcomentComponent implements OnInit {
   
     const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este comentario?');
     if (!confirmDelete) {
-      // Si el usuario cancela, no se realiza ninguna acción
       return;
     }
 
     try {
       const commentDoc = doc(this.firestore, 'comments', this.existingCommentId);
-      await deleteDoc(commentDoc); // Elimina el comentario de la base de datos
-      alert('Comentario eliminado con éxito.');
+      await deleteDoc(commentDoc);
+      this.message = 'Comentario eliminado con éxito.';
   
-      // Redirige a la página del videojuego después de eliminar
       this.router.navigate(['/videogameprofile'], { queryParams: { id: this.videogameId } });
     } catch (error) {
       console.error('Error al eliminar el comentario:', error);
-      alert('Hubo un error al eliminar el comentario. Inténtalo de nuevo.');
+      this.message = 'Hubo un error al eliminar el comentario. Inténtalo de nuevo.';
     }
   }
 }

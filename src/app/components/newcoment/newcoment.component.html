@@ -1,23 +1,35 @@
 <div class="comments-container">
-  <div class="comment">
+  <div class comment>
     <div class="user">
       <img [src]="user?.profileicon" [alt]="user?.username" class="profile-image">
       <div class="info">
         <h3>{{ user?.username }}</h3>
-        <input
+        <textarea
           [(ngModel)]="commentContent"
           placeholder="Escribe tu comentario aquí..."
-          class="comment-input"
-          type="text"
-        />
+          class="comment-textarea"
+          rows="5">
+        </textarea>
       </div>
     </div>
     <aside>
-      <app-stars [(rating)]="rating"></app-stars>
+      <app-stars [(rating)]="rating" [interactive]="true"></app-stars>
     </aside>
   </div>
   <div class="button-container">
-    <button (click)="submitComment()" class="submit-button">Enviar Comentario</button>
-    <button *ngIf="existingCommentId" (click)="deleteComment()" class="delete-button">Eliminar Comentario</button>
+    <button 
+    [routerLink]="['/videogameprofile']" 
+    [queryParams]="{ id: videogameId }"
+    (click)="submitComment()" 
+    class="submit-button">
+    {{ existingCommentId ? 'Modificar Comentario' : 'Enviar Comentario' }}
+    </button>
+    <button 
+    *ngIf="existingCommentId"
+    [routerLink]="['/videogameprofile']"
+    [queryParams]="{ id: videogameId }"
+    (click)="deleteComment()" 
+    class="delete-button">Eliminar Comentario</button>
   </div>
+  <p *ngIf="message" class="error-message">{{ message }}</p>
 </div>

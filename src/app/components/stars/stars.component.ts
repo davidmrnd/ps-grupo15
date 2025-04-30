@@ -11,9 +11,12 @@ import { CommonModule } from '@angular/common';
 export class StarsComponent {
   @Input() rating: number = 0; 
   @Output() ratingChange = new EventEmitter<number>();
+  @Input() interactive: boolean = false; // Controla si las estrellas son interactivas
 
   onStarClick(star: number): void {
-    this.rating = star;
-    this.ratingChange.emit(this.rating);
+    if (this.interactive) {
+      this.rating = star;
+      this.ratingChange.emit(this.rating);
+    }
   }
 }
