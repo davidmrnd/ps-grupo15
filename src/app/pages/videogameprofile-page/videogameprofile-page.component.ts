@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
@@ -36,18 +36,20 @@ export class VideogamePageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.videogameSlug = this.route.snapshot.paramMap.get("slug");
-    if (this.videogameSlug) {
-      this.apiService.getVideogameProfileFromSlug(this.videogameSlug).subscribe((response) => {
-        this.gameInfo = response.apiResponse[0];
-        this.videogameId = this.gameInfo.id.toString();
+    this.route.params.subscribe(params => {
+      this.videogameSlug = params['slug'];
+      if (this.videogameSlug) {
+        this.apiService.getVideogameProfileFromSlug(this.videogameSlug).subscribe((response) => {
+          this.gameInfo = response.apiResponse[0];
+          this.videogameId = this.gameInfo.id.toString();
 
-        this.apiService.getCoverURL(parseInt(this.videogameId), "cover_big").subscribe((response) => {
-          this.gameCover = response.fullURL;
+          this.apiService.getCoverURL(parseInt(this.videogameId), "cover_big").subscribe((response) => {
+            this.gameCover = response.fullURL;
+          });
+          this.loadComments();
         });
-        this.loadComments();
-      });
-    }
+      }
+    });
   }
 
   loadComments(): void {

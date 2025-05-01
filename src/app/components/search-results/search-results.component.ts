@@ -1,4 +1,4 @@
-import {Component, inject, input} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {ApiService} from '../../services/api.service';
 import {RouterLink} from '@angular/router';
@@ -14,10 +14,14 @@ import {RouterLink} from '@angular/router';
   styleUrl: './search-results.component.css'
 })
 export class SearchResultsComponent {
-  searchResults = input<any[]>([]);
+  @Input() searchResults: any[] = [];
   apiService = inject(ApiService);
 
   showYear(releaseDate: number) {
     return !isNaN(releaseDate)
+  }
+
+  clearResults() {
+    this.searchResults = []
   }
 }

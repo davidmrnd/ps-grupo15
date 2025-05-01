@@ -1,7 +1,7 @@
 import {DataService} from '../../services/data.service';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
-import {Component, inject, input, Input, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 
 @Component({
