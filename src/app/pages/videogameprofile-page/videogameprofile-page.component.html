@@ -1,7 +1,6 @@
-<main>
-  <app-profile [type]="'videogame'"></app-profile>
+<main *ngIf="this.gameInfo">
+  <app-profile [type]="'videogame'" [gameInfo]="this.gameInfo" [gameCover]="this.gameCover"></app-profile>
   <app-stars [rating]="averageRating"></app-stars>
 </main>
-
 <button (click)="navigateToAddComment()" class="add-comment-button">Añadir valoración</button>
-<app-commentaries [type]="'videogame'"></app-commentaries>
+<app-commentaries [type]="'videogame'" [comments]="this.comments"></app-commentaries>

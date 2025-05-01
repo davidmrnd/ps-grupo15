@@ -11,8 +11,9 @@
   </div>
 </div>
 
-<div class="profile-container" *ngIf="data && (type === 'videogame')">
+<div class="profile-container" *ngIf="gameInfo && (type === 'videogame')">
   <img
+    *ngIf="gameCover"
     [src]="this.gameCover"
     [alt]="gameInfo.name"
     [class.videogame-profile-image]="type === 'videogame'"

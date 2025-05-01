@@ -13,7 +13,7 @@ import { StarsComponent } from '../stars/stars.component';
 })
 export class CommentariesComponent implements OnInit {
   @Input() type: string = '';
-  comments: any[] = [];
+  @Input() comments: any[] = [];
   id!: string;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
@@ -23,19 +23,7 @@ export class CommentariesComponent implements OnInit {
       this.id = params['id'];
       if (!this.id) return;
 
-      if (this.type === 'videogame') {
-        this.dataService.getCommentsByVideogameId(this.id).subscribe(comments => {
-          this.comments = [];
-
-          for (let comment of comments) {
-            this.dataService.getUsersById(comment.userId).subscribe(user => {
-              comment.user = user;
-              console.log(comment);
-              this.comments.push(comment);
-            });
-          }
-        });
-      } else {
+      if (this.type === 'videogame') {} else {
         this.dataService.getCommentsByUserId(this.id).subscribe(comments => {
           this.comments = [];
 

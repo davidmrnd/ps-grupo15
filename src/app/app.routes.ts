@@ -21,7 +21,7 @@ export const routes: Routes = [
     component: CategoriesPageComponent,
   },
   {
-    path: 'videogame',
+    path: 'videogame/:slug',
     component: VideogamePageComponent,
   },
   {
