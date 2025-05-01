@@ -342,6 +342,7 @@ paths:
                           31
                         ],
                         name: "Dishonored",
+                        slug: "dishonored",
                         platforms: [
                           9,
                           6,
