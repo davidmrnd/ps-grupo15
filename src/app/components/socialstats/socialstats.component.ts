@@ -41,9 +41,11 @@ export class SocialstatsComponent implements OnInit {
       if (user) {
         this.followers = user.followers?.length || 0;
         this.following = user.following?.length || 0;
-        this.valorations = user.comments?.length || 0;
+        this.dataService.getCommentsByUserId(this.userid).subscribe((comments: any) => {
+          user.comments = comments || [];
+          this.valorations = user.comments.length;
+        });
 
-        // Preload followers and following lists
         this.loadUserList(user.followers, this.followerlist);
         this.loadUserList(user.following, this.followinglist);
       }
@@ -73,5 +75,7 @@ export class SocialstatsComponent implements OnInit {
 
   goToUserProfile(userId: string): void {
     this.router.navigate(['/user'], { queryParams: { id: userId } });
+    this.showFollowersDropdown = false;
+    this.showFollowingDropdown = false;
   }
 }
