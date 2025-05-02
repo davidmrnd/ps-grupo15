@@ -190,6 +190,42 @@ async function getVideogameProfileFromSlug(clientID, accessToken, slug) {
     return await makeQuery(clientID, accessToken, query);
 }
 
+/**
+ * Devuelve el nombre, slug e información de portadas de una lista de IDs
+ * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
+ * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
+ * @param idList {number[]} Lista con IDs de la base de datos de IGDB
+ * @returns {Promise<{status: number, statusText: string, apiResponse: *}|{status: number, statusText: string, message: string}>}
+ */
+async function getVideogameInfoFromIdList(clientID, accessToken, idList) {
+    let url = "https://api.igdb.com/v4/multiquery";
+
+    if (!(idList instanceof Array)) {
+      return {
+        status: 400,
+        statusText: "Bad Request",
+        message: "idList must be an array of numbers (ex: [12, 16])"
+      }
+    }
+
+    let idString = "";
+    for (const id of idList) {
+      idString += id + ",";
+    }
+
+    let query = `query games "Info de Juego" {
+    fields id,name,slug;
+    where id = (${idString.substring(0, idString.length - 1)});
+  };
+
+  query covers "Portada de Juego" {
+    fields game,image_id;
+    where game = (${idString.substring(0, idString.length - 1)});
+  };`
+
+  return await makeQuery(clientID, accessToken, query, url);
+}
+
 exports.makeQuery = makeQuery;
 exports.getVideogameData = getVideogameData;
 exports.searchByGenreAndName = searchByGenreAndName;
@@ -198,3 +234,4 @@ exports.getCovers = getCovers;
 exports.getCoverAndGameInfo = getCoverAndGameInfo;
 exports.getReleaseYear = getReleaseYear;
 exports.getVideogameProfileFromSlug = getVideogameProfileFromSlug;
+exports.getVideogameInfoFromIdList = getVideogameInfoFromIdList;
