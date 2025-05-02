@@ -45,12 +45,24 @@ a {
   color: black;
 }
 
-aside app-stars {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.edit-button {
+  background: none;
+  border: none; 
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
 }
 
+.edit-button:hover {
+  color: #0056b3;
+}
+
+.comment-date {
+  color: #a9a9a9; 
+  font-size: 0.85rem; 
+  margin-top: 0.5rem; 
+  display: block;
+}
 
 @media (max-width: 1023px) {
   .comment {

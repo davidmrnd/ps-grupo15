@@ -5,10 +5,32 @@
   </div>
   <div class="column">
     <h1>Seguidores</h1>
-    <p id="followers">{{ followers }}</p>
+    <p id="followers" (click)="toggleFollowersDropdown()">{{ followers }}</p>
+    <div *ngIf="showFollowersDropdown" class="modal">
+      <div class="modal-content">
+        <h2>Seguidores</h2>
+        <ul>
+          <li *ngFor="let follower of followerlist">
+            <a (click)="goToUserProfile(follower.id)" class="user-link">{{ follower.name }}</a>
+          </li>
+        </ul>
+        <button class="close-button" (click)="toggleFollowersDropdown()">Cerrar</button>
+      </div>
+    </div>
   </div>
   <div class="column">
     <h1>Seguidos</h1>
-    <p id="following">{{ following }}</p>
+    <p id="following" (click)="toggleFollowingDropdown()">{{ following }}</p>
+    <div *ngIf="showFollowingDropdown" class="modal">
+      <div class="modal-content">
+        <h2>Seguidos</h2>
+        <ul>
+          <li *ngFor="let following of followinglist">
+            <a (click)="goToUserProfile(following.id)" class="user-link">{{ following.name }}</a>
+          </li>
+        </ul>
+        <button class="close-button" (click)="toggleFollowingDropdown()">Cerrar</button>
+      </div>
+    </div>
   </div>
 </div>

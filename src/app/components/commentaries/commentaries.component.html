@@ -13,10 +13,18 @@
         <h3 *ngIf="type === 'user'">{{ comment.videogame?.name }} <span *ngIf="showReleaseYear(comment.videogame?.year)">
           ({{ comment.videogame?.year }})</span></h3>
         <p>{{ comment.content }}</p>
+        <span class="comment-date">{{ comment.createdAt | date: 'dd/MM/yyyy, HH:mm' }}</span>
       </aside>
     </div>
     <aside>
       <app-stars [rating]="comment.rating"></app-stars>
     </aside>
+    <button
+    *ngIf="comment.userId === currentUserId"
+    (click)="navigateToEditComment(comment.videogameId)"
+    class="edit-button"
+    title="Editar comentario">
+    ✏️
+    </button>
   </div>
 </div>

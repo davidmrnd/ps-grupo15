@@ -1,7 +1,7 @@
-import {DataService} from '../../services/data.service';
-import {ActivatedRoute, RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common';
-import {Component, inject, Input, OnInit} from '@angular/core';
+import { DataService } from '../../services/data.service';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import {Component, inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 
 @Component({
@@ -11,8 +11,7 @@ import {ApiService} from '../../services/api.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
-export class ProfileComponent  implements OnInit {
-
+export class ProfileComponent implements OnInit, OnChanges {
   @Input() type: string = '';
   data: any = null;
   @Input() gameInfo: any = null;
@@ -25,15 +24,28 @@ export class ProfileComponent  implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.id = params['id'];
+      this.tryLoadData();
     });
+  }
 
-    if(this.type === 'videogame'){
-      /**
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['type']) {
+      this.tryLoadData();
+    }
+  }
+
+  private tryLoadData(): void {
+    if (this.id && this.type) {
+      this.loadData();
+    }
+  }
+
+  private loadData(): void {
+    if (this.type === 'videogame') {
       this.dataService.getVideogameById(this.id).subscribe(response => {
         this.data = response;
       });
-       **/
-    }else{
+    } else {
       this.dataService.getUsersById(this.id).subscribe(response => {
         this.data = response;
       });

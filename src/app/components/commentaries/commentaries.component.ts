@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { StarsComponent } from '../stars/stars.component';
 import {ApiService} from '../../services/api.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-commentaries',
@@ -16,14 +17,22 @@ export class CommentariesComponent implements OnInit {
   @Input() type: string = '';
   @Input() comments: any[] = [];
   id!: string;
+  currentUserId: string | null = null;
 
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
     private apiService: ApiService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // Obtener el ID del usuario autenticado
+    this.authService.getCurrentUserObservable().subscribe((user) => {
+      this.currentUserId = user ? user.uid : null;
+    });
+
     this.route.queryParams.subscribe(params => {
       this.id = params['id'];
       if (!this.id) return;
@@ -48,4 +57,9 @@ export class CommentariesComponent implements OnInit {
   showReleaseYear(releaseDate: number) {
     return !isNaN(releaseDate)
   }
+
+  navigateToEditComment(videogameId: string): void {
+    this.router.navigate(['/newcoment'], { queryParams: { id: videogameId } });
+  }
+
 }

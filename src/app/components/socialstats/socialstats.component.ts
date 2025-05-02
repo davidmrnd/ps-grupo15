@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -11,13 +11,19 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./socialstats.component.css']
 })
 export class SocialstatsComponent implements OnInit {
-  userid: string = "";
+  userid: string = '';
+  followerlist: { id: string; name: string }[] = [];
+  followinglist: { id: string; name: string }[] = [];
   followers: number = 0;
   following: number = 0;
   valorations: number = 0;
 
+  showFollowersDropdown: boolean = false;
+  showFollowingDropdown: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dataService: DataService
   ) {}
 
@@ -32,24 +38,44 @@ export class SocialstatsComponent implements OnInit {
 
   loadSocialStats(): void {
     this.dataService.getUsersById(this.userid).subscribe((user: any) => {
-      if(user){
-        if (user.followers) {
-          this.followers = user.followers.length;
-        } else {
-          this.followers = 0;
-        }
-  
-        if (user.following) {
-          this.following = user.following.length;
-        } else {
-          this.following = 0;
-        }
-
+      if (user) {
+        this.followers = user.followers?.length || 0;
+        this.following = user.following?.length || 0;
         this.dataService.getCommentsByUserId(this.userid).subscribe((comments: any) => {
           user.comments = comments || [];
           this.valorations = user.comments.length;
         });
+
+        this.loadUserList(user.followers, this.followerlist);
+        this.loadUserList(user.following, this.followinglist);
       }
     });
+  }
+
+  toggleFollowersDropdown(): void {
+    this.showFollowersDropdown = !this.showFollowersDropdown;
+  }
+
+  toggleFollowingDropdown(): void {
+    this.showFollowingDropdown = !this.showFollowingDropdown;
+  }
+
+  loadUserList(ids: string[], list: { id: string; name: string }[]): void {
+    list.length = 0; // Clear the list
+    if (ids) {
+      ids.forEach(id => {
+        this.dataService.getUsersById(id).subscribe((user: any) => {
+          if (user) {
+            list.push({ id, name: user.name || 'Unknown User' });
+          }
+        });
+      });
+    }
+  }
+
+  goToUserProfile(userId: string): void {
+    this.router.navigate(['/user'], { queryParams: { id: userId } });
+    this.showFollowersDropdown = false;
+    this.showFollowingDropdown = false;
   }
 }
