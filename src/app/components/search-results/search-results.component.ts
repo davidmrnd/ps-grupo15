@@ -1,4 +1,4 @@
-import {Component, inject, Input} from '@angular/core';
+import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {ApiService} from '../../services/api.service';
 import {RouterLink} from '@angular/router';
@@ -15,6 +15,7 @@ import {RouterLink} from '@angular/router';
 })
 export class SearchResultsComponent {
   @Input() searchResults: any[] = [];
+  @Output() searchResultClicked = new EventEmitter();
   apiService = inject(ApiService);
 
   showYear(releaseDate: number) {
@@ -22,6 +23,7 @@ export class SearchResultsComponent {
   }
 
   clearResults() {
-    this.searchResults = []
+    this.searchResults = [];
+    this.searchResultClicked.emit();
   }
 }
