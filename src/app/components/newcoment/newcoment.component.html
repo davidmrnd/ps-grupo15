@@ -1,15 +1,14 @@
 <div class="comments-container">
-  <div class comment>
+  <div class="comment">
     <div class="user">
       <img [src]="user?.profileicon" [alt]="user?.username" class="profile-image">
       <div class="info">
         <h3>{{ user?.username }}</h3>
-        <textarea
+        <input
           [(ngModel)]="commentContent"
           placeholder="Escribe tu comentario aquí..."
-          class="comment-textarea"
-          rows="5">
-        </textarea>
+          class="comment-input"
+          type="text">
       </div>
     </div>
     <aside>
@@ -17,19 +16,32 @@
     </aside>
   </div>
   <div class="button-container">
-    <button 
-    [routerLink]="['/videogameprofile']" 
-    [queryParams]="{ id: videogameId }"
-    (click)="submitComment()" 
-    class="submit-button">
-    {{ existingCommentId ? 'Modificar Comentario' : 'Enviar Comentario' }}
-    </button>
-    <button 
-    *ngIf="existingCommentId"
-    [routerLink]="['/videogameprofile']"
-    [queryParams]="{ id: videogameId }"
-    (click)="deleteComment()" 
-    class="delete-button">Eliminar Comentario</button>
+    <ng-container *ngIf="!showDeleteConfirmation">
+      <button 
+        (click)="submitComment()" 
+        class="submit-button">
+        {{ existingCommentId ? 'Modificar Comentario' : 'Enviar Comentario' }}
+      </button>
+      <button 
+        *ngIf="existingCommentId"
+        (click)="deleteComment()" 
+        class="delete-button">
+        Eliminar Comentario
+      </button>
+    </ng-container>
+
+    <ng-container *ngIf="showDeleteConfirmation">
+      <button 
+        (click)="confirmDelete()" 
+        class="confirm-button">
+        Aceptar
+      </button>
+      <button 
+        (click)="cancelDelete()" 
+        class="cancel-button">
+        Cancelar
+      </button>
+    </ng-container>
   </div>
   <p *ngIf="message" class="error-message">{{ message }}</p>
 </div>

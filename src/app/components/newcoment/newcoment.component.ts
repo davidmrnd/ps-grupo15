@@ -21,6 +21,7 @@ export class NewcomentComponent implements OnInit {
   videogameId: string = '';
   existingCommentId: string | null = null; 
   message: string = '';
+  showDeleteConfirmation: boolean = false; 
 
   constructor(
     private authService: AuthService,
@@ -89,7 +90,7 @@ export class NewcomentComponent implements OnInit {
         this.message = 'Comentario enviado con éxito.';
       }
 
-      this.router.navigate(['/videogameprofile'], { queryParams: { id: this.videogameId } });
+      this.router.navigate(['/videogame'], { queryParams: { id: this.videogameId } });
 
       this.commentContent = '';
       this.rating = 0;
@@ -104,21 +105,25 @@ export class NewcomentComponent implements OnInit {
       console.error('No hay un comentario existente para eliminar.');
       return;
     }
-  
-    const confirmDelete = confirm('¿Estás seguro de que deseas eliminar este comentario?');
-    if (!confirmDelete) {
-      return;
-    }
 
+    this.showDeleteConfirmation = true; 
+  }
+
+  async confirmDelete(): Promise<void> {
     try {
-      const commentDoc = doc(this.firestore, 'comments', this.existingCommentId);
+      const commentDoc = doc(this.firestore, 'comments', this.existingCommentId!);
       await deleteDoc(commentDoc);
       this.message = 'Comentario eliminado con éxito.';
-  
-      this.router.navigate(['/videogameprofile'], { queryParams: { id: this.videogameId } });
+      this.router.navigate(['/videogame'], { queryParams: { id: this.videogameId } });
     } catch (error) {
       console.error('Error al eliminar el comentario:', error);
       this.message = 'Hubo un error al eliminar el comentario. Inténtalo de nuevo.';
+    } finally {
+      this.showDeleteConfirmation = false; 
     }
+  }
+
+  cancelDelete(): void {
+    this.showDeleteConfirmation = false; 
   }
 }

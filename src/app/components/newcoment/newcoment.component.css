@@ -40,21 +40,24 @@
   margin: 0;
 }
 
-.comment-textarea {
-  width: 350%; 
+.comment-input {
+  width: 350%;
   padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
-  resize: vertical; 
-  min-height: 45px; 
-  max-height: 300px;
-  line-height: 1.5; 
+  border: 1px solid black;
+  border-radius: 5px; 
+  background-color: white; 
+  font-size: 16px;
+  color: black; 
+  outline: none;
+  box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-  color: black;
+.comment-input::placeholder {
+  color: #888; 
+}
+
+.comment-input:focus {
+  border-color: #555; 
 }
 
 .submit-button {
@@ -66,10 +69,6 @@ a {
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
-}
-
-.submit-button:hover {
-  background-color: #d1b842;
 }
 
 .button-container {
@@ -97,10 +96,44 @@ a {
 
 .error-message {
   margin-top: 1rem;
-  color: red; /* Texto rojo */
+  color: red;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cancel-button {
+  padding: 10px 20px;
+  background-color: #f44336;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.confirm-button:hover {
+  background-color: #45a049;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
 }
 
 @media (max-width: 1023px) {
