@@ -23,6 +23,8 @@
     padding: 10px 0;
     overflow: visible;
     transform: translateX(0);
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .carousel-slide {
@@ -34,7 +36,7 @@
 }
 
 .carosel-images {
-    width: 100%;
+    width: 80%;
     height: auto;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
