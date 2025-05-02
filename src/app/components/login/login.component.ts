@@ -14,19 +14,46 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
+  isModalOpen: boolean = false;
+  resetEmail: string = '';
+  modalErrorMessage: string = '';
 
   constructor(private authService: AuthService) {}
 
   login() {
     this.authService.login(this.email, this.password)
       .then(() => {
-        document.body.innerHTML = '<div style="font-size: 8rem; text-align: center;">✅</div>';
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 1000);
+        // Redirigir al usuario después del inicio de sesión
+        window.location.href = '/';
       })
       .catch(error => {
         this.errorMessage = error.message;
+      });
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.resetEmail = '';
+    this.modalErrorMessage = '';
+  }
+
+  sendPasswordReset() {
+    if (!this.resetEmail) {
+      this.modalErrorMessage = 'Por favor, introduce un correo válido.';
+      return;
+    }
+
+    this.authService.recoverPassword(this.resetEmail)
+      .then(() => {
+        alert('Se ha enviado un correo para restablecer tu contraseña.');
+        this.closeModal();
+      })
+      .catch(error => {
+        this.modalErrorMessage = error.message;
       });
   }
 }

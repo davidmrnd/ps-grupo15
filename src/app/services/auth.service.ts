@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
 
@@ -50,5 +50,9 @@ export class AuthService {
 
   logout(): Promise<void> {
     return this.auth.signOut();
+  }
+
+  async recoverPassword(email: string): Promise<void> {
+    return sendPasswordResetEmail(this.auth, email);
   }
 }
