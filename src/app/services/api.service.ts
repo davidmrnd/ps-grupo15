@@ -81,4 +81,17 @@ export class ApiService {
       apiResponse: any[];
     }>(`${this.backendURL}/get-videogame-profile-from-slug/${slug}`);
   }
+
+  getVideogameInfoForCorousel(idList: number[]): Observable<{
+    status: number;
+    statusText: string;
+    apiResponse: any[];
+  }> {
+    return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
+      `${this.backendURL}/get-videogame-info-from-id-list`,
+      {
+        idList: idList,
+      }
+    )
+  }
 }

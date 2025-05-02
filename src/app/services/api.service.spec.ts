@@ -112,5 +112,20 @@ describe('ApiService', () => {
       expect(apiResponse.name).toEqual("Dishonored");
       done();
     });
-  })
+  });
+
+  it('should return expected videogame information list from idList', (done: DoneFn) => {
+    service.getVideogameInfoForCorousel([533, 11118]).subscribe((response) => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      const apiResponse = response.apiResponse;
+      for (const videogame of apiResponse[0].result) {
+        expect((videogame.id === 533) || (videogame.id === 11118)).toBeTruthy();
+      }
+      for (const cover of apiResponse[1].result) {
+        expect((cover.game === 533) || (cover.game === 11118)).toBeTruthy();
+      }
+      done();
+    });
+  });
 });
