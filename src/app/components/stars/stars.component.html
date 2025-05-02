@@ -1,6 +1,9 @@
 <div class="stars">
   <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
-    <span class="star" [ngClass]="{ 'filled': star <= rating}">
+    <span
+      class="star"
+      [ngClass]="{ 'filled': star <= rating }"
+      (click)="onStarClick(star)">
       &#9733;
     </span>
   </ng-container>

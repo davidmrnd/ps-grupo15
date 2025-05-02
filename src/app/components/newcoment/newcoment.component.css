@@ -1,0 +1,163 @@
+.comments-container {
+  width: 80%;
+  margin: 50px auto;;
+  padding: 0 1rem;
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border-bottom: 1px solid #eee;
+  flex-wrap: wrap;
+}
+
+.user {
+  display: flex;
+  align-items: flex-start; 
+  gap: 1rem;
+  flex: 1;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column; 
+  gap: 0.5rem; 
+}
+
+.info h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.comment-input {
+  width: 350%;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px; 
+  background-color: white; 
+  font-size: 16px;
+  color: black; 
+  outline: none;
+  box-sizing: border-box;
+}
+
+.comment-input::placeholder {
+  color: #888; 
+}
+
+.comment-input:focus {
+  border-color: #555; 
+}
+
+.submit-button {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  background-color: #ECD54C;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.button-container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.delete-button {
+  margin-top: 1rem;
+  padding: 10px 20px;
+  background-color: #ff4d4d;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.delete-button:hover {
+  background-color: #cc0000;
+}
+
+.error-message {
+  margin-top: 1rem;
+  color: red;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.confirmation-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.confirm-button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cancel-button {
+  padding: 10px 20px;
+  background-color: #f44336;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.confirm-button:hover {
+  background-color: #45a049;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width: 1023px) {
+  .comment {
+    flex-direction: column; 
+    align-items: flex-start;
+  }
+
+  .comment-input {
+    width: 100%; 
+  }
+}
+
+@media (max-width: 767px) {
+  .profile-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .comments-container {
+    margin: auto 0;
+  }
+
+  .info h3 {
+    font-size: 0.95rem;
+  }
+}
