@@ -24,6 +24,29 @@
   width: 400px;
 }
 
+.arcade-effect {
+  font-size: 3rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ff0000, #ff7300, #ffeb00, #47ff00, #00ffee, #2b65ff, #8000ff, #ff0080, #ff0000);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: arcade-wave 3s infinite linear;
+}
+
+@keyframes arcade-wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @media (max-width: 1024px) {
   .welcome-title {
     font-size: 19px;
