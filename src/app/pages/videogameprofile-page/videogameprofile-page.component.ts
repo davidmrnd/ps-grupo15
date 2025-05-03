@@ -60,13 +60,12 @@ export class VideogamePageComponent implements OnInit {
 
   loadComments(): void {
     this.dataService.getCommentsByVideogameId(this.videogameId).subscribe(comments => {
-      this.comments = [];
+      this.comments = comments;
       this.calculateAverage(comments)
 
-      for (let comment of comments) {
+      for (let comment of this.comments) {
         this.dataService.getUsersById(comment.userId).subscribe(user => {
           comment.user = user;
-          this.comments.push(comment);
         });
       }
     });
