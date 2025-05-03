@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { StarsComponent } from '../stars/stars.component';
-import { AuthService } from '../../services/auth.service';
+import {ApiService} from '../../services/api.service';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-commentaries',
@@ -14,40 +15,42 @@ import { AuthService } from '../../services/auth.service';
 })
 export class CommentariesComponent implements OnInit {
   @Input() type: string = '';
-  comments: any[] = [];
+  @Input() comments: any[] = [];
   id!: string;
   currentUserId: string | null = null;
+  private videogameSlug: string = "";
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router, private authService: AuthService) {}
+  constructor(
+    private dataService: DataService,
+    private route: ActivatedRoute,
+    private apiService: ApiService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     // Obtener el ID del usuario autenticado
     this.authService.getCurrentUserObservable().subscribe((user) => {
       this.currentUserId = user ? user.uid : null;
     });
-    
+
+    this.route.params.subscribe(params => {
+      this.videogameSlug = params["slug"];
+    })
+
     this.route.queryParams.subscribe(params => {
       this.id = params['id'];
       if (!this.id) return;
 
-      if (this.type === 'videogame') {
-        this.dataService.getCommentsByVideogameId(this.id).subscribe(comments => {
-          this.comments = [];
-          for (let comment of comments) {
-            this.dataService.getUsersById(comment.userId).subscribe(user => {
-              comment.user = user;
-              console.log(comment);
-              this.comments.push(comment);
-            });
-          }
-        });
-      } else {
+      if (this.type === 'videogame') {} else {
         this.dataService.getCommentsByUserId(this.id).subscribe(comments => {
           this.comments = [];
 
           for (let comment of comments) {
-            this.dataService.getVideogameById(comment.videogameId).subscribe(videogame => {
-              comment.videogame = videogame;
+            this.apiService.getVideogameProfile(comment.videogameId).subscribe(response => {
+              comment.videogame = response.apiResponse[0].result[0];
+              comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${response.apiResponse[1].result[0].image_id}.jpg`
+              comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
               this.comments.push(comment);
             });
           }
@@ -56,8 +59,15 @@ export class CommentariesComponent implements OnInit {
     });
   }
 
-  navigateToEditComment(videogameId: string): void {
-    this.router.navigate(['/newcoment'], { queryParams: { id: videogameId } });
+  showReleaseYear(releaseDate: number) {
+    return !isNaN(releaseDate)
   }
 
+  navigateToEditCommentFromUserProfile(slug: string): void {
+    this.router.navigate(['/new-comment', slug]);
+  }
+
+  navigateToEditCommentFromVideogame() {
+    this.router.navigate(['/new-comment', this.videogameSlug]);
+  }
 }

@@ -1,13 +1,26 @@
-<div class="profile-container" *ngIf="data && (data.title || data.name)">
+<div class="profile-container" *ngIf="data && (type === 'user')">
   <img
-    [src]="data.imageprofile || data.profileicon"
-    [alt]="data.title || data.name"
-    [class.videogame-profile-image]="type === 'videogame'"
+    [src]="data.profileicon"
+    [alt]="data.name"
     [class.user-profile-image]="type === 'user'"
     class="profile-image">
   <div class="profile-info">
-    <h2 class="profile-title">{{ data.title || data.name }}</h2>
-    <h3 class="profile-subtitle">{{ data.subtitle || data.username }}</h3>
+    <h2 class="profile-title">{{ data.name }}</h2>
+    <h3 class="profile-subtitle">{{ data.username }}</h3>
     <p class="profile-description" *ngIf="data.description">{{ data.description }}</p>
+  </div>
+</div>
+
+<div class="profile-container" *ngIf="gameInfo && (type === 'videogame')">
+  <img
+    *ngIf="gameCover"
+    [src]="this.gameCover"
+    [alt]="gameInfo.name"
+    [class.videogame-profile-image]="type === 'videogame'"
+    >
+  <div class="profile-info">
+    <h2 class="profile-title">{{ gameInfo.name }} <span *ngIf="showReleaseYear()">
+      ({{ apiService.getReleaseYear(gameInfo.first_release_date) }})</span></h2>
+    <p class="profile-description" *ngIf="gameInfo.summary">{{ gameInfo.summary }}</p>
   </div>
 </div>

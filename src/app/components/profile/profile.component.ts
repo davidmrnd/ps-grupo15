@@ -1,7 +1,8 @@
 import { DataService } from '../../services/data.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {Component, inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {ApiService} from '../../services/api.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,10 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 export class ProfileComponent implements OnInit, OnChanges {
   @Input() type: string = '';
   data: any = null;
+  @Input() gameInfo: any = null;
+  @Input() gameCover: string = "";
   id!: string;
+  apiService: ApiService = inject(ApiService);
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
 
@@ -37,14 +41,14 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   private loadData(): void {
-    if (this.type === 'videogame') {
-      this.dataService.getVideogameById(this.id).subscribe(response => {
-        this.data = response;
-      });
-    } else {
+    if (this.type === 'videogame') {} else {
       this.dataService.getUsersById(this.id).subscribe(response => {
         this.data = response;
       });
     }
+  }
+
+  protected showReleaseYear() {
+    return !isNaN(this.apiService.getReleaseYear(this.gameInfo.first_release_date));
   }
 }

@@ -18,6 +18,7 @@ async function readJSON(url, params) {
  * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
  * @param query {string} Consulta a realizar (Más info: https://api-docs.igdb.com/#apicalypse-1)
  * @param url {string} Url del endpoint al que realizar la petición (Lista de endpoints: https://api-docs.igdb.com/#endpoints)
+ * @returns {Promise<{status: number, statusText: string, apiResponse: any}>}
  */
 async function makeQuery(clientID, accessToken, query, url = "https://api.igdb.com/v4/games") {
     const params = {
@@ -38,6 +39,7 @@ async function makeQuery(clientID, accessToken, query, url = "https://api.igdb.c
  * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
  * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
  * @param id {number} ID del videojuego en la base de datos
+ * @returns {Promise<{status: number, statusText: string, apiResponse: any}>}
  */
 async function getVideogameData(clientID, accessToken, id) {
     const query = "fields *; where id = " + id + ";";
@@ -52,6 +54,7 @@ async function getVideogameData(clientID, accessToken, id) {
  * @param string {string} String a buscar en el título del videojuego (opcional)
  * @param genreList {Array<number>} Lista con los ID de los generos a buscar (opcional).
  * Los ID de los generos se pueden obtener del siguiente endpoint: https://api-docs.igdb.com/#genre
+ * @returns {Promise<{status: number, statusText: string, apiResponse: any}>}
  */
 async function searchByGenreAndName(
     clientID,
@@ -60,7 +63,7 @@ async function searchByGenreAndName(
     string = undefined,
     genreList = undefined
 ) {
-    let query = `fields name,id,genres,first_release_date; limit ${limit};`;
+    let query = `fields name,id,genres,first_release_date,slug; limit ${limit};`;
 
     // Realiza la búsqueda por nombre
     if (string !== undefined) {
@@ -92,17 +95,13 @@ async function searchByGenreAndName(
     return await makeQuery(clientID, accessToken, query);
 }
 
-// Obtiene la URL de la portada de un videojuego
-// clientID: ID de cliente (se encuentra en el fichero keys.json)
-// accessToken: Clave de acceso (se encuentra en el fichero keys.json)
-// id: ID del videojuego
-// sizeType: Tamaño de imagen (Más info: https://api-docs.igdb.com/#images)
 /**
  * Obtiene la URL de la portada de un videojuego
  * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
  * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
  * @param id {number} ID del videojuego
  * @param sizeType {string} Tamaño de imagen (Más info: https://api-docs.igdb.com/#images)
+ * @returns {Promise<{status: number, statusText: string, apiResponse: any, fullURL: string}>}
  */
 async function getCoverURL(clientID, accessToken, id, sizeType) {
     let url="https://api.igdb.com/v4/covers";
@@ -124,6 +123,7 @@ async function getCoverURL(clientID, accessToken, id, sizeType) {
  * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
  * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
  * @param idList {Array<number>} Lista con los ID de los videojuegos de los que se desea obtener la portada
+ * @returns {Promise<{status: number, statusText: string, apiResponse: any}>}
  */
 async function getCovers(clientID, accessToken, idList) {
     let url="https://api.igdb.com/v4/covers";
@@ -150,12 +150,13 @@ async function getCovers(clientID, accessToken, idList) {
  * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
  * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
  * @param id {number} ID del videojuego
+ * @returns {Promise<{status: number, statusText: string, apiResponse: any}>}
  */
 async function getCoverAndGameInfo(clientID, accessToken, id) {
     let url = "https://api.igdb.com/v4/multiquery";
 
     let query = `query games "Info de Juego" {
-    fields id,name,storyline,summary,first_release_date,genres,platforms;
+    fields id,name,storyline,summary,first_release_date,genres,platforms,slug;
     where id = ${id};
 };
 
@@ -176,6 +177,55 @@ function getReleaseYear(releaseDate) {
     return new Date(releaseDate * 1000).getFullYear();
 }
 
+/**
+ * Obtiene el ID de un videojuego a partir del slug (nombre en formato URL)
+ * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
+ * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
+ * @param slug Nombre del videojuego en formato URL
+ * @returns {Promise<{status: number, statusText: string, apiResponse: any}>}
+ */
+async function getVideogameProfileFromSlug(clientID, accessToken, slug) {
+    let query = `fields id,name,storyline,summary,first_release_date,genres,platforms; where slug = "${slug}";`;
+
+    return await makeQuery(clientID, accessToken, query);
+}
+
+/**
+ * Devuelve el nombre, slug e información de portadas de una lista de IDs
+ * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
+ * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
+ * @param idList {number[]} Lista con IDs de la base de datos de IGDB
+ * @returns {Promise<{status: number, statusText: string, apiResponse: *}|{status: number, statusText: string, message: string}>}
+ */
+async function getVideogameInfoFromIdList(clientID, accessToken, idList) {
+    let url = "https://api.igdb.com/v4/multiquery";
+
+    if (!(idList instanceof Array)) {
+      return {
+        status: 400,
+        statusText: "Bad Request",
+        message: "idList must be an array of numbers (ex: [12, 16])"
+      }
+    }
+
+    let idString = "";
+    for (const id of idList) {
+      idString += id + ",";
+    }
+
+    let query = `query games "Info de Juego" {
+    fields id,name,slug;
+    where id = (${idString.substring(0, idString.length - 1)});
+  };
+
+  query covers "Portada de Juego" {
+    fields game,image_id;
+    where game = (${idString.substring(0, idString.length - 1)});
+  };`
+
+  return await makeQuery(clientID, accessToken, query, url);
+}
+
 exports.makeQuery = makeQuery;
 exports.getVideogameData = getVideogameData;
 exports.searchByGenreAndName = searchByGenreAndName;
@@ -183,3 +233,5 @@ exports.getCoverURL = getCoverURL;
 exports.getCovers = getCovers;
 exports.getCoverAndGameInfo = getCoverAndGameInfo;
 exports.getReleaseYear = getReleaseYear;
+exports.getVideogameProfileFromSlug = getVideogameProfileFromSlug;
+exports.getVideogameInfoFromIdList = getVideogameInfoFromIdList;

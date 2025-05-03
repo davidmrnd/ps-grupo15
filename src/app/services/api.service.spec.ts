@@ -101,5 +101,31 @@ describe('ApiService', () => {
 
   it('should return expected release year', () => {
     expect(service.getReleaseYear(1349740800)).toEqual(2012);
-  })
+  });
+
+  it('should return expected videogame profile from slug', (done: DoneFn) => {
+    service.getVideogameProfileFromSlug("dishonored").subscribe((response) => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      const apiResponse = response.apiResponse[0];
+      expect(apiResponse.id).toEqual(533);
+      expect(apiResponse.name).toEqual("Dishonored");
+      done();
+    });
+  });
+
+  it('should return expected videogame information list from idList', (done: DoneFn) => {
+    service.getVideogameInfoForCorousel([533, 11118]).subscribe((response) => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      const apiResponse = response.apiResponse;
+      for (const videogame of apiResponse[0].result) {
+        expect((videogame.id === 533) || (videogame.id === 11118)).toBeTruthy();
+      }
+      for (const cover of apiResponse[1].result) {
+        expect((cover.game === 533) || (cover.game === 11118)).toBeTruthy();
+      }
+      done();
+    });
+  });
 });

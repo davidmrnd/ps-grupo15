@@ -4,13 +4,14 @@
       <a *ngIf="type === 'videogame'" routerLink="/user" [queryParams]="{ id: comment.user?.id }">
         <img [src]="comment.user?.profileicon" [alt]="comment.user?.username" class="profile-image">
       </a>
-      <a *ngIf="type === 'user'" routerLink="/videogame" [queryParams]="{ id: comment.videogame?.id }">
-        <img [src]="comment.videogame?.imageprofile" [alt]="comment.videogame?.title" class="profile-image">
+      <a *ngIf="type === 'user'" [routerLink]="['/videogame', comment.videogame?.slug]">
+        <img [src]="comment.videogame?.cover" [alt]="comment.videogame?.name" class="profile-image">
       </a>
 
       <aside class="info">
         <h3 *ngIf="type === 'videogame'">{{ comment.user?.username }}</h3>
-        <h3 *ngIf="type === 'user'">{{ comment.videogame?.title }}</h3>
+        <h3 *ngIf="type === 'user'">{{ comment.videogame?.name }} <span *ngIf="showReleaseYear(comment.videogame?.year)">
+          ({{ comment.videogame?.year }})</span></h3>
         <p>{{ comment.content }}</p>
         <span class="comment-date">{{ comment.createdAt | date: 'dd/MM/yyyy, HH:mm' }}</span>
       </aside>
@@ -19,11 +20,18 @@
       <app-stars [rating]="comment.rating"></app-stars>
     </aside>
     <button
-    *ngIf="comment.userId === currentUserId"
-    (click)="navigateToEditComment(comment.videogameId)"
+    *ngIf="comment.userId === currentUserId && type === 'user'"
+    (click)="navigateToEditCommentFromUserProfile(comment.videogame.slug)"
     class="edit-button"
     title="Editar comentario">
     ✏️
+    </button>
+    <button
+      *ngIf="comment.userId === currentUserId && type === 'videogame'"
+      (click)="navigateToEditCommentFromVideogame()"
+      class="edit-button"
+      title="Editar comentario">
+      ✏️
     </button>
   </div>
 </div>

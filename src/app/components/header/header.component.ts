@@ -70,4 +70,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.onSearchButtonClicked();
     }
   }
+
+  clearSearchText() {
+    this.searchText = "";
+  }
 }

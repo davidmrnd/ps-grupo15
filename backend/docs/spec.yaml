@@ -310,7 +310,7 @@ paths:
 
   /get-game-profile/{id}:
     get:
-      description: "Devuelve la información para utilizarla en el perfil de un videojuego."
+      description: "Devuelve la información para utilizarla en el perfil de un videojuego a partir de un ID numérico."
       parameters:
         - in: path
           name: id
@@ -342,6 +342,7 @@ paths:
                           31
                         ],
                         name: "Dishonored",
+                        slug: "dishonored",
                         platforms: [
                           9,
                           6,
@@ -406,6 +407,120 @@ paths:
                 status: 400
                 statusText: Bad Request
                 message: Release Date is invalid
+
+  /get-videogame-profile-from-slug/{slug}:
+    get:
+      description: "Devuelve la información para el perfil del videojuego a partir de un nombre en la URL. Sin información sobre la portada."
+      parameters:
+        - in: path
+          name: slug
+          schema:
+            type: string
+            example: "dishonored"
+          required: true
+          description: "Nombre del videojuego en formato válido para una URL"
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: OK
+                apiResponse: [
+                  {
+                    id: 533,
+                    first_release_date: 1349740800,
+                    genres: [
+                      9,
+                      12,
+                      31
+                    ],
+                    name: "Dishonored",
+                    platforms: [
+                      9,
+                      6,
+                      12
+                    ],
+                    storyline: "...",
+                    summary: "..."
+                  }
+                ]
+
+  /get-videogame-info-from-id-list:
+    post:
+      description: Devuelve el nombre, el slug e información de la portada de una lista de videojuegos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idList:
+                  type: array
+                  description: "Lista de IDs de videojuegos de los que se desea obtener la la información"
+              example:
+                idList: [ 533, 11118 ]
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: "OK"
+                apiReponse: [
+                  {
+                    name: "Info de Juego",
+                    result: [
+                      {
+                        id: 533,
+                        name: "Dishonored",
+                        slug: "dishonored"
+                      },
+                      {
+                        id: 11118,
+                        name: "Dishonored 2",
+                        slug: "dishonored-2"
+                      }
+                    ]
+                  },
+                  {
+                    name: "Portada de Juego",
+                    result: [
+                      {
+                        id: 266140,
+                        game: 533,
+                        image_id: "co5pcs"
+                      },
+                      {
+                        id: 438129,
+                        game: 11118,
+                        image_id: "co9e29"
+                      }
+                    ]
+                  }
+                ]
+        400:
+          description: "Petición no válida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                apiResponse: [
+                  {
+                    title: "Syntax Error",
+                    status: 400,
+                    cause: "Expecting a STRING as input, surround your input with quotes starting at 'd' expecting {'{', 'f', '(', '[', 'true', 't', 'false', 'null', 'n'"
+                  }
+                ]
 
 components:
   schemas:

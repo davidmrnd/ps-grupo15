@@ -69,4 +69,29 @@ export class ApiService {
   getReleaseYear(releaseDate: number): number {
     return new Date(releaseDate * 1000).getFullYear();
   }
+
+  getVideogameProfileFromSlug(slug: string): Observable<{
+    status: number;
+    statusText: string;
+    apiResponse: any[];
+  }> {
+    return this.http.get<{
+      status: number;
+      statusText: string;
+      apiResponse: any[];
+    }>(`${this.backendURL}/get-videogame-profile-from-slug/${slug}`);
+  }
+
+  getVideogameInfoForCorousel(idList: number[]): Observable<{
+    status: number;
+    statusText: string;
+    apiResponse: any[];
+  }> {
+    return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
+      `${this.backendURL}/get-videogame-info-from-id-list`,
+      {
+        idList: idList,
+      }
+    )
+  }
 }
