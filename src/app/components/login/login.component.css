@@ -1,19 +1,21 @@
 .form-container {
   display: flex;
   justify-content: center;
-  height: 100vh;
-  padding-top: 10vh;
-
+  align-items: center; 
+  min-height: 100vh; 
+  padding: 20px; 
+  box-sizing: border-box; 
 }
 
 .form-box {
   background-color: #e0e0e0;
   width: 400px;
-  height: 450px;
+  height: auto;
   border-radius: 20px;
   padding: 40px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   text-align: center;
+  transition: height 0.3s ease;
 }
 
 .label {
@@ -26,12 +28,18 @@
 .input {
   width: 100%;
   padding: 10px;
-  border: none;
+  border: 2px solid transparent;
   border-radius: 20px;
   background-color: #b3b3b3;
+  transition: border-color 0.3s ease;
+}
+
+.input-error {
+  border-color: red;
 }
 
 .button {
+  
   background-color: #f4d73e;
   border: none;
   border-radius: 20px;
@@ -46,7 +54,6 @@
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-
 }
 
 .bold-text {
@@ -63,47 +70,10 @@
   background-color: transparent;
 }
 
-.forgot-password {
-  margin-top: 30px;
-  text-align: center;
-}
-
-.forgot-password .shadow-text {
-  color: #f4d73e;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.close-button {
-  background-color: #f44336;
-  color: white;
-  margin-top: 10px;
-}
-
-.close-button:hover {
-  background-color: #d32f2f;
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 5px;
+  max-width: 100%;
+  word-wrap: break-word;
 }

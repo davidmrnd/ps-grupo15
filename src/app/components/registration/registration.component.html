@@ -2,25 +2,84 @@
   <div class="form-box">
     <span class="register-title">Registrarse</span>
 
-    <form (ngSubmit)="register()">
+    <form #registrationForm="ngForm" (ngSubmit)="register()">
       <label class="label">Correo</label>
-      <input type="email" class="input" [(ngModel)]="email" name="email" placeholder="Correo" required>
-
-      <label class="label">Nombre</label>
-      <input type="text" class="input" [(ngModel)]="name" name="name" placeholder="Nombre" required>
-
-      <label class="label">Nombre de Usuario</label>
-      <input type="text" class="input" [(ngModel)]="username" name="username" placeholder="Nombre de Usuario" required>
-
-      <label class="label">Contraseña</label>
-      <input type="password" class="input" [(ngModel)]="password" name="password" placeholder="Contraseña" required>
-
-      <div class="checkbox-container">
-        <input type="checkbox" id="checkbox" required>
-        <label for="checkbox">Acepto todos los Términos de Servicio y la Política de Privacidad</label>
+      <input 
+        type="email" 
+        class="input" 
+        [(ngModel)]="email" 
+        name="email" 
+        placeholder="Correo" 
+        required 
+        #emailInput="ngModel"
+        [class.input-error]="emailInput.invalid && emailInput.touched">
+      <div *ngIf="emailInput.invalid && emailInput.touched" class="error-message">
+        <small *ngIf="emailInput.errors?.['required']">El correo es obligatorio.</small>
+        <small *ngIf="emailInput.errors?.['email']">El formato del correo no es válido.</small>
       </div>
 
-      <button type="submit" class="button">Registrarse</button>
+      <label class="label">Nombre</label>
+      <input 
+        type="text" 
+        class="input" 
+        [(ngModel)]="name" 
+        name="name" 
+        placeholder="Nombre" 
+        required 
+        #nameInput="ngModel"
+        [class.input-error]="nameInput.invalid && nameInput.touched">
+      <div *ngIf="nameInput.invalid && nameInput.touched" class="error-message">
+        <small *ngIf="nameInput.errors?.['required']">El nombre es obligatorio.</small>
+      </div>
+
+      <label class="label">Nombre de Usuario</label>
+      <input 
+        type="text" 
+        class="input" 
+        [(ngModel)]="username" 
+        name="username" 
+        placeholder="Nombre de Usuario" 
+        required 
+        #usernameInput="ngModel"
+        [class.input-error]="usernameInput.invalid && usernameInput.touched">
+      <div *ngIf="usernameInput.invalid && usernameInput.touched" class="error-message">
+        <small *ngIf="usernameInput.errors?.['required']">El nombre de usuario es obligatorio.</small>
+      </div>
+
+      <label class="label">Contraseña</label>
+      <input 
+        type="password" 
+        class="input" 
+        [(ngModel)]="password" 
+        name="password" 
+        placeholder="Contraseña" 
+        required 
+        minlength="6" 
+        #passwordInput="ngModel"
+        [class.input-error]="passwordInput.invalid && passwordInput.touched">
+      <div *ngIf="passwordInput.invalid && passwordInput.touched" class="error-message">
+        <small *ngIf="passwordInput.errors?.['required']">La contraseña es obligatoria.</small>
+        <small *ngIf="passwordInput.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</small>
+      </div>
+
+      <div class="checkbox-container">
+        <input 
+          type="checkbox" 
+          id="checkbox" 
+          required 
+          [(ngModel)]="termsAccepted" 
+          name="termsAccepted">
+        <label for="checkbox">
+          Acepto todos los 
+          <span class="link" (click)="onPoliciesClick()">Términos de Servicio</span> y la 
+          <span class="link" (click)="onPoliciesClick()">Política de Privacidad</span>.
+        </label>
+      </div>
+      <div *ngIf="!termsAccepted && registrationForm.submitted" class="error-message">
+        <small>Debes aceptar los términos y condiciones.</small>
+      </div>
+
+      <button type="submit" class="button" [disabled]="registrationForm.invalid">Registrarse</button>
     </form>
     <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
