@@ -36,26 +36,6 @@ export class CommentariesComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.videogameSlug = params["slug"];
-    })
-
-    this.route.queryParams.subscribe(params => {
-      this.id = params['id'];
-      if (!this.id) return;
-
-      if (this.type === 'videogame') {} else {
-        this.dataService.getCommentsByUserId(this.id).subscribe(comments => {
-          this.comments = [];
-
-          for (let comment of comments) {
-            this.apiService.getVideogameProfile(comment.videogameId).subscribe(response => {
-              comment.videogame = response.apiResponse[0].result[0];
-              comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${response.apiResponse[1].result[0].image_id}.jpg`
-              comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
-              this.comments.push(comment);
-            });
-          }
-        });
-      }
     });
   }
 

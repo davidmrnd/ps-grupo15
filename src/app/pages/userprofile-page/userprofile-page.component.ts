@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Firestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
+import {DataService} from '../../services/data.service';
+import {ApiService} from '../../services/api.service';
 
 @Component({
   selector: 'app-user-page',
@@ -22,11 +24,14 @@ export class UserPageComponent implements OnInit {
   isCurrentUserProfile: boolean = false;
   viewedProfileId!: string;
   isFollowing: boolean = false; // New property to track follow status
+  protected comments: any[] = [];
 
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private dataService: DataService,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit() {
@@ -41,6 +46,17 @@ export class UserPageComponent implements OnInit {
           const userData = userDoc.data();
           this.isFollowing = userData?.['following']?.includes(this.viewedProfileId) || false; // Use bracket notation
         }
+        this.dataService.getCommentsByUserId(this.viewedProfileId).subscribe(comments => {
+          this.comments = comments;
+
+          for (let comment of this.comments) {
+            this.apiService.getVideogameProfile(comment.videogameId).subscribe(response => {
+              comment.videogame = response.apiResponse[0].result[0];
+              comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${response.apiResponse[1].result[0].image_id}.jpg`
+              comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
+            });
+          }
+        });
       });
     });
   }
