@@ -183,4 +183,7 @@ a {
   .profile-img {
     display: block;
   }
+  .search-container {
+    max-width: 250px;
+  }
 }
