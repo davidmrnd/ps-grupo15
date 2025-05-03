@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule, Router } from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
+import {RouterModule, Router, ActivatedRoute} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../../services/auth.service';
 import { StarsComponent } from '../stars/stars.component';
 import { Firestore, collection, query, where, getDocs, updateDoc, doc, addDoc, deleteDoc } from '@angular/fire/firestore';
+import {ApiService} from '../../services/api.service';
 
 @Component({
   selector: 'app-newcoment',
@@ -18,31 +19,35 @@ export class NewcomentComponent implements OnInit {
   user: any = null;
   commentContent: string = '';
   rating: number = 0;
-  videogameId: string = '';
-  existingCommentId: string | null = null; 
+  videogameId: string = "";
+  private videogameSlug: string = "";
+  existingCommentId: string | null = null;
   message: string = '';
-  showDeleteConfirmation: boolean = false; 
+  showDeleteConfirmation: boolean = false;
 
   constructor(
     private authService: AuthService,
     private dataService: DataService,
-    private route: ActivatedRoute,
     private firestore: Firestore,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private apiService: ApiService,
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((params) => {
-      this.videogameId = params['id'];
+    this.route.params.subscribe(params => {
+      this.videogameSlug = params["slug"];
     });
-
-    this.authService.getCurrentUserObservable().subscribe((user) => {
-      if (user) {
-        this.dataService.getUsersById(user.uid).subscribe((userData) => {
-          this.user = userData;
-          this.checkExistingComment(); 
-        });
-      }
+    this.apiService.getVideogameProfileFromSlug(this.videogameSlug).subscribe((response) => {
+      this.videogameId = response.apiResponse[0].id.toString();
+      this.authService.getCurrentUserObservable().subscribe((user) => {
+        if (user) {
+          this.dataService.getUsersById(user.uid).subscribe((userData) => {
+            this.user = userData;
+            this.checkExistingComment();
+          });
+        }
+      });
     });
   }
 
@@ -59,7 +64,7 @@ export class NewcomentComponent implements OnInit {
       const existingComment = querySnapshot.docs[0];
       this.existingCommentId = existingComment.id;
       const data = existingComment.data();
-      this.commentContent = data['content']; 
+      this.commentContent = data['content'];
       this.rating = data['rating'];
     }
   }
@@ -90,7 +95,7 @@ export class NewcomentComponent implements OnInit {
         this.message = 'Comentario enviado con éxito.';
       }
 
-      this.router.navigate(['/videogame'], { queryParams: { id: this.videogameId } });
+      this.router.navigate(['/videogame', this.videogameSlug]);
 
       this.commentContent = '';
       this.rating = 0;
@@ -106,7 +111,7 @@ export class NewcomentComponent implements OnInit {
       return;
     }
 
-    this.showDeleteConfirmation = true; 
+    this.showDeleteConfirmation = true;
   }
 
   async confirmDelete(): Promise<void> {
@@ -114,16 +119,16 @@ export class NewcomentComponent implements OnInit {
       const commentDoc = doc(this.firestore, 'comments', this.existingCommentId!);
       await deleteDoc(commentDoc);
       this.message = 'Comentario eliminado con éxito.';
-      this.router.navigate(['/videogame'], { queryParams: { id: this.videogameId } });
+      this.router.navigate(['/videogame', this.videogameSlug]);
     } catch (error) {
       console.error('Error al eliminar el comentario:', error);
       this.message = 'Hubo un error al eliminar el comentario. Inténtalo de nuevo.';
     } finally {
-      this.showDeleteConfirmation = false; 
+      this.showDeleteConfirmation = false;
     }
   }
 
   cancelDelete(): void {
-    this.showDeleteConfirmation = false; 
+    this.showDeleteConfirmation = false;
   }
 }

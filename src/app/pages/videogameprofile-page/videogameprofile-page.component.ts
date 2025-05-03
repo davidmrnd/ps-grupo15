@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
 import { ProfileComponent } from '../../components/profile/profile.component';
@@ -36,7 +36,8 @@ export class VideogamePageComponent implements OnInit {
     private dataService: DataService,
     private authService: AuthService,
     private apiService: ApiService,
-    private firestore: Firestore
+    private firestore: Firestore,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -65,7 +66,6 @@ export class VideogamePageComponent implements OnInit {
       for (let comment of comments) {
         this.dataService.getUsersById(comment.userId).subscribe(user => {
           comment.user = user;
-          console.log(comment);
           this.comments.push(comment);
         });
       }
@@ -103,10 +103,11 @@ export class VideogamePageComponent implements OnInit {
     this.authService.getCurrentUserObservable().subscribe((user) => {
       if (user === null) {
         // Si el usuario no ha iniciado sesión, redirige a la página de login
-        window.location.href = '/login';
+        console.log(user);
+        this.router.navigate(['/login']);
       } else {
         // Si el usuario ha iniciado sesión, redirige a la página de newcoment
-        window.location.href = '/newcoment?id=' + this.videogameId;
+        this.router.navigate(['/new-comment', this.videogameSlug]);
       }
     });
   }

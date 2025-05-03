@@ -41,11 +41,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
   private loadData(): void {
-    if (this.type === 'videogame') {
-      this.dataService.getVideogameById(this.id).subscribe(response => {
-        this.data = response;
-      });
-    } else {
+    if (this.type === 'videogame') {} else {
       this.dataService.getUsersById(this.id).subscribe(response => {
         this.data = response;
       });

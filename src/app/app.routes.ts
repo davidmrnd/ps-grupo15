@@ -33,7 +33,7 @@ export const routes: Routes = [
     component: UserPageComponent,
   },
   {
-    path: 'newcoment',
+    path: 'new-comment/:slug',
     component: NewcomentPageComponent,
   },
   {

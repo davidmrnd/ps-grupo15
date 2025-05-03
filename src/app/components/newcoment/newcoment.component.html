@@ -17,27 +17,27 @@
   </div>
   <div class="button-container">
     <ng-container *ngIf="!showDeleteConfirmation">
-      <button 
-        (click)="submitComment()" 
+      <button
+        (click)="submitComment()"
         class="submit-button">
         {{ existingCommentId ? 'Modificar Comentario' : 'Enviar Comentario' }}
       </button>
-      <button 
+      <button
         *ngIf="existingCommentId"
-        (click)="deleteComment()" 
+        (click)="deleteComment()"
         class="delete-button">
         Eliminar Comentario
       </button>
     </ng-container>
 
     <ng-container *ngIf="showDeleteConfirmation">
-      <button 
-        (click)="confirmDelete()" 
+      <button
+        (click)="confirmDelete()"
         class="confirm-button">
         Aceptar
       </button>
-      <button 
-        (click)="cancelDelete()" 
+      <button
+        (click)="cancelDelete()"
         class="cancel-button">
         Cancelar
       </button>

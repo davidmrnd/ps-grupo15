@@ -20,11 +20,18 @@
       <app-stars [rating]="comment.rating"></app-stars>
     </aside>
     <button
-    *ngIf="comment.userId === currentUserId"
-    (click)="navigateToEditComment(comment.videogameId)"
+    *ngIf="comment.userId === currentUserId && type === 'user'"
+    (click)="navigateToEditCommentFromUserProfile(comment.videogame.slug)"
     class="edit-button"
     title="Editar comentario">
     ✏️
+    </button>
+    <button
+      *ngIf="comment.userId === currentUserId && type === 'videogame'"
+      (click)="navigateToEditCommentFromVideogame()"
+      class="edit-button"
+      title="Editar comentario">
+      ✏️
     </button>
   </div>
 </div>

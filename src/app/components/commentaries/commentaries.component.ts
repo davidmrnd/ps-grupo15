@@ -18,6 +18,7 @@ export class CommentariesComponent implements OnInit {
   @Input() comments: any[] = [];
   id!: string;
   currentUserId: string | null = null;
+  private videogameSlug: string = "";
 
   constructor(
     private dataService: DataService,
@@ -32,6 +33,10 @@ export class CommentariesComponent implements OnInit {
     this.authService.getCurrentUserObservable().subscribe((user) => {
       this.currentUserId = user ? user.uid : null;
     });
+
+    this.route.params.subscribe(params => {
+      this.videogameSlug = params["slug"];
+    })
 
     this.route.queryParams.subscribe(params => {
       this.id = params['id'];
@@ -58,8 +63,11 @@ export class CommentariesComponent implements OnInit {
     return !isNaN(releaseDate)
   }
 
-  navigateToEditComment(videogameId: string): void {
-    this.router.navigate(['/newcoment'], { queryParams: { id: videogameId } });
+  navigateToEditCommentFromUserProfile(slug: string): void {
+    this.router.navigate(['/new-comment', slug]);
   }
 
+  navigateToEditCommentFromVideogame() {
+    this.router.navigate(['/new-comment', this.videogameSlug]);
+  }
 }
