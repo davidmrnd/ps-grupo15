@@ -20,8 +20,8 @@
                 <p class="comment-date">{{ comment.createdAt | date: 'dd/MM/yyyy, HH:mm' }}</p>
               </div>
               <div class="comment-image">
-                <a [routerLink]="['/videogame']" [queryParams]="{ id: comment.videogame?.id }">
-                  <img [src]="comment.videogame?.imageprofile" [alt]="comment.videogame?.title" class="carousel-image">
+                <a [routerLink]="['/videogame', comment.videogame.slug]">
+                  <img *ngIf="comment.videogame.coverURL" [src]="comment.videogame.coverURL" [alt]="comment.videogame.name" class="carousel-image">
                 </a>
               </div>
             </div>

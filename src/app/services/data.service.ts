@@ -45,11 +45,9 @@ export class DataService {
           switchMap((comments: any[]) => {
             const enrichedComments = comments.map(async (comment) => {
               const user = await getDoc(doc(this.firestore, `users/${comment.userId}`));
-              const videogame = await getDoc(doc(this.firestore, `videogames/${comment.videogameId}`));
               return {
                 ...comment,
                 user: user.data(),
-                videogame: videogame.data(),
               };
             });
             return Promise.all(enrichedComments);

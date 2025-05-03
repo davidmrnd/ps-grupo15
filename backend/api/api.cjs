@@ -216,11 +216,13 @@ async function getVideogameInfoFromIdList(clientID, accessToken, idList) {
     let query = `query games "Info de Juego" {
     fields id,name,slug;
     where id = (${idString.substring(0, idString.length - 1)});
+    limit 500;
   };
 
   query covers "Portada de Juego" {
     fields game,image_id;
     where game = (${idString.substring(0, idString.length - 1)});
+    limit 500;
   };`
 
   return await makeQuery(clientID, accessToken, query, url);
