@@ -214,7 +214,7 @@ async function getVideogameInfoFromIdList(clientID, accessToken, idList) {
     }
 
     let query = `query games "Info de Juego" {
-    fields id,name,slug;
+    fields id,name,slug,first_release_date;
     where id = (${idString.substring(0, idString.length - 1)});
     limit 500;
   };

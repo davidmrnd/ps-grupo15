@@ -49,13 +49,22 @@ export class UserPageComponent implements OnInit {
         this.dataService.getCommentsByUserId(this.viewedProfileId).subscribe(comments => {
           this.comments = comments;
 
-          for (let comment of this.comments) {
-            this.apiService.getVideogameProfile(comment.videogameId).subscribe(response => {
-              comment.videogame = response.apiResponse[0].result[0];
-              comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${response.apiResponse[1].result[0].image_id}.jpg`
-              comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
-            });
+          const idList = []
+          for(let comment of this.comments) {
+            idList.push(comment.videogameId);
           }
+
+          this.apiService.getVideogameInfoForCorousel(idList).subscribe((response) => {
+            for (const comment of this.comments) {
+              const videogameData = response.apiResponse[0].result;
+              const coverData = response.apiResponse[1].result;
+              comment.videogame = videogameData.find((v: any) => v.id.toString() === comment.videogameId);
+              const videogameCover = coverData.find((v: any) => v.game.toString() === comment.videogameId);
+              comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${videogameCover.image_id}.jpg`;
+              comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
+              console.log(comment);
+            }
+          });
         });
       });
     });
