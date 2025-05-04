@@ -75,6 +75,11 @@ export class NewcomentComponent implements OnInit {
       return;
     }
 
+    if (this.commentContent.length > 500) {
+      this.message = 'El comentario no debe superar los 500 caracteres.';
+      return;
+    }
+
     const newComment = {
       userId: this.user?.id,
       videogameId: this.videogameId,
