@@ -1,11 +1,12 @@
 import {Component, OnInit, OnDestroy, inject, HostListener} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Data, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {FormsModule} from '@angular/forms';
 import {ApiService} from '../../services/api.service';
 import {SearchResultsComponent} from '../search-results/search-results.component';
+import {DataService} from '../../services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -18,12 +19,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userName: string | null = null;
   private userSubscription: Subscription | null = null;
   userId: any|string;
+  searchType: 'user' | 'videogame' = 'videogame'; // Default to 'videogame'
   searchText: string = "";
   apiService: ApiService = inject(ApiService);
   searchResults: any[] = [];
   showSearchResults: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private dataService: DataService) {}
 
   ngOnInit() {
     this.userSubscription = this.authService.getCurrentUserObservable().subscribe((user) => {
@@ -48,10 +50,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onSearchButtonClicked() {
-    this.apiService.search(10, this.searchText).subscribe((result) => {
-      this.searchResults = result.apiResponse;
-      this.showSearchResults = true;
-    });
+    if (this.searchType === 'videogame') {
+      this.apiService.search(10, this.searchText).subscribe((result) => {
+        this.searchResults = result.apiResponse;
+        this.showSearchResults = true;
+      });
+    } else if (this.searchType === 'user') {
+      this.dataService.searchUser(this.searchText).subscribe((result) => {
+        console.log(result);
+        this.searchResults = result;
+        this.showSearchResults = true;
+      });
+    }
     this.positionSearchResults();
   }
 

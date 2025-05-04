@@ -89,4 +89,12 @@ export class DataService {
       })
     );
   }
+  
+  // Buscar usuarios por nombre de usuario
+  searchUser(username: string): Observable<any[]> {
+    const usersRef = collection(this.firestore, 'users');
+    const usersQuery = query(usersRef, where('username_lowercase', '>=', username.toLowerCase()), where('username_lowercase', '<=', username.toLowerCase() + '\uf8ff'));
+    return collectionData(usersQuery, { idField: 'id' });
+  }
+
 }
