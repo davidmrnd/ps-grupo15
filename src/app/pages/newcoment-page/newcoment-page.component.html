@@ -1,4 +1,11 @@
-<main>
+<main *ngIf="this.gameInfo && this.showContent">
   <app-profile [type]="'videogame'" [gameInfo]="this.gameInfo" [gameCover]="this.gameCover" [showPlatformsAndGenres]="false"></app-profile>
 </main>
-<app-newcoment></app-newcoment>
+<app-newcoment *ngIf="this.gameInfo && this.showContent"></app-newcoment>
+
+<main *ngIf="this.showErrorMessage" class="error-message">
+  <h1>Ups...</h1>
+  <p>Parece que el videojuego que has introducido en la URL no es válido</p>
+  <p>Utiliza el buscador o <button
+    (click)="navigateToExplore()">explora las diferentes categorías</button></p>
+</main>
