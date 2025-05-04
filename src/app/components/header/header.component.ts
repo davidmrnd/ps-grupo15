@@ -57,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     } else if (this.searchType === 'user') {
       this.dataService.searchUser(this.searchText).subscribe((result) => {
-        console.log(result);
+        console.log("Resultado", result);
         this.searchResults = result;
         this.showSearchResults = true;
       });

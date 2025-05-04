@@ -10,7 +10,7 @@ import {
   where,
   updateDoc
 } from '@angular/fire/firestore';
-import { Observable, switchMap } from 'rxjs';
+import {map, Observable, switchMap, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -89,12 +89,24 @@ export class DataService {
       })
     );
   }
-  
+
   // Buscar usuarios por nombre de usuario
   searchUser(username: string): Observable<any[]> {
     const usersRef = collection(this.firestore, 'users');
-    const usersQuery = query(usersRef, where('username_lowercase', '>=', username.toLowerCase()), where('username_lowercase', '<=', username.toLowerCase() + '\uf8ff'));
-    return collectionData(usersQuery, { idField: 'id' });
-  }
+    // Convertir el username a minúsculas para hacer la búsqueda insensible a mayúsculas/minúsculas
+    const usernameLowercase = username.toLowerCase();
 
+    // Realizar la búsqueda en Firestore
+    const usersQuery = query(
+      usersRef,
+      where('username', '>=', usernameLowercase),
+      where('username', '<=', usernameLowercase + '\uf8ff') // Esto maneja la búsqueda parcial
+    );
+
+    return collectionData(usersQuery, { idField: 'id' }).pipe(
+      tap(users => {
+        console.log('Usuarios encontrados:', users); // Ver los usuarios obtenidos
+      })
+    );
+  }
 }

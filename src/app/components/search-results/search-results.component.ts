@@ -18,6 +18,7 @@ export class SearchResultsComponent {
   @Output() searchResultClicked = new EventEmitter();
   apiService = inject(ApiService);
   @Input() showSearchResults!: boolean;
+  @Input() searchType: 'user' | 'videogame' = 'videogame';
 
   showYear(releaseDate: number) {
     return !isNaN(releaseDate)

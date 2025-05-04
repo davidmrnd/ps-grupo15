@@ -1,12 +1,33 @@
 <div id="search-results">
-  <ul *ngIf="searchResults.length !== 0 && showSearchResults">
+  <ul *ngIf="searchResults.length !== 0 && showSearchResults && searchType === 'videogame'">
     <li *ngFor="let videogame of searchResults">
       <a [routerLink]="['/videogame', videogame.slug]" (click)="clearResults()">{{videogame.name}}
-        <span *ngIf="showYear(this.apiService.getReleaseYear(videogame.first_release_date))">
-          ({{this.apiService.getReleaseYear(videogame.first_release_date)}})
+        <span *ngIf="showYear(apiService.getReleaseYear(videogame.first_release_date))">
+          ({{apiService.getReleaseYear(videogame.first_release_date)}})
         </span>
       </a>
     </li>
   </ul>
-  <p *ngIf="searchResults.length === 0 && showSearchResults">No hay resultados de búsqueda</p>
+
+  <!-- RESULTADOS DE USUARIOS -->
+  <ul *ngIf="searchResults.length !== 0 && showSearchResults && searchType === 'user'">
+    <li *ngFor="let user of searchResults">
+      <a [routerLink]="['/user']" [queryParams]="{ id: user.id }" (click)="clearResults()">
+        <img
+          *ngIf="user.profileicon"
+          [src]="user.profileicon"
+          alt="ProfileIcon"
+          width="24"
+          height="24"
+          style="border-radius: 50%; margin-right: 8px;"
+        />
+        {{ user.username }}
+      </a>
+    </li>
+  </ul>
+
+  <!-- MENSAJE DE SIN RESULTADOS -->
+  <p *ngIf="searchResults.length === 0 && showSearchResults">
+    No hay resultados de búsqueda
+  </p>
 </div>
