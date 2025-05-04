@@ -63,4 +63,16 @@ export class DataService {
     const commentsQuery = query(commentsRef, where('userId', '==', userId));
     return collectionData(commentsQuery, { idField: 'id' });
   }
+ 
+  getFollowingUsers(userId: string): Observable<any[]> {
+    const userDoc = doc(this.firestore, `users/${userId}`);
+    return docData(userDoc).pipe(
+      switchMap((user: any) => {
+        const followingIds = user.following || [];
+        const usersRef = collection(this.firestore, 'users');
+        const usersQuery = query(usersRef, where('id', 'in', followingIds));
+        return collectionData(usersQuery, { idField: 'id' });
+      })
+    );
+  }
 }

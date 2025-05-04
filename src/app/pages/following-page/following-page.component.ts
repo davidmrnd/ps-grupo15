@@ -24,45 +24,58 @@ export class FollowingPageComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getCurrentUserObservable().subscribe((user) => {
       if (user) {
-        this.dataService.getFollowingComments(user.uid).subscribe((comments) => {
-          const idList = [];
-          for (const comment of comments) {
-            idList.push(comment.videogameId);
-          }
-
-          this.apiService.getVideogameInfoForCorousel(idList).subscribe((response) => {
+        this.dataService.getFollowingUsers(user.uid).subscribe((followingUsers) => {
+          this.dataService.getFollowingComments(user.uid).subscribe((comments) => {
+            const idList = [];
             for (const comment of comments) {
-              const videogameData = response.apiResponse[0].result;
-              const coverData = response.apiResponse[1].result;
-              comment.videogame = videogameData.find((v: any) => v.id.toString() === comment.videogameId);
-              const videogameCover = coverData.find((v: any) => v.game.toString() === comment.videogameId);
-              comment.videogame.coverURL = `https://images.igdb.com/igdb/image/upload/t_cover_big/${videogameCover.image_id}.jpg`;
+              idList.push(comment.videogameId);
             }
-          })
 
-          const grouped = comments.reduce((acc: any, comment: any) => {
-            const userId = comment.userId;
-            if (!acc[userId]) {
-              acc[userId] = {
-                username: comment.user?.username,
-                profileicon: comment.user?.profileicon,
-                id: userId,
-                comments: [],
-              };
-            }
-            acc[userId].comments.push(comment);
-            return acc;
-          }, {});
+            this.apiService.getVideogameInfoForCorousel(idList).subscribe((response) => {
+              for (const comment of comments) {
+                const videogameData = response.apiResponse[0].result;
+                const coverData = response.apiResponse[1].result;
+                comment.videogame = videogameData.find((v: any) => v.id.toString() === comment.videogameId);
+                const videogameCover = coverData.find((v: any) => v.game.toString() === comment.videogameId);
+                comment.videogame.coverURL = `https://images.igdb.com/igdb/image/upload/t_cover_big/${videogameCover.image_id}.jpg`;
+              }
 
-          this.groupedComments = Object.values(grouped).map((group: any) => {
-            group.comments.sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
-            return group;
-          });
+              const grouped = comments.reduce((acc: any, comment: any) => {
+                const userId = comment.userId;
+                if (!acc[userId]) {
+                  acc[userId] = {
+                    username: comment.user?.username,
+                    profileicon: comment.user?.profileicon,
+                    id: userId,
+                    comments: [],
+                  };
+                }
+                acc[userId].comments.push(comment);
+                return acc;
+              }, {});
 
-          this.groupedComments.sort((a: any, b: any) => {
-            const mostRecentA = a.comments[0].createdAt;
-            const mostRecentB = b.comments[0].createdAt;
-            return mostRecentB.localeCompare(mostRecentA);
+              for (const user of followingUsers) {
+                if (!grouped[user.id]) {
+                  grouped[user.id] = {
+                    username: user.username,
+                    profileicon: user.profileicon,
+                    id: user.id,
+                    comments: [],
+                  };
+                }
+              }
+
+              this.groupedComments = Object.values(grouped).map((group: any) => {
+                group.comments.sort((a: any, b: any) => b.createdAt.localeCompare(a.createdAt));
+                return group;
+              });
+
+              this.groupedComments.sort((a: any, b: any) => {
+                const mostRecentA = a.comments[0]?.createdAt || '';
+                const mostRecentB = b.comments[0]?.createdAt || '';
+                return mostRecentB.localeCompare(mostRecentA);
+              });
+            });
           });
         });
       }
