@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() gameCover: string = "";
   id!: string;
   apiService: ApiService = inject(ApiService);
+  @Input() showPlatformsAndGenres: boolean = false;
 
   constructor(private dataService: DataService, private route: ActivatedRoute) {}
 

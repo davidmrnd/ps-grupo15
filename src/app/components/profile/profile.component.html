@@ -19,7 +19,7 @@
     [class.videogame-profile-image]="type === 'videogame'"
     >
   <div class="profile-info">
-    <div id="game-info-container">
+    <div id="game-info-container" *ngIf="showPlatformsAndGenres">
       <div class="game-info">
         <p>Plataformas</p>
         <ul *ngFor="let platform of gameInfo.platformsNames">
