@@ -2,7 +2,7 @@
   <div class="comment" *ngFor="let comment of getSortedComments()">
     <div class="user">
       <a *ngIf="type === 'videogame'" routerLink="/user" [queryParams]="{ id: comment.user?.id }">
-        <img [src]="comment.user?.profileicon" [alt]="comment.user?.username" class="userprofile-image">
+        <img [src]="setProfileIcon(comment)" [alt]="comment.user?.username" class="userprofile-image">
       </a>
       <a *ngIf="type === 'user'" [routerLink]="['/videogame', comment.videogame?.slug]">
         <img [src]="comment.videogame?.cover" [alt]="comment.videogame?.name" class="videogameprofile-image">

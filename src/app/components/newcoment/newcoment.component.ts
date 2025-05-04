@@ -44,11 +44,20 @@ export class NewcomentComponent implements OnInit {
         if (user) {
           this.dataService.getUsersById(user.uid).subscribe((userData) => {
             this.user = userData;
+            this.setProfileIcon();
             this.checkExistingComment();
           });
         }
       });
     });
+  }
+
+  private setProfileIcon() {
+    const localImage = localStorage.getItem(`profile-image-${this.user.id}`);
+    if (localImage){
+      this.user.profileicon = localImage;
+    }
+    this.user.profileicon
   }
 
   async checkExistingComment(): Promise<void> {
