@@ -9,7 +9,8 @@
       </a>
       <aside class="info">
         <h3 *ngIf="type === 'videogame'">{{ comment.user?.username }}</h3>
-        <h3 *ngIf="type === 'user'">{{ comment.videogame?.name }}</h3>
+        <h3 *ngIf="type === 'user'">{{ comment.videogame?.name }} <span *ngIf="showReleaseYear(comment.videogame?.year)">
+          ({{ comment.videogame?.year }})</span></h3>
         <p>{{ comment.content }}</p>
         <span class="comment-date">{{ comment.createdAt | date: 'dd/MM/yyyy, HH:mm' }}</span>
       </aside>

@@ -46,7 +46,7 @@ export class CommentariesComponent implements OnInit {
     return comment.user?.profileicon;
   }
   showReleaseYear(releaseDate: number) {
-    return !isNaN(releaseDate)
+    return !isNaN(releaseDate);
   }
 
   navigateToEditCommentFromUserProfile(slug: string): void {
