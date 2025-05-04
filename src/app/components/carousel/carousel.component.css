@@ -29,8 +29,8 @@
 }
 
 .carousel-slide {
-    flex: 0 0 calc(100% / 4 - 25px);
-    max-width: calc(100% / 4 - 25px);
+    flex: 0 0 calc(100% / 5 - 25px);
+    max-width: calc(100% / 5 - 25px);
     transition: transform 0.3s ease-in-out;
     position: relative;
     overflow: visible;

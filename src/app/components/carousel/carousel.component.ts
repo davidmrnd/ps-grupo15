@@ -54,7 +54,7 @@ export class CarouselComponent implements OnInit {
     } else if (width <= 1024) {
       this.visibleSlides = 3;
     } else {
-      this.visibleSlides = 4;
+      this.visibleSlides = 5;
     }
   }
 
