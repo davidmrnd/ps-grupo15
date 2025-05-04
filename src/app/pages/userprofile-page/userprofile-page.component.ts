@@ -62,7 +62,6 @@ export class UserPageComponent implements OnInit {
               const videogameCover = coverData.find((v: any) => v.game.toString() === comment.videogameId);
               comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${videogameCover.image_id}.jpg`;
               comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
-              console.log(comment);
             }
           });
         });

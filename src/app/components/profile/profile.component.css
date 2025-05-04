@@ -69,6 +69,29 @@
   background-color: #d1b842;
 }
 
+#game-info-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.game-info {
+  background-color: #ECD54C;
+  width: max-content;
+  height: min-content;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
+.game-info p {
+  text-align: center;
+}
+
+.game-info ul {
+  list-style: none;
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
   .profile-image {
     min-width: 180px;

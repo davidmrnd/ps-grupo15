@@ -19,6 +19,20 @@
     [class.videogame-profile-image]="type === 'videogame'"
     >
   <div class="profile-info">
+    <div id="game-info-container">
+      <div class="game-info">
+        <p>Plataformas</p>
+        <ul *ngFor="let platform of gameInfo.platformsNames">
+          <li>{{ platform.name }}</li>
+        </ul>
+      </div>
+      <div class="game-info">
+        <p>Géneros</p>
+        <ul *ngFor="let genre of gameInfo.genresNames">
+          <li>{{ genre.name }}</li>
+        </ul>
+      </div>
+    </div>
     <h2 class="profile-title">{{ gameInfo.name }} <span *ngIf="showReleaseYear()">
       ({{ apiService.getReleaseYear(gameInfo.first_release_date) }})</span></h2>
     <p class="profile-description" *ngIf="gameInfo.summary">{{ gameInfo.summary }}</p>

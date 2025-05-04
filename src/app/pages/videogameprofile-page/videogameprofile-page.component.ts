@@ -51,6 +51,15 @@ export class VideogamePageComponent implements OnInit {
           this.apiService.getCoverURL(parseInt(this.videogameId), "cover_big").subscribe((response) => {
             this.gameCover = response.fullURL;
           });
+
+          this.apiService.getPlatformNames(this.gameInfo.platforms).subscribe((response) => {
+            this.gameInfo.platformsNames = response.apiResponse;
+          });
+
+          this.apiService.getGenreNames(this.gameInfo.genres).subscribe((response) => {
+            this.gameInfo.genresNames = response.apiResponse;
+          });
+
           this.loadComments();
           this.checkIfUserHasComment();
         });
