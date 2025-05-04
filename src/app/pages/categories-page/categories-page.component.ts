@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoriesPageComponent {
   showDropdown: boolean = false;
-  allCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes'];
+  allCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes', 'Aventura', 'Terror'];
   defaultCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes'];
   selectedCategories: string[] = [];
   isUsingDefault: boolean = true;

@@ -22,11 +22,13 @@ export class CarouselComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.carouselGames.set("Novedades", [242408, 135400, 112875, 1020, 126290, 267306, 300976, 305152]);
-    this.carouselGames.set("Acción", [103054, 127044, 112875, 1020, 138949]);
+    this.carouselGames.set("Novedades", [112875, 1020, 126290, 267306, 300976, 305152, 136879, 332780]);
+    this.carouselGames.set("Acción", [103054, 127044, 112875, 1020, 378, 76844]);
     this.carouselGames.set("Supervivencia", [10239, 135400, 1879, 7504, 126290]);
     this.carouselGames.set("Disparos", [242408, 9509, 83728, 114795, 109096]);
     this.carouselGames.set("Deportes", [308034, 19554, 138766, 308698, 24985]);
+    this.carouselGames.set("Aventura", [7346, 26192, 565, 25076, 7599, 1164]);
+    this.carouselGames.set("Terror", [19686, 222341, 14390, 111, 284721]);
 
     if (this.category) {
       const idList = this.carouselGames.get(this.category);
