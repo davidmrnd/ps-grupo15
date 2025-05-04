@@ -52,13 +52,22 @@ export class VideogamePageComponent implements OnInit {
             this.gameCover = response.fullURL;
           });
 
-          this.apiService.getPlatformNames(this.gameInfo.platforms).subscribe((response) => {
-            this.gameInfo.platformsNames = response.apiResponse;
-          });
+          if (this.gameInfo.platforms && this.gameInfo.genres) {
+            this.apiService.getGenreAndPlatformNames(this.gameInfo.genres, this.gameInfo.platforms).subscribe((response) => {
+              this.gameInfo.platformsNames = response.apiResponse[0].result;
+              this.gameInfo.genresNames = response.apiResponse[1].result;
+            });
+          }
 
-          this.apiService.getGenreNames(this.gameInfo.genres).subscribe((response) => {
-            this.gameInfo.genresNames = response.apiResponse;
-          });
+          else {
+            this.apiService.getPlatformNames(this.gameInfo.platforms).subscribe((response) => {
+              this.gameInfo.platformsNames = response.apiResponse;
+            });
+
+            this.apiService.getGenreNames(this.gameInfo.genres).subscribe((response) => {
+              this.gameInfo.genresNames = response.apiResponse;
+            });
+          }
 
           this.loadComments();
           this.checkIfUserHasComment();
