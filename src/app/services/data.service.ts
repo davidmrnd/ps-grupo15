@@ -1,5 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData,getDoc, doc, docData, query, where } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  getDoc,
+  doc,
+  docData,
+  query,
+  where,
+  updateDoc
+} from '@angular/fire/firestore';
 import { Observable, switchMap } from 'rxjs';
 
 @Injectable({
@@ -63,7 +73,11 @@ export class DataService {
     const commentsQuery = query(commentsRef, where('userId', '==', userId));
     return collectionData(commentsQuery, { idField: 'id' });
   }
- 
+  updateUserProfile(userId: string, data: any): Promise<void> {
+    const userRef = doc(this.firestore, `users/${userId}`);
+    return updateDoc(userRef, data);
+  }
+
   getFollowingUsers(userId: string): Observable<any[]> {
     const userDoc = doc(this.firestore, `users/${userId}`);
     return docData(userDoc).pipe(

@@ -38,7 +38,13 @@ export class CommentariesComponent implements OnInit {
       this.videogameSlug = params["slug"];
     });
   }
-
+  setProfileIcon(comment: any){
+    if (comment.userId === this.currentUserId) {
+      const localImage = localStorage.getItem(`profile-image-${comment.userId}`);
+      return localImage || comment.user?.profileicon;
+    }
+    return comment.user?.profileicon;
+  }
   showReleaseYear(releaseDate: number) {
     return !isNaN(releaseDate)
   }
