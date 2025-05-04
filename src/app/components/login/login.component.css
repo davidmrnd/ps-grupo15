@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center; 
-  min-height: 100vh; 
+  min-height: 500px; 
+  margin-bottom: 170px;
   padding: 20px; 
   box-sizing: border-box; 
 }
@@ -76,4 +77,49 @@
   margin-top: 5px;
   max-width: 100%;
   word-wrap: break-word;
+}
+
+.forgot-password {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.forgot-password .shadow-text {
+  color: #f4d73e;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+  background-color: #f44336;
+  color: white;
+  margin-top: 10px;
+}
+
+.close-button:hover {
+  background-color: #d32f2f;
 }
