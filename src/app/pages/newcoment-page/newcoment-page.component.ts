@@ -4,6 +4,7 @@ import { NewcomentComponent } from "../../components/newcoment/newcoment.compone
 import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from '../../services/api.service';
 import {NgIf} from '@angular/common';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-newcoment-page',
@@ -27,10 +28,17 @@ export class NewcomentPageComponent implements OnInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
     private router: Router,
+    private authService: AuthService,
   ) {
   }
 
   ngOnInit(): void {
+    this.authService.getCurrentUserObservable().subscribe((user) => {
+      if (!user) {
+        this.router.navigate(['/login']);
+      }
+    });
+
     this.route.params.subscribe(params => {
       this.videogameSlug = params["slug"];
       if (this.videogameSlug) {
