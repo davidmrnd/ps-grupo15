@@ -23,6 +23,7 @@ export class NewcomentPageComponent implements OnInit {
   protected gameCover!: string;
   showContent: boolean = false;
   showErrorMessage: boolean = false;
+  showErrorMessageType: string = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -33,12 +34,6 @@ export class NewcomentPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.getCurrentUserObservable().subscribe((user) => {
-      if (!user) {
-        this.router.navigate(['/login']);
-      }
-    });
-
     this.route.params.subscribe(params => {
       this.videogameSlug = params["slug"];
       if (this.videogameSlug) {
@@ -55,7 +50,16 @@ export class NewcomentPageComponent implements OnInit {
 
           else {
             this.showErrorMessage = true;
+            this.showErrorMessageType = "invalid-game";
           }
+
+          this.authService.getCurrentUserObservable().subscribe((user) => {
+            console.log(user);
+            if (!user) {
+              this.showErrorMessage = true;
+              this.showErrorMessageType = "no-logged-in";
+            }
+          });
 
           this.showContent = true;
         });
@@ -65,5 +69,13 @@ export class NewcomentPageComponent implements OnInit {
 
   navigateToExplore() {
     this.router.navigate(['/categories']);
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/registration']);
   }
 }
