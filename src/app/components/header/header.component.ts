@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchText: string = "";
   apiService: ApiService = inject(ApiService);
   searchResults: any[] = [];
+  showSearchResults: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -49,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSearchButtonClicked() {
     this.apiService.search(10, this.searchText).subscribe((result) => {
       this.searchResults = result.apiResponse;
+      this.showSearchResults = true;
     });
     this.positionSearchResults();
   }
@@ -73,5 +75,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   clearSearchText() {
     this.searchText = "";
+    this.showSearchResults = false;
   }
 }

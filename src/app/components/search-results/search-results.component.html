@@ -1,5 +1,5 @@
 <div id="search-results">
-  <ul *ngIf="searchResults.length !== 0">
+  <ul *ngIf="searchResults.length !== 0 && showSearchResults">
     <li *ngFor="let videogame of searchResults">
       <a [routerLink]="['/videogame', videogame.slug]" (click)="clearResults()">{{videogame.name}}
         <span *ngIf="showYear(this.apiService.getReleaseYear(videogame.first_release_date))">
@@ -8,4 +8,5 @@
       </a>
     </li>
   </ul>
+  <p *ngIf="searchResults.length === 0 && showSearchResults">No hay resultados de búsqueda</p>
 </div>

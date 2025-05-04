@@ -28,7 +28,10 @@
       </button>
     </div>
 
-    <app-search-results [searchResults]="this.searchResults" (searchResultClicked)="clearSearchText()"></app-search-results>
+    <app-search-results [searchResults]="this.searchResults"
+                        (searchResultClicked)="clearSearchText()"
+                        [showSearchResults] = showSearchResults
+    ></app-search-results>
 
     <div class="right-container">
       <ng-container *ngIf="isLoggedIn; else guestButtons">
