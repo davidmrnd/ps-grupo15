@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { FormsModule } from '@angular/forms'; // Importación necesaria para ngModel
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  standalone: true, // Indica que es un componente independiente
-  imports: [FormsModule, CommonModule, RouterModule], // Asegúrate de incluir FormsModule aquí
+  standalone: true,
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -15,7 +15,10 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
-
+  isModalOpen: boolean = false;
+  resetEmail: string = '';
+  modalErrorMessage: string = '';
+  
   constructor(private authService: AuthService) {}
 
   login() {
@@ -26,10 +29,7 @@ export class LoginComponent {
 
     this.authService.login(this.email, this.password)
       .then(() => {
-        document.body.innerHTML = '<div style="font-size: 8rem; text-align: center;">✅</div>';
-        setTimeout(() => {
-          window.location.href = '/';
-        }, 1000);
+        window.location.href = '/';
         this.email = '';
         this.password = '';
         this.errorMessage = '';
@@ -42,6 +42,32 @@ export class LoginComponent {
         } else {
           this.errorMessage = 'Ocurrió un error. Inténtalo de nuevo.';
         }
+      });
+  }
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.resetEmail = '';
+    this.modalErrorMessage = '';
+  }
+
+  sendPasswordReset() {
+    if (!this.resetEmail) {
+      this.modalErrorMessage = 'Por favor, introduce un correo válido.';
+      return;
+    }
+
+    this.authService.recoverPassword(this.resetEmail)
+      .then(() => {
+        alert('Se ha enviado un correo para restablecer tu contraseña.');
+        this.closeModal();
+      })
+      .catch(error => {
+        this.modalErrorMessage = error.message;
       });
   }
 }
