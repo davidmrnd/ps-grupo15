@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, inject} from '@angular/core';
+import {Component, OnInit, OnDestroy, inject, HostListener} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -76,5 +76,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   clearSearchText() {
     this.searchText = "";
     this.showSearchResults = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: MouseEvent) {
+    const searchResultsElement = document.getElementById('search-results');
+    const searchContainerElement = document.querySelector(".search-container");
+
+    if (
+      searchResultsElement &&
+      searchContainerElement &&
+      !searchResultsElement.contains(event.target as Node) &&
+      !searchContainerElement.contains(event.target as Node)
+    ) {
+      this.showSearchResults = false;
+    }
   }
 }
