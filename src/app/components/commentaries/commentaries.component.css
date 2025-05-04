@@ -54,16 +54,24 @@ a {
   color: black;
 }
 
+.stars-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .edit-button {
   background: none;
-  border: none; 
-  font-size: 1.2rem;
+  border: none;
+  font-size: 1.5rem;
   cursor: pointer;
+  color: #555;
+  margin-left: 0.5rem;
   transition: color 0.3s ease;
 }
 
 .edit-button:hover {
-  color: #0056b3;
+  color: #000;
 }
 
 .comment-date {

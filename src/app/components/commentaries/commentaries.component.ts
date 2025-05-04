@@ -50,4 +50,20 @@ export class CommentariesComponent implements OnInit {
   navigateToEditCommentFromVideogame() {
     this.router.navigate(['/new-comment', this.videogameSlug]);
   }
+
+  getSortedComments(): any[] {
+    if (!this.comments || !this.currentUserId) {
+      return this.comments;
+    }
+
+    return this.comments.sort((a, b) => {
+      if (a.userId === this.currentUserId) {
+        return -1;
+      }
+      if (b.userId === this.currentUserId) {
+        return 1;
+      }
+      return 0;
+    });
+  }
 }
