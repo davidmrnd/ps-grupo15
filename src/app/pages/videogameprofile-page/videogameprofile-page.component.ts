@@ -30,6 +30,8 @@ export class VideogamePageComponent implements OnInit {
   protected gameCover!: string;
   userId: string = '';
   hasComment: boolean = false; // Indica si el usuario ya tiene un comentario
+  showContent: boolean = false;
+  showErrorMessage: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,29 +48,37 @@ export class VideogamePageComponent implements OnInit {
       if (this.videogameSlug) {
         this.apiService.getVideogameProfileFromSlug(this.videogameSlug).subscribe((response) => {
           this.gameInfo = response.apiResponse[0];
-          this.videogameId = this.gameInfo.id.toString();
 
-          this.apiService.getCoverURL(parseInt(this.videogameId), "cover_big").subscribe((response) => {
-            this.gameCover = response.fullURL;
-          });
+          if (this.gameInfo) {
+            this.videogameId = this.gameInfo.id.toString();
 
-          if (this.gameInfo.platforms && this.gameInfo.genres) {
-            this.apiService.getGenreAndPlatformNames(this.gameInfo.genres, this.gameInfo.platforms).subscribe((response) => {
-              this.gameInfo.platformsNames = response.apiResponse[0].result;
-              this.gameInfo.genresNames = response.apiResponse[1].result;
+            this.apiService.getCoverURL(parseInt(this.videogameId), "cover_big").subscribe((response) => {
+              this.gameCover = response.fullURL;
             });
+
+            if (this.gameInfo.platforms && this.gameInfo.genres) {
+              this.apiService.getGenreAndPlatformNames(this.gameInfo.genres, this.gameInfo.platforms).subscribe((response) => {
+                this.gameInfo.platformsNames = response.apiResponse[0].result;
+                this.gameInfo.genresNames = response.apiResponse[1].result;
+              });
+            }
+
+            else {
+              this.apiService.getPlatformNames(this.gameInfo.platforms).subscribe((response) => {
+                this.gameInfo.platformsNames = response.apiResponse;
+              });
+
+              this.apiService.getGenreNames(this.gameInfo.genres).subscribe((response) => {
+                this.gameInfo.genresNames = response.apiResponse;
+              });
+            }
           }
 
           else {
-            this.apiService.getPlatformNames(this.gameInfo.platforms).subscribe((response) => {
-              this.gameInfo.platformsNames = response.apiResponse;
-            });
-
-            this.apiService.getGenreNames(this.gameInfo.genres).subscribe((response) => {
-              this.gameInfo.genresNames = response.apiResponse;
-            });
+            this.showErrorMessage = true;
           }
 
+          this.showContent = true;
           this.loadComments();
           this.checkIfUserHasComment();
         });
@@ -127,5 +137,9 @@ export class VideogamePageComponent implements OnInit {
         this.router.navigate(['/new-comment', this.videogameSlug]);
       }
     });
+  }
+
+  navigateToExplore() {
+    this.router.navigate(['/categories']);
   }
 }

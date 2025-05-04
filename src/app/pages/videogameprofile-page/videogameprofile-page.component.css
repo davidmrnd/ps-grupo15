@@ -37,6 +37,18 @@ app-commentaries {
   background-color: #d1b842;
 }
 
+.error-message {
+  display: grid;
+}
+
+.error-message p,h1 {
+  text-align: center;
+}
+
+.error-message #return-to-explore-button {
+  margin-left: 0;
+}
+
 @media (max-width:767px){
 
   main {
