@@ -180,12 +180,24 @@ app.post('/get-genre-names-from-id-list', (req, res) => {
       });
 });
 
+app.post('/get-genre-and-platform-names-from-id-lists', (req, res) => {
+    apiFunctions.getPlatformAndGenreNamesFromIdLists(
+      keys["client-id"],
+      keys["access-token"],
+      req.body.genreIdList,
+      req.body.platformIdList
+    )
+      .then(result => {
+        res.status(result.status).send(result);
+      });
+});
+
 app.get('/docs', (req, res) => {
-  res.sendFile(__dirname + '/docs/docs.html');
+    res.sendFile(__dirname + '/docs/docs.html');
 });
 
 app.get('/docs/spec', (req, res) => {
-  res.sendFile(__dirname + '/docs/spec.yaml');
+    res.sendFile(__dirname + '/docs/spec.yaml');
 });
 
 app.listen(port, () => {

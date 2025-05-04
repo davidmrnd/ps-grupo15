@@ -136,6 +136,14 @@ async function getCovers(clientID, accessToken, idList) {
         }
     }
 
+    if (idList.length === 0) {
+        return {
+          status: 200,
+          statusText: "OK",
+          apiResponse: []
+        }
+    }
+
     let idString = "";
     for (const id of idList) {
         idString += id + ",";
@@ -208,6 +216,14 @@ async function getVideogameInfoFromIdList(clientID, accessToken, idList) {
       }
     }
 
+  if (idList.length === 0) {
+    return {
+      status: 200,
+      statusText: "OK",
+      apiResponse: []
+    }
+  }
+
     let idString = "";
     for (const id of idList) {
       idString += id + ",";
@@ -247,6 +263,14 @@ async function getPlatformOrGenreNamesFromIdList(clientID, accessToken, idList, 
         }
     }
 
+  if (idList.length === 0) {
+    return {
+      status: 200,
+      statusText: "OK",
+      apiResponse: []
+    }
+  }
+
     let idString = "";
     for (const id of idList) {
         idString += id + ",";
@@ -255,6 +279,58 @@ async function getPlatformOrGenreNamesFromIdList(clientID, accessToken, idList, 
     let query = `fields id,name; where id = (${idString.substring(0, idString.length - 1)});`
 
     return await makeQuery(clientID, accessToken, query, url);
+}
+
+/**
+ * Devuelve una lista de nombres de plataformas y géneros a partir del ID en una única petición
+ * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
+ * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
+ * @param genreIdList {number[]} Lista con IDs de géneros de la base de datos de IGDB
+ * @param platformIdList {number[]} Lista con IDs de plataformas de la base de datos de IGDB
+ * @returns {Promise<{status: number, statusText: string, apiResponse: *}|{status: number, statusText: string, message: string}>}
+ */
+async function getPlatformAndGenreNamesFromIdLists(clientID, accessToken, genreIdList, platformIdList) {
+    let url = "https://api.igdb.com/v4/multiquery";
+
+    if (!(genreIdList instanceof Array)) {
+      return {
+        status: 400,
+        statusText: "Bad Request",
+        message: "genreIdList must be an array of numbers (ex: [12, 16])"
+      }
+    }
+
+    if (!(platformIdList instanceof Array)) {
+      return {
+        status: 400,
+        statusText: "Bad Request",
+        message: "platformIdList must be an array of numbers (ex: [12, 16])"
+      }
+    }
+
+    let genreIdString = "";
+    for (const id of genreIdList) {
+      genreIdString += id + ",";
+    }
+
+    let platformIdString = "";
+    for (const id of platformIdList) {
+      platformIdString += id + ",";
+    }
+
+    let query = `query platforms "Plataformas" {
+    fields id,name;
+    where id = (${platformIdString.substring(0, platformIdString.length - 1)});
+    limit 500;
+  };
+
+  query genres "Géneros" {
+    fields id,name;
+    where id = (${genreIdString.substring(0, genreIdString.length - 1)});
+    limit 500;
+  };`
+
+  return await makeQuery(clientID, accessToken, query, url);
 }
 
 exports.makeQuery = makeQuery;
@@ -267,3 +343,4 @@ exports.getReleaseYear = getReleaseYear;
 exports.getVideogameProfileFromSlug = getVideogameProfileFromSlug;
 exports.getVideogameInfoFromIdList = getVideogameInfoFromIdList;
 exports.getPlatformNamesFromIdList = getPlatformOrGenreNamesFromIdList;
+exports.getPlatformAndGenreNamesFromIdLists = getPlatformAndGenreNamesFromIdLists;

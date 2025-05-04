@@ -154,4 +154,23 @@ describe('ApiService', () => {
       done();
     });
   });
+
+  it('should return expected genre and platform name lists from id lists', (done: DoneFn) => {
+    service.getGenreAndPlatformNames([12, 25, 31], [48, 6, 167]).subscribe((response) => {
+      const expectedGenreNames = ["Role-playing (RPG)", "Hack and slash/Beat 'em up", "Adventure"];
+      const expectedPlatformNames = ["PlayStation 5", "PlayStation 4", "PC (Microsoft Windows)"];
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      const apiResponse = response.apiResponse;
+      const platformInfo = apiResponse[0].result;
+      const genreInfo = apiResponse[1].result;
+      for (const platform of platformInfo) {
+        expect(expectedPlatformNames.includes(platform.name)).toBe(true);
+      }
+      for (const genre of genreInfo) {
+        expect(expectedGenreNames.includes(genre.name)).toBe(true);
+      }
+      done();
+    });
+  });
 });

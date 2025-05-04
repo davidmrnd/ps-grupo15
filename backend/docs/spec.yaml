@@ -533,7 +533,7 @@ paths:
               properties:
                 idList:
                   type: array
-                  description: "Lista de IDs de plataformas de los que se desea obtener la la información"
+                  description: "Lista de IDs de plataformas de los que se desea obtener la información"
               example:
                 idList: [ 48, 6, 167 ]
       responses:
@@ -588,7 +588,7 @@ paths:
               properties:
                 idList:
                   type: array
-                  description: "Lista de IDs de géneros de los que se desea obtener la la información"
+                  description: "Lista de IDs de géneros de los que se desea obtener la información"
               example:
                 idList: [ 12, 25, 31 ]
       responses:
@@ -613,6 +613,87 @@ paths:
                   {
                     id: 31,
                     name: "Adventure"
+                  }
+                ]
+        400:
+          description: "Petición no válida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                apiResponse: [
+                  {
+                    title: "Syntax Error",
+                    status: 400,
+                    cause: "Expecting a STRING as input, surround your input with quotes starting at 'd' expecting {'{', 'f', '(', '[', 'true', 't', 'false', 'null', 'n'"
+                  }
+                ]
+
+  /get-genre-and-platform-names-from-id-lists:
+    post:
+      description: Devuelve una lista de nombres de géneros y plataformas a partir de dos listas de ID en una única petición
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                genreIdList:
+                  type: array
+                  description: "Lista de IDs de géneros de los que se desea obtener la información"
+                platformIdList:
+                  type: array
+                  description: "Lista de IDs de géneros de los que se desea obtener la la información"
+              example:
+                genreIdList: [ 12, 25, 31 ]
+                platformIdList: [ 48, 6, 167 ]
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: "OK"
+                apiReponse: [
+                  {
+                    name: "Plataformas",
+                    result: [
+                      {
+                        id: 167,
+                        name: "PlayStation 5"
+                      },
+                      {
+                        id: 48,
+                        name: "PlayStation 4"
+                      },
+                      {
+                        id: 6,
+                        name: "PC (Microsoft Windows)"
+                      }
+                    ]
+                  },
+                  {
+                    name: "Géneros",
+                    result: [
+                      {
+                        id: 12,
+                        name: "Role-playing (RPG)"
+                      },
+                      {
+                        id: 25,
+                        name: "Hack and slash/Beat 'em up"
+                      },
+                      {
+                        id: 31,
+                        name: "Adventure"
+                      }
+                    ]
                   }
                 ]
         400:

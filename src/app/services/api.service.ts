@@ -61,7 +61,7 @@ export class ApiService {
     return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
       `${this.backendURL}/covers`,
       {
-        idList: idList,
+        idList: idList !== undefined ? idList : [],
       }
     );
   }
@@ -90,7 +90,7 @@ export class ApiService {
     return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
       `${this.backendURL}/get-videogame-info-from-id-list`,
       {
-        idList: idList,
+        idList: idList !== undefined ? idList : [],
       }
     )
   }
@@ -103,7 +103,7 @@ export class ApiService {
     return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
       `${this.backendURL}/get-platform-names-from-id-list`,
       {
-        idList: idList,
+        idList: idList !== undefined ? idList : [],
       }
     );
   }
@@ -116,7 +116,21 @@ export class ApiService {
     return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
       `${this.backendURL}/get-genre-names-from-id-list`,
       {
-        idList: idList,
+        idList: idList !== undefined ? idList : [],
+      }
+    );
+  }
+
+  getGenreAndPlatformNames(genreIdList: number[], platformIdList: number[]): Observable<{
+    status: number;
+    statusText: string;
+    apiResponse: any[];
+  }> {
+    return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
+      `${this.backendURL}/get-genre-and-platform-names-from-id-lists`,
+      {
+        genreIdList: genreIdList,
+        platformIdList: platformIdList
       }
     );
   }
