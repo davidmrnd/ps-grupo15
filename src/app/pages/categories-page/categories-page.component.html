@@ -1,4 +1,20 @@
-<app-carousel category="Acción"></app-carousel>
-<app-carousel category="Supervivencia"></app-carousel>
-<app-carousel category="Disparos"></app-carousel>
-<app-carousel category="Deportes"></app-carousel>
+<div class="categories-dropdown-container">
+  <button (click)="toggleDropdown()" class="dropdown-button">Filtrar Categorías</button>
+  <div *ngIf="showDropdown" class="categories-dropdown">
+    <div class="categories-grid">
+      <label *ngFor="let category of allCategories" class="category-item" [class.selected]="selectedCategories.includes(category)">
+        <input
+          type="checkbox"
+          [value]="category"
+          [checked]="selectedCategories.includes(category)"
+          (change)="onCategoryChange($event)"
+        />
+        {{ category }}
+      </label>
+    </div>
+  </div>
+</div>
+
+<div *ngFor="let category of getDisplayedCategories()">
+  <app-carousel [category]="category"></app-carousel>
+</div>
