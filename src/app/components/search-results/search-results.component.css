@@ -1,26 +1,55 @@
 #search-results {
   position: absolute;
   background: white;
-  max-height: 200px;
+  max-height: 250px; /* Incrementé el tamaño máximo */
   overflow-y: auto;
   z-index: 1000;
+  border-radius: 8px; /* Bordes redondeados en el contenedor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  width: 100%; /* Ajuste para que se alinee con el tamaño del input */
 }
 
 #search-results ul {
   list-style-type: none;
-  border: 1px solid #ddd;
+  padding: 0; /* Quitar el padding por defecto */
+  margin: 0; /* Eliminar márgenes */
 }
 
 #search-results li {
-  margin: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+  display: flex;               /* Activar flexbox */
+  align-items: center;         /* Centrar verticalmente el contenido */
+}
+
+#search-results li:last-child {
+  border-bottom: none; /* Quitar borde en el último elemento */
 }
 
 #search-results li:hover {
-  background: #f0f0f0;
+  background: #f5f5f5; /* Fondo suave al pasar el ratón */
+  cursor: pointer; /* Hacer el cursor de mano para indicar que es clickeable */
 }
 
 #search-results li a {
   text-decoration: none;
   color: black;
+  font-weight: 500;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+#search-results li a:hover {
+  color: #007bff;
+}
+
+#search-results p {
+  text-align: center;
+  font-size: 16px;
+  color: #777;
+  padding: 20px;
+  margin: 0;
+  font-style: italic;
 }

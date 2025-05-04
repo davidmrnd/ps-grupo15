@@ -93,6 +93,63 @@
   background-color: #f0f0f0;
 }
 
+.search-toggle {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  background-color: #e5e5e5;
+  border-radius: 20px;
+  overflow: hidden;
+  left: 5px;
+}
+
+.search-toggle input[type="radio"] {
+  display: none;
+}
+
+.search-toggle label {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.3s ease;
+}
+
+.search-toggle label[for="user"] {
+  left: 0;
+}
+
+.search-toggle label[for="videogame"] {
+  right: 0;
+}
+
+.search-toggle .toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background-color: #ECD54C;
+  border-radius: 20px;
+  z-index: 1;
+  transition: left 0.3s ease;
+}
+
+.search-toggle input[type="radio"]:checked + label {
+  color: #fff;
+}
+
+.search-toggle input[type="radio"]#videogame:checked ~ .toggle-slider {
+  left: 50%;
+}
+
 .right-container {
   margin-left: auto;
   display: flex;
