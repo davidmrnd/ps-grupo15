@@ -74,6 +74,18 @@ app-commentaries {
   background-color: #d32f2f;
 }
 
+.error-message {
+  display: grid;
+}
+
+.error-message p,h1 {
+  text-align: center;
+}
+
+.error-message #return-to-root-button {
+  margin-left: 0;
+}
+
 /* Móviles */
 @media (max-width: 767px) {
   main {

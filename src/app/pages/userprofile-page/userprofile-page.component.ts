@@ -3,7 +3,7 @@ import { ProfileComponent } from "../../components/profile/profile.component";
 import { SocialstatsComponent } from "../../components/socialstats/socialstats.component";
 import { CommentariesComponent } from '../../components/commentaries/commentaries.component';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Firestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
 import {DataService} from '../../services/data.service';
@@ -25,6 +25,8 @@ export class UserPageComponent implements OnInit {
   viewedProfileId!: string;
   isFollowing: boolean = false; // New property to track follow status
   protected comments: any[] = [];
+  showContent: boolean = false;
+  showErrorMessage: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -32,6 +34,7 @@ export class UserPageComponent implements OnInit {
     private firestore: Firestore,
     private dataService: DataService,
     private apiService: ApiService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -127,5 +130,14 @@ export class UserPageComponent implements OnInit {
         })
         .catch((error) => console.error('Error updating unfollow data:', error));
     });
+  }
+
+  getErrorMessage(value: boolean) {
+    this.showErrorMessage = value;
+    this.showContent = true;
+  }
+
+  navigateToRoot() {
+    this.router.navigate(['/']);
   }
 }

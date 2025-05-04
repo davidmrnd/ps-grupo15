@@ -1,7 +1,7 @@
 import { DataService } from '../../services/data.service';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {Component, inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import { getAuth, onAuthStateChanged  } from 'firebase/auth';
 import {FormsModule} from '@angular/forms';
@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   id!: string;
   apiService: ApiService = inject(ApiService);
   @Input() showPlatformsAndGenres: boolean = false;
+  @Output() showErrorMessageEmitter = new EventEmitter<boolean>();
 
   editMode: boolean = false;
   editableData: any = {
@@ -70,6 +71,7 @@ export class ProfileComponent implements OnInit, OnChanges {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       this.dataService.getUsersById(this.id).subscribe(response => {
+        this.showErrorMessageEmitter.emit(response === undefined);
         this.data = response;
         this.originalData = { ...response };
 

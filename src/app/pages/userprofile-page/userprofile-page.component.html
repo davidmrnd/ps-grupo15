@@ -1,16 +1,23 @@
-<main>
-  <app-profile [type]="'user'"></app-profile>
+<main *ngIf="!this.showErrorMessage">
+  <app-profile [type]="'user'" (showErrorMessageEmitter)="getErrorMessage($event)"></app-profile>
   <app-socialstats></app-socialstats>
 </main>
 
 <!-- Conditionally render Follow or Unfollow button only if it's not the current user's profile -->
-<div *ngIf="!isCurrentUserProfile">
+<div *ngIf="!isCurrentUserProfile && this.showContent  && !this.showErrorMessage">
   <button *ngIf="!isFollowing" (click)="followUser()" class="follow-button">Seguir</button>
   <button *ngIf="isFollowing" (click)="unfollowUser()" class="unfollow-button">Dejar de seguir</button>
 </div>
-<div *ngIf="isCurrentUserProfile">
+<div *ngIf="isCurrentUserProfile && this.showContent  && !this.showErrorMessage">
   <button (click)="logout()" class="logout-button">Cerrar sesión</button>
 </div>
 
 
-<app-commentaries [type]="'user'" [comments]="this.comments"></app-commentaries>
+<app-commentaries *ngIf="this.showContent  && !this.showErrorMessage" [type]="'user'" [comments]="this.comments"></app-commentaries>
+
+<main *ngIf="this.showErrorMessage" class="error-message">
+  <h1>Ups...</h1>
+  <p>Parece que el perfil de usuario que estás intentando ver no existe</p>
+  <p>Utiliza el buscador o <button
+    (click)="navigateToRoot()" class="follow-button" id="return-to-root-button">regresa al inicio</button></p>
+</main>
