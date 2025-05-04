@@ -228,6 +228,35 @@ async function getVideogameInfoFromIdList(clientID, accessToken, idList) {
   return await makeQuery(clientID, accessToken, query, url);
 }
 
+/**
+ * Devuelve una lista de nombres de plataformas o géneros a partir del ID
+ * @param clientID {string} ID de cliente (se encuentra en el fichero keys.json)
+ * @param accessToken {string} Clave de acceso (se encuentra en el fichero keys.json)
+ * @param idList {number[]} Lista con IDs de la base de datos de IGDB
+ * @param what {string} Parámetro que indica que se desea buscar ('platforms' o 'genres)
+ * @returns {Promise<{status: number, statusText: string, apiResponse: *}|{status: number, statusText: string, message: string}>}
+ */
+async function getPlatformOrGenreNamesFromIdList(clientID, accessToken, idList, what) {
+    let url = "https://api.igdb.com/v4/" + what;
+
+    if (!(idList instanceof Array)) {
+        return {
+        status: 400,
+        statusText: "Bad Request",
+        message: "idList must be an array of numbers (ex: [12, 16])"
+        }
+    }
+
+    let idString = "";
+    for (const id of idList) {
+        idString += id + ",";
+    }
+
+    let query = `fields id,name; where id = (${idString.substring(0, idString.length - 1)});`
+
+    return await makeQuery(clientID, accessToken, query, url);
+}
+
 exports.makeQuery = makeQuery;
 exports.getVideogameData = getVideogameData;
 exports.searchByGenreAndName = searchByGenreAndName;
@@ -237,3 +266,4 @@ exports.getCoverAndGameInfo = getCoverAndGameInfo;
 exports.getReleaseYear = getReleaseYear;
 exports.getVideogameProfileFromSlug = getVideogameProfileFromSlug;
 exports.getVideogameInfoFromIdList = getVideogameInfoFromIdList;
+exports.getPlatformNamesFromIdList = getPlatformOrGenreNamesFromIdList;

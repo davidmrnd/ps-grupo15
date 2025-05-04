@@ -156,6 +156,29 @@ app.post('/get-videogame-info-from-id-list', (req, res) => {
       });
 });
 
+app.post('/get-platform-names-from-id-list', (req, res) => {
+    apiFunctions.getPlatformNamesFromIdList(
+      keys["client-id"],
+      keys["access-token"],
+      req.body.idList,
+      "platforms"
+    )
+      .then(result => {
+        res.status(result.status).send(result);
+      });
+});
+
+app.post('/get-genre-names-from-id-list', (req, res) => {
+    apiFunctions.getPlatformNamesFromIdList(
+      keys["client-id"],
+      keys["access-token"],
+      req.body.idList,
+      "genres"
+    )
+      .then(result => {
+        res.status(result.status).send(result);
+      });
+});
 
 app.get('/docs', (req, res) => {
   res.sendFile(__dirname + '/docs/docs.html');

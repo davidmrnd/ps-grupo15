@@ -94,4 +94,30 @@ export class ApiService {
       }
     )
   }
+
+  getPlatformNames(idList: number[]): Observable<{
+    status: number;
+    statusText: string;
+    apiResponse: any[];
+  }> {
+    return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
+      `${this.backendURL}/get-platform-names-from-id-list`,
+      {
+        idList: idList,
+      }
+    );
+  }
+
+  getGenreNames(idList: number[]): Observable<{
+    status: number;
+    statusText: string;
+    apiResponse: any[];
+  }> {
+    return this.http.post<{ status: number, statusText: string, apiResponse: any[] }>(
+      `${this.backendURL}/get-genre-names-from-id-list`,
+      {
+        idList: idList,
+      }
+    );
+  }
 }

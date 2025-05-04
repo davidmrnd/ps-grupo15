@@ -522,6 +522,116 @@ paths:
                   }
                 ]
 
+  /get-platform-names-from-id-list:
+    post:
+      description: Devuelve una lista de nombres de plataformas a partir de una lista de ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idList:
+                  type: array
+                  description: "Lista de IDs de plataformas de los que se desea obtener la la información"
+              example:
+                idList: [ 48, 6, 167 ]
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: "OK"
+                apiReponse: [
+                  {
+                    id: 167,
+                    name: "PlayStation 5"
+                  },
+                  {
+                    id: 48,
+                    name: "PlayStation 4"
+                  },
+                  {
+                    id: 6,
+                    name: "PC (Microsoft Windows)"
+                  }
+                ]
+        400:
+          description: "Petición no válida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                apiResponse: [
+                  {
+                    title: "Syntax Error",
+                    status: 400,
+                    cause: "Expecting a STRING as input, surround your input with quotes starting at 'd' expecting {'{', 'f', '(', '[', 'true', 't', 'false', 'null', 'n'"
+                  }
+                ]
+
+  /get-genre-names-from-id-list:
+    post:
+      description: Devuelve una lista de nombres de géneros a partir de una lista de ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idList:
+                  type: array
+                  description: "Lista de IDs de géneros de los que se desea obtener la la información"
+              example:
+                idList: [ 12, 25, 31 ]
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 200
+                statusText: "OK"
+                apiReponse: [
+                  {
+                    id: 12,
+                    name: "Role-playing (RPG)"
+                  },
+                  {
+                    id: 25,
+                    name: "Hack and slash/Beat 'em up"
+                  },
+                  {
+                    id: 31,
+                    name: "Adventure"
+                  }
+                ]
+        400:
+          description: "Petición no válida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+              example:
+                status: 400
+                statusText: Bad Request
+                apiResponse: [
+                  {
+                    title: "Syntax Error",
+                    status: 400,
+                    cause: "Expecting a STRING as input, surround your input with quotes starting at 'd' expecting {'{', 'f', '(', '[', 'true', 't', 'false', 'null', 'n'"
+                  }
+                ]
+
 components:
   schemas:
     Response:
