@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   apiService: ApiService = inject(ApiService);
   @Input() showPlatformsAndGenres: boolean = false;
   @Output() showErrorMessageEmitter = new EventEmitter<boolean>();
+  @Input() showUserProfile: boolean = false;
 
   errorMessage: string = "";
   formErrorMessage: string = "";

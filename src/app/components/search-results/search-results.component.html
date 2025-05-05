@@ -3,7 +3,7 @@
     <li *ngFor="let videogame of searchResults">
       <a [routerLink]="['/videogame', videogame.slug]" (click)="clearResults()">{{videogame.name}}
         <span *ngIf="showYear(apiService.getReleaseYear(videogame.first_release_date))">
-          ({{apiService.getReleaseYear(videogame.first_release_date)}})
+          &nbsp;({{apiService.getReleaseYear(videogame.first_release_date)}})
         </span>
       </a>
     </li>

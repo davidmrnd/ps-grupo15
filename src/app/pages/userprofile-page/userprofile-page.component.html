@@ -1,6 +1,8 @@
-<main *ngIf="!this.showErrorMessage">
-  <app-profile [type]="'user'" (showErrorMessageEmitter)="getErrorMessage($event)"></app-profile>
-  <app-socialstats></app-socialstats>
+<main>
+  <app-profile [type]="'user'" (showErrorMessageEmitter)="getErrorMessage($event)" [showUserProfile]="this.showContent"></app-profile>
+  <div *ngIf="this.showContent && !this.showErrorMessage">
+    <app-socialstats></app-socialstats>
+  </div>
 </main>
 
 <!-- Conditionally render Follow or Unfollow button only if it's not the current user's profile -->
