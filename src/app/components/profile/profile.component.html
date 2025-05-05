@@ -8,17 +8,29 @@
     <h2 class="profile-title">{{ data.name }}</h2>
     <h3 class="profile-subtitle">{{ data.username }}</h3>
     <p class="profile-description" *ngIf="data.description">{{ data.description }}</p>
-    <button *ngIf="type === 'user' && isCurrentUser" (click)="editMode = true" class="edit-profile-button">
+    <button *ngIf="type === 'user' && isCurrentUser" (click)="editMode = true; errorMessage='' " class="edit-profile-button">
       Editar perfil</button>
   </div>
-
   <form *ngIf="editMode" #editForm="ngForm" (ngSubmit)="saveProfile()" class="edit-form">
-    <input type="text" [(ngModel)]="editableData.name" name="name" placeholder="Nombre" required>
-    <input type="text" [(ngModel)]="editableData.username" name="username" placeholder="Username" required>
+    <input type="text" [(ngModel)]="editableData.name" name="name" placeholder="Nombre" required  #nameField="ngModel">
+    <div *ngIf="nameField.invalid && nameField.touched" class="error-message">
+      El nombre no puede estar vacío.
+    </div>
+    <input type="text" [(ngModel)]="editableData.username" name="username" placeholder="Nombre de usuario" required
+           #usernameField="ngModel">
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <div *ngIf="usernameField.invalid && usernameField.touched" class="error-message">
+      El nombre de usuario no puede estar vacío.
+    </div>
     <textarea [(ngModel)]="editableData.description" name="description" placeholder="Descripción"></textarea>
     <input type="file" (change)="onFileSelected($event)" accept="image/*">
-    <button type="submit" [disabled]="!editForm.valid">Guardar</button>
-    <button type="button" (click)="cancelEdit()">Cancelar</button>
+    <div *ngIf="formErrorMessage" class="error-message">
+      {{ formErrorMessage }}
+    </div>
+    <div class="button-group">
+      <button type="submit" [disabled]="!editForm.valid">Guardar</button>
+      <button type="button" (click)="cancelEdit()">Cancelar</button>
+    </div>
   </form>
 
 

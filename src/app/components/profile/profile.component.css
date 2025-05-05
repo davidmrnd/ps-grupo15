@@ -93,6 +93,11 @@
 }
 
 /* ----- Estilos del formulario de edición ----- */
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
 .edit-profile-button {
   background-color: #ECD54C;
   border: none;
@@ -113,7 +118,7 @@
   margin-top: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
   background-color: #f9f9f9;
   padding: 2rem;
   border-radius: 16px;
@@ -136,6 +141,12 @@
 .edit-form textarea {
   resize: vertical;
   min-height: 80px;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem; /* Espacio entre botones */
+  justify-content: flex-start;
 }
 
 .edit-form button[type="submit"] {

@@ -89,6 +89,11 @@ export class DataService {
       })
     );
   }
+  searchUsername(username: string): Observable<any[]> {
+    const usersRef = collection(this.firestore, 'users');
+    const usersQuery = query(usersRef, where('username', '==', username));
+    return collectionData(usersQuery, { idField: 'id' });
+  }
 
   // Buscar usuarios por nombre de usuario
   searchUser(username: string): Observable<any[]> {
@@ -102,6 +107,7 @@ export class DataService {
       where('username', '>=', usernameLowercase),
       where('username', '<=', usernameLowercase + '\uf8ff') // Esto maneja la búsqueda parcial
     );
+
 
     return collectionData(usersQuery, { idField: 'id' }).pipe(
       tap(users => {

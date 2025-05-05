@@ -23,6 +23,8 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() showPlatformsAndGenres: boolean = false;
   @Output() showErrorMessageEmitter = new EventEmitter<boolean>();
 
+  errorMessage: string = "";
+  formErrorMessage: string = "";
   editMode: boolean = false;
   editableData: any = {
     name: '',
@@ -111,20 +113,51 @@ export class ProfileComponent implements OnInit, OnChanges {
 
 
   saveProfile(): void {
-    if (this.selectedFile) {
-      // Guardamos solo el nombre del archivo como referencia
-      this.editableData.profileicon = this.selectedFile.name;
+    this.formErrorMessage = '';
+    const { name, username } = this.editableData;
+    if (!name.trim() || !username.trim()) {
+      this.formErrorMessage = 'El nombre y el nombre de usuario no pueden estar vacíos.';
+      return;
     }
+    this.checkUsernameAvailability(username).then((isUsernameAvailable) => {
+      if (!isUsernameAvailable) {
+        this.errorMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
+        return;
+      }
+      if (this.selectedFile) {
+        this.editableData.profileicon = this.selectedFile.name;
+      }
 
-    this.dataService.updateUserProfile(this.id, this.editableData).then(() => {
-      this.editMode = false;
-      this.loadUserProfile();
+      this.dataService.updateUserProfile(this.id, this.editableData).then(() => {
+        this.editMode = false;
+        this.loadUserProfile();
+      }).catch(error => {
+        console.error('Error al actualizar el perfil:', error);
+        this.formErrorMessage = 'Hubo un error al guardar los cambios. Inténtalo de nuevo.';
+      });
     }).catch(error => {
-      console.error('Error al actualizar el perfil:', error);
+      console.error('Error al comprobar disponibilidad del nombre de usuario:', error);
+      this.formErrorMessage = 'Hubo un error al comprobar la disponibilidad del nombre de usuario.';
     });
   }
+  checkUsernameAvailability(username: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.dataService.searchUsername(username).subscribe((existingUsers: any[]) => {
+        if (existingUsers.length > 0 && existingUsers[0].id !== this.id) {
+          // Si ya existe otro usuario con el mismo nombre de usuario y no es el mismo que está editando
+          resolve(false); // Nombre de usuario no disponible
+        } else {
+          resolve(true); // Nombre de usuario disponible
+        }
+      }, (error) => {
+        reject(error); // En caso de error en la llamada a la API
+      });
+    });
+  }
+
   cancelEdit(): void {
     this.editMode = false;
+    this.errorMessage = "";
     this.editableData = { ...this.originalData };
   }
 }
