@@ -3,10 +3,10 @@
   <ng-container *ngIf="groupedComments.length > 0; else noFollowing">
     <div *ngFor="let user of groupedComments">
       <div class="carousel-title">
-        <a [routerLink]="['/user']" [queryParams]="{ id: user.id }">
+        <a [routerLink]="['/user', user.id]">
           <img [src]="user.profileicon" [alt]="user.username" class="profileuser-image">
         </a>
-        <a [routerLink]="['/user']" [queryParams]="{ id: user.id }">
+        <a [routerLink]="['/user', user.id]">
           <h3>{{ user.username }}</h3>
         </a>
       </div>

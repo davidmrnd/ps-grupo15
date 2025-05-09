@@ -49,7 +49,7 @@
 
     <div class="right-container">
       <ng-container *ngIf="isLoggedIn; else guestButtons">
-        <a [routerLink]="['/user']" [queryParams]="{ id: userId }"><button class="cta-button">Mi Perfil</button></a>
+        <a [routerLink]="['/user', userId]"><button class="cta-button">Mi Perfil</button></a>
       </ng-container>
       <ng-template #guestButtons>
         <a routerLink="/registration"><button class="cta-button">Registrarse</button></a>

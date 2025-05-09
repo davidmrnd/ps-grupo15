@@ -56,6 +56,7 @@ export class ProfileComponent implements OnInit, OnChanges {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (this.userInfo) {
+        this.id = this.userInfo.id;
         this.originalData = { ...this.userInfo };
 
         // Si es el perfil del usuario autenticado, intenta usar imagen del localStorage

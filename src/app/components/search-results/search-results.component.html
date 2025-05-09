@@ -12,7 +12,7 @@
   <!-- RESULTADOS DE USUARIOS -->
   <ul *ngIf="searchResults.length !== 0 && showSearchResults && searchType === 'user'">
     <li *ngFor="let user of searchResults">
-      <a [routerLink]="['/user']" [queryParams]="{ id: user.id }" (click)="clearResults()">
+      <a [routerLink]="['/user', user.id]" (click)="clearResults()">
         <img
           *ngIf="user.profileicon"
           [src]="user.profileicon"
