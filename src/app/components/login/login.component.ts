@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,8 +18,10 @@ export class LoginComponent {
   isModalOpen: boolean = false;
   resetEmail: string = '';
   modalErrorMessage: string = '';
-  
-  constructor(private authService: AuthService) {}
+
+  private authService: AuthService = inject(AuthService);
+
+  constructor() {}
 
   login() {
     if (!this.email || !this.password) {

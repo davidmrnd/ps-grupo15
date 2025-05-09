@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {
   Firestore,
   collection,
@@ -10,13 +10,15 @@ import {
   where,
   updateDoc
 } from '@angular/fire/firestore';
-import {map, Observable, switchMap, tap} from 'rxjs';
+import {Observable, switchMap, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private firestore: Firestore) {}
+  private firestore: Firestore = inject(Firestore);
+
+  constructor() {}
 
   // Obtener todos los videojuegos de una categoría
   getVideogames(category: string): Observable<any[]> {

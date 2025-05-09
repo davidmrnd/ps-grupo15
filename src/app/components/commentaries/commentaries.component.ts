@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import { DataService } from '../../services/data.service';
 import { StarsComponent } from '../stars/stars.component';
-import {ApiService} from '../../services/api.service';
 import {AuthService} from '../../services/auth.service';
 
 @Component({
@@ -20,13 +18,11 @@ export class CommentariesComponent implements OnInit {
   currentUserId: string | null = null;
   private videogameSlug: string = "";
 
-  constructor(
-    private dataService: DataService,
-    private route: ActivatedRoute,
-    private apiService: ApiService,
-    private router: Router,
-    private authService: AuthService
-  ) {}
+  private authService: AuthService = inject(AuthService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
+
+  constructor() {}
 
   ngOnInit(): void {
     // Obtener el ID del usuario autenticado

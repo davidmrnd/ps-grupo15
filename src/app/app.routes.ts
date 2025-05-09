@@ -29,7 +29,7 @@ export const routes: Routes = [
     component: RegisterPageComponent,
   },
   {
-    path: 'user',
+    path: 'user/:id',
     component: UserPageComponent,
   },
   {

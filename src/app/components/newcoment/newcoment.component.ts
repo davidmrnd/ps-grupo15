@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {RouterModule, Router, ActivatedRoute} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,14 +25,14 @@ export class NewcomentComponent implements OnInit {
   message: string = '';
   showDeleteConfirmation: boolean = false;
 
-  constructor(
-    private authService: AuthService,
-    private dataService: DataService,
-    private firestore: Firestore,
-    private router: Router,
-    private route: ActivatedRoute,
-    private apiService: ApiService,
-  ) {}
+  private authService: AuthService = inject(AuthService);
+  private dataService: DataService = inject(DataService);
+  private firestore: Firestore = inject(Firestore);
+  private router: Router = inject(Router);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private apiService: ApiService = inject(ApiService);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

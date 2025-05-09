@@ -115,7 +115,7 @@ describe('ApiService', () => {
   });
 
   it('should return expected videogame information list from idList', (done: DoneFn) => {
-    service.getVideogameInfoForCorousel([533, 11118]).subscribe((response) => {
+    service.getVideogameInfoForCorouselAndUserProfile([533, 11118]).subscribe((response) => {
       expect(response).toBeTruthy();
       expect(response.status).toBe(200);
       const apiResponse = response.apiResponse;

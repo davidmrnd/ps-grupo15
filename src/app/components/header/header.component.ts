@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy, inject, HostListener} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { Data, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {FormsModule} from '@angular/forms';
 import {ApiService} from '../../services/api.service';
@@ -25,7 +25,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchResults: any[] = [];
   showSearchResults: boolean = false;
 
-  constructor(private authService: AuthService, private dataService: DataService) {}
+  private authService: AuthService = inject(AuthService);
+  private dataService: DataService = inject(DataService);
+
+  constructor() {}
 
   ngOnInit() {
     this.userSubscription = this.authService.getCurrentUserObservable().subscribe((user) => {

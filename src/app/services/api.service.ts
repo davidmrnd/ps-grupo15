@@ -82,7 +82,7 @@ export class ApiService {
     }>(`${this.backendURL}/get-videogame-profile-from-slug/${slug}`);
   }
 
-  getVideogameInfoForCorousel(idList: number[]): Observable<{
+  getVideogameInfoForCorouselAndUserProfile(idList: number[]): Observable<{
     status: number;
     statusText: string;
     apiResponse: any[];

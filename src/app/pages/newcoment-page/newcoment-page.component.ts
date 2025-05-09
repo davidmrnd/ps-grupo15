@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { NewcomentComponent } from "../../components/newcoment/newcoment.component";
 import {ActivatedRoute, Router} from '@angular/router';
@@ -25,12 +25,12 @@ export class NewcomentPageComponent implements OnInit {
   showErrorMessage: boolean = false;
   showErrorMessageType: string = "";
 
-  constructor(
-    private route: ActivatedRoute,
-    private apiService: ApiService,
-    private router: Router,
-    private authService: AuthService,
-  ) {
+  private authService: AuthService = inject(AuthService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
+  private apiService: ApiService = inject(ApiService);
+
+  constructor() {
   }
 
   ngOnInit(): void {

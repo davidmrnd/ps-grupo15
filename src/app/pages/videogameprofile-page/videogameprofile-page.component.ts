@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
@@ -33,14 +33,14 @@ export class VideogamePageComponent implements OnInit {
   showContent: boolean = false;
   showErrorMessage: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private dataService: DataService,
-    private authService: AuthService,
-    private apiService: ApiService,
-    private firestore: Firestore,
-    private router: Router,
-  ) {}
+  private dataService: DataService = inject(DataService);
+  private authService: AuthService = inject(AuthService);
+  private firestore: Firestore = inject(Firestore);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private apiService: ApiService = inject(ApiService);
+  private router: Router = inject(Router);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {

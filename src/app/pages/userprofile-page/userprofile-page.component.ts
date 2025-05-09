@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { ProfileComponent } from "../../components/profile/profile.component";
 import { SocialstatsComponent } from "../../components/socialstats/socialstats.component";
 import { CommentariesComponent } from '../../components/commentaries/commentaries.component';
@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { Firestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
 import {DataService} from '../../services/data.service';
 import {ApiService} from '../../services/api.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-user-page',
@@ -27,17 +28,77 @@ export class UserPageComponent implements OnInit {
   protected comments: any[] = [];
   showContent: boolean = false;
   showErrorMessage: boolean = false;
+  protected currentUser: any;
 
-  constructor(
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private firestore: Firestore,
-    private dataService: DataService,
-    private apiService: ApiService,
-    private router: Router,
-  ) {}
+  protected valorations: number = 0;
+  followerList: { id: string; name: string }[] = [];
+  followingList: { id: string; name: string }[] = [];
+
+  private authService: AuthService = inject(AuthService);
+  private firestore: Firestore = inject(Firestore);
+  private dataService: DataService = inject(DataService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private apiService: ApiService = inject(ApiService);
+  private router: Router = inject(Router);
+
+  private userSubscription!: Subscription;
+
+  constructor() {}
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.viewedProfileId = params['id'];
+      this.authService.getCurrentUserObservable().subscribe(async (user) => {
+        if (user) {
+          this.isCurrentUserProfile = user.uid === this.viewedProfileId;
+
+          if (!this.isCurrentUserProfile) {
+            // Check if the current user is following the viewed user
+            const userDoc = await getDoc(doc(this.firestore, `users/${user.uid}`));
+            const userData = userDoc.data();
+            this.isFollowing = userData?.['following']?.includes(this.viewedProfileId) || false; // Use bracket notation
+          }
+        }
+
+        if (this.userSubscription) {
+          this.userSubscription.unsubscribe();
+        }
+
+        this.userSubscription = this.dataService.getUsersById(this.viewedProfileId).subscribe((user) => {
+          if (user) {
+            this.currentUser = user;
+            this.dataService.getCommentsByUserId(this.viewedProfileId).subscribe((comments: any) => {
+              user.comments = comments || [];
+              this.valorations = user.comments.length;
+            });
+
+            this.loadUserList(user.followers, "followers");
+            this.loadUserList(user.following, "following");
+          }
+        });
+
+        this.dataService.getCommentsByUserId(this.viewedProfileId).subscribe((comments) => {
+          this.comments = comments;
+
+          const idList = []
+          for(let comment of this.comments) {
+            idList.push(comment.videogameId);
+          }
+
+          this.apiService.getVideogameInfoForCorouselAndUserProfile(idList).subscribe((response) => {
+            for (const comment of this.comments) {
+              const videogameData = response.apiResponse[0].result;
+              const coverData = response.apiResponse[1].result;
+              comment.videogame = videogameData.find((v: any) => v.id.toString() === comment.videogameId);
+              const videogameCover = coverData.find((v: any) => v.game.toString() === comment.videogameId);
+              comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${videogameCover.image_id}.jpg`;
+              comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
+            }
+          });
+        });
+      });
+    });
+    /*
     this.route.queryParams.subscribe((queryParams) => {
       this.viewedProfileId = queryParams['id'];
       this.authService.getCurrentUserObservable().subscribe(async (user) => {
@@ -70,6 +131,7 @@ export class UserPageComponent implements OnInit {
         });
       });
     });
+     */
   }
 
   logout() {
@@ -79,13 +141,13 @@ export class UserPageComponent implements OnInit {
   }
 
   followUser(): void {
-    this.authService.getCurrentUserObservable().subscribe((currentUser) => {
-      if (!currentUser || !this.viewedProfileId) {
+    this.authService.getCurrentUserObservable().subscribe((user) => {
+      if (!user || !this.viewedProfileId) {
         window.location.href = '/login';
         return;
       }
 
-      const currentUserId = currentUser.uid;
+      const currentUserId = user.uid;
 
       const updates = [
         updateDoc(doc(this.firestore, `users/${currentUserId}`), {
@@ -106,13 +168,13 @@ export class UserPageComponent implements OnInit {
   }
 
   unfollowUser(): void {
-    this.authService.getCurrentUserObservable().subscribe((currentUser) => {
-      if (!currentUser || !this.viewedProfileId) {
+    this.authService.getCurrentUserObservable().subscribe((user) => {
+      if (!user || !this.viewedProfileId) {
         window.location.href = '/login';
         return;
       }
 
-      const currentUserId = currentUser.uid;
+      const currentUserId = user.uid;
 
       const updates = [
         updateDoc(doc(this.firestore, `users/${currentUserId}`), {
@@ -139,5 +201,26 @@ export class UserPageComponent implements OnInit {
 
   navigateToRoot() {
     this.router.navigate(['/']);
+  }
+
+  loadUserList(ids: string[], list: string): void {
+    const newList = ids.map((id) => {
+      return {id: id, name: ""};
+    });
+
+    for (const listElement of newList) {
+      this.dataService.getUsersById(listElement.id).subscribe((user) => {
+        if (user) {
+          listElement.name = user.name;
+        }
+      });
+    }
+
+    if (list === "followers") {
+      this.followerList = newList;
+    }
+    else {
+      this.followingList = newList;
+    }
   }
 }

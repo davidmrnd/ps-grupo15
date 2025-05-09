@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,7 +20,10 @@ export class RegistrationComponent {
   errorMessage: string = '';
   termsAccepted: boolean = false;
 
-  constructor(private authService: AuthService, private dataService: DataService) {}
+  private authService: AuthService = inject(AuthService);
+  private dataService: DataService = inject(DataService);
+
+  constructor() {}
 
   register() {
     if (!this.termsAccepted) {

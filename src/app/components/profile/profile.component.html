@@ -1,13 +1,13 @@
-<div class="profile-container" *ngIf="data && (type === 'user') && this.showUserProfile">
+<div class="profile-container" *ngIf="userInfo && (type === 'user')">
   <img
-    [src]="data.profileicon"
-    [alt]="data.name"
+    [src]="userInfo.profileicon"
+    [alt]="userInfo.name"
     [class.user-profile-image]="type === 'user'"
     class="profile-image">
   <div class="profile-info">
-    <h2 class="profile-title">{{ data.name }}</h2>
-    <h3 class="profile-subtitle">{{ data.username }}</h3>
-    <p class="profile-description" *ngIf="data.description">{{ data.description }}</p>
+    <h2 class="profile-title">{{ userInfo.name }}</h2>
+    <h3 class="profile-subtitle">{{ userInfo.username }}</h3>
+    <p class="profile-description" *ngIf="userInfo.description">{{ userInfo.description }}</p>
     <button *ngIf="type === 'user' && isCurrentUser" (click)="editMode = true; errorMessage='' " class="edit-profile-button">
       Editar perfil</button>
   </div>

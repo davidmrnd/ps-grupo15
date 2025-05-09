@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { Auth, User, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } from '@angular/fire/auth';
 import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
@@ -8,8 +8,10 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   private currentUserSubject = new BehaviorSubject<User | null>(null);
+  private auth: Auth = inject(Auth);
+  private firestore: Firestore = inject(Firestore);
 
-  constructor(private auth: Auth, private firestore: Firestore) {
+  constructor() {
     onAuthStateChanged(this.auth, (user) => {
       this.currentUserSubject.next(user);
     });

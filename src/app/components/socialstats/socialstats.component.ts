@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DataService } from '../../services/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-socialstats',
@@ -11,46 +10,18 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./socialstats.component.css']
 })
 export class SocialstatsComponent implements OnInit {
-  userid: string = '';
-  followerlist: { id: string; name: string }[] = [];
-  followinglist: { id: string; name: string }[] = [];
-  followers: number = 0;
-  following: number = 0;
-  valorations: number = 0;
+  @Input() followerList: { id: string; name: string }[] = [];
+  @Input() followingList: { id: string; name: string }[] = [];
+  @Input() valorations: number = 0;
 
   showFollowersDropdown: boolean = false;
   showFollowingDropdown: boolean = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private dataService: DataService
-  ) {}
+  private router: Router = inject(Router)
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.userid = params['id'];
-      if (this.userid) {
-        this.loadSocialStats();
-      }
-    });
-  }
+  constructor() {}
 
-  loadSocialStats(): void {
-    this.dataService.getUsersById(this.userid).subscribe((user: any) => {
-      if (user) {
-        this.followers = user.followers?.length || 0;
-        this.following = user.following?.length || 0;
-        this.dataService.getCommentsByUserId(this.userid).subscribe((comments: any) => {
-          user.comments = comments || [];
-          this.valorations = user.comments.length;
-        });
-
-        this.loadUserList(user.followers, this.followerlist);
-        this.loadUserList(user.following, this.followinglist);
-      }
-    });
-  }
+  ngOnInit(): void {}
 
   toggleFollowersDropdown(): void {
     this.showFollowersDropdown = !this.showFollowersDropdown;
@@ -60,21 +31,8 @@ export class SocialstatsComponent implements OnInit {
     this.showFollowingDropdown = !this.showFollowingDropdown;
   }
 
-  loadUserList(ids: string[], list: { id: string; name: string }[]): void {
-    list.length = 0; // Clear the list
-    if (ids) {
-      ids.forEach(id => {
-        this.dataService.getUsersById(id).subscribe((user: any) => {
-          if (user) {
-            list.push({ id, name: user.name || 'Unknown User' });
-          }
-        });
-      });
-    }
-  }
-
   goToUserProfile(userId: string): void {
-    this.router.navigate(['/user'], { queryParams: { id: userId } });
+    this.router.navigate(['/user', userId]);
     this.showFollowersDropdown = false;
     this.showFollowingDropdown = false;
   }

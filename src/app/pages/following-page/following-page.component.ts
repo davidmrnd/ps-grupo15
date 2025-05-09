@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import { StarsComponent } from "../../components/stars/stars.component";
@@ -15,11 +15,11 @@ import {ApiService} from '../../services/api.service';
 export class FollowingPageComponent implements OnInit {
   groupedComments: any[] = [];
 
-  constructor(
-    private authService: AuthService,
-    private dataService: DataService,
-    private apiService: ApiService,
-  ) {}
+  private authService: AuthService = inject(AuthService);
+  private dataService: DataService = inject(DataService);
+  private apiService: ApiService = inject(ApiService);
+
+  constructor() {}
 
   ngOnInit(): void {
     this.authService.getCurrentUserObservable().subscribe((user) => {
@@ -31,7 +31,7 @@ export class FollowingPageComponent implements OnInit {
               idList.push(comment.videogameId);
             }
 
-            this.apiService.getVideogameInfoForCorousel(idList).subscribe((response) => {
+            this.apiService.getVideogameInfoForCorouselAndUserProfile(idList).subscribe((response) => {
               for (const comment of comments) {
                 const videogameData = response.apiResponse[0].result;
                 const coverData = response.apiResponse[1].result;

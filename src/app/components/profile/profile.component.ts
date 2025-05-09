@@ -1,7 +1,7 @@
 import { DataService } from '../../services/data.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import { getAuth, onAuthStateChanged  } from 'firebase/auth';
 import {FormsModule} from '@angular/forms';
@@ -15,14 +15,12 @@ import {FormsModule} from '@angular/forms';
 })
 export class ProfileComponent implements OnInit, OnChanges {
   @Input() type: string = '';
-  data: any = null;
+  @Input() userInfo: any = null;
   @Input() gameInfo: any = null;
   @Input() gameCover: string = "";
   id!: string;
   apiService: ApiService = inject(ApiService);
   @Input() showPlatformsAndGenres: boolean = false;
-  @Output() showErrorMessageEmitter = new EventEmitter<boolean>();
-  @Input() showUserProfile: boolean = false;
 
   errorMessage: string = "";
   formErrorMessage: string = "";
@@ -36,65 +34,45 @@ export class ProfileComponent implements OnInit, OnChanges {
   selectedFile: File | null = null;
   originalData: any = {};
 
-  isCurrentUser: boolean = false;
-  constructor(private dataService: DataService, private route: ActivatedRoute) {}
+  @Input() isCurrentUser: boolean = false;
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.id = params['id'];
+  private dataService: DataService = inject(DataService);
 
-      if (this.type === 'user') {
-        this.loadUserProfile();
-      } else if (this.type === 'videogame') {
-        this.loadVideogameProfile();
-      }
-    });
-  }
+  constructor() {}
+
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['type'] && this.id) {
-      if (this.type === 'user') {
-        this.loadUserProfile();
-      } else if (this.type === 'videogame') {
-        this.loadVideogameProfile();
-      }
+    if (changes["userInfo"]) {
+      this.prepareUserProfile();
     }
-  }
-
-  private loadVideogameProfile(): void {
-    this.dataService.getVideogameById(this.id).subscribe(response => {
-      this.data = response;
-    });
   }
 
   protected showReleaseYear() {
     return !isNaN(this.apiService.getReleaseYear(this.gameInfo.first_release_date));
   }
-  private loadUserProfile(): void {
+
+  private prepareUserProfile(): void {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-      this.dataService.getUsersById(this.id).subscribe(response => {
-        this.showErrorMessageEmitter.emit(response === undefined);
-        this.data = response;
-        this.originalData = { ...response };
-
-        this.isCurrentUser = user?.uid === response.id;
+      if (this.userInfo) {
+        this.originalData = { ...this.userInfo };
 
         // Si es el perfil del usuario autenticado, intenta usar imagen del localStorage
         if (this.isCurrentUser) {
           const localImage = localStorage.getItem(`profile-image-${this.id}`);
           if (localImage) {
-            this.data.profileicon = localImage;
+            this.userInfo.profileicon = localImage;
           }
-        }
 
-        this.editableData = {
-          name: response.name || '',
-          username: response.username || '',
-          description: response.description || '',
-          profileicon: response.profileicon || ''
-        };
-      });
+          this.editableData = {
+            name: this.userInfo.name || '',
+            username: this.userInfo.username || '',
+            description: this.userInfo.description || '',
+            profileicon: this.userInfo.profileicon || ''
+          };
+        }
+      }
     });
   }
 
@@ -129,9 +107,8 @@ export class ProfileComponent implements OnInit, OnChanges {
         this.editableData.profileicon = this.selectedFile.name;
       }
 
-      this.dataService.updateUserProfile(this.id, this.editableData).then(() => {
+      this.dataService.updateUserProfile(this.userInfo.id, this.editableData).then(() => {
         this.editMode = false;
-        this.loadUserProfile();
       }).catch(error => {
         console.error('Error al actualizar el perfil:', error);
         this.formErrorMessage = 'Hubo un error al guardar los cambios. Inténtalo de nuevo.';

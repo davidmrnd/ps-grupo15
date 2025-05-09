@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ElementRef, HostListener, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {ApiService} from '../../services/api.service';
@@ -18,8 +18,9 @@ export class CarouselComponent implements OnInit {
   @ViewChild('carouselTrack') carouselTrack!: ElementRef;
   visibleSlides: number = 4;
   carouselGames = new Map<string, number[]>();
+  private apiService: ApiService = inject(ApiService);
 
-  constructor(private apiService: ApiService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.carouselGames.set("Novedades", [112875, 1020, 126290, 267306, 300976, 305152, 136879, 332780]);
@@ -33,7 +34,7 @@ export class CarouselComponent implements OnInit {
     if (this.category) {
       const idList = this.carouselGames.get(this.category);
       if (idList) {
-        this.apiService.getVideogameInfoForCorousel(idList).subscribe((response) => {
+        this.apiService.getVideogameInfoForCorouselAndUserProfile(idList).subscribe((response) => {
           this.videogameData = response.apiResponse[0].result;
           this.coverData = response.apiResponse[1].result;
           for (const videogame of this.videogameData) {

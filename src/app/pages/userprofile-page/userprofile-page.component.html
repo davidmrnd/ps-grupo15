@@ -1,21 +1,25 @@
 <main>
-  <app-profile [type]="'user'" (showErrorMessageEmitter)="getErrorMessage($event)" [showUserProfile]="this.showContent"></app-profile>
-  <div *ngIf="this.showContent && !this.showErrorMessage">
-    <app-socialstats></app-socialstats>
-  </div>
+  <app-profile [type]="'user'"
+               [userInfo]="this.currentUser"
+               [isCurrentUser]="this.isCurrentUserProfile">
+  </app-profile>
+  <app-socialstats [valorations]="this.valorations"
+                   [followerList]="this.followerList"
+                   [followingList]="this.followingList">
+  </app-socialstats>
 </main>
 
 <!-- Conditionally render Follow or Unfollow button only if it's not the current user's profile -->
-<div *ngIf="!isCurrentUserProfile && this.showContent  && !this.showErrorMessage">
+<div *ngIf="!isCurrentUserProfile">
   <button *ngIf="!isFollowing" (click)="followUser()" class="follow-button">Seguir</button>
   <button *ngIf="isFollowing" (click)="unfollowUser()" class="unfollow-button">Dejar de seguir</button>
 </div>
-<div *ngIf="isCurrentUserProfile && this.showContent  && !this.showErrorMessage">
+<div *ngIf="isCurrentUserProfile">
   <button (click)="logout()" class="logout-button">Cerrar sesión</button>
 </div>
 
 
-<app-commentaries *ngIf="this.showContent  && !this.showErrorMessage" [type]="'user'" [comments]="this.comments"></app-commentaries>
+<app-commentaries [type]="'user'" [comments]="this.comments"></app-commentaries>
 
 <main *ngIf="this.showErrorMessage" class="error-message">
   <h1>Ups...</h1>
