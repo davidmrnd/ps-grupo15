@@ -26,7 +26,6 @@ export class UserPageComponent implements OnInit {
   viewedProfileId!: string;
   isFollowing: boolean = false; // New property to track follow status
   protected comments: any[] = [];
-  showContent: boolean = false;
   showErrorMessage: boolean = false;
   protected currentUser: any;
 
@@ -66,6 +65,7 @@ export class UserPageComponent implements OnInit {
 
         this.userSubscription = this.dataService.getUsersById(this.viewedProfileId).subscribe((user) => {
           if (user) {
+            this.showErrorMessage = false;
             this.currentUser = user;
             this.dataService.getCommentsByUserId(this.viewedProfileId).subscribe((comments: any) => {
               user.comments = comments || [];
@@ -74,6 +74,9 @@ export class UserPageComponent implements OnInit {
 
             this.loadUserList(user.followers, "followers");
             this.loadUserList(user.following, "following");
+          }
+          else {
+            this.showErrorMessage = true;
           }
         });
 
@@ -98,40 +101,6 @@ export class UserPageComponent implements OnInit {
         });
       });
     });
-    /*
-    this.route.queryParams.subscribe((queryParams) => {
-      this.viewedProfileId = queryParams['id'];
-      this.authService.getCurrentUserObservable().subscribe(async (user) => {
-        if (user) {
-          this.isCurrentUserProfile = user.uid === this.viewedProfileId;
-
-          // Check if the current user is following the viewed user
-          const userDoc = await getDoc(doc(this.firestore, `users/${user.uid}`));
-          const userData = userDoc.data();
-          this.isFollowing = userData?.['following']?.includes(this.viewedProfileId) || false; // Use bracket notation
-        }
-        this.dataService.getCommentsByUserId(this.viewedProfileId).subscribe(comments => {
-          this.comments = comments;
-
-          const idList = []
-          for(let comment of this.comments) {
-            idList.push(comment.videogameId);
-          }
-
-          this.apiService.getVideogameInfoForCorousel(idList).subscribe((response) => {
-            for (const comment of this.comments) {
-              const videogameData = response.apiResponse[0].result;
-              const coverData = response.apiResponse[1].result;
-              comment.videogame = videogameData.find((v: any) => v.id.toString() === comment.videogameId);
-              const videogameCover = coverData.find((v: any) => v.game.toString() === comment.videogameId);
-              comment.videogame.cover = `https://images.igdb.com/igdb/image/upload/t_cover_big/${videogameCover.image_id}.jpg`;
-              comment.videogame.year = this.apiService.getReleaseYear(comment.videogame.first_release_date);
-            }
-          });
-        });
-      });
-    });
-     */
   }
 
   logout() {
@@ -192,11 +161,6 @@ export class UserPageComponent implements OnInit {
         })
         .catch((error) => console.error('Error updating unfollow data:', error));
     });
-  }
-
-  getErrorMessage(value: boolean) {
-    this.showErrorMessage = value;
-    this.showContent = true;
   }
 
   navigateToRoot() {
