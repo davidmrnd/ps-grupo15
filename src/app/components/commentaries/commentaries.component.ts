@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { StarsComponent } from '../stars/stars.component';
 import {AuthService} from '../../services/auth.service';
-import { Firestore, doc, updateDoc } from '@angular/fire/firestore'; 
+import { Firestore, doc, updateDoc, deleteDoc } from '@angular/fire/firestore'; 
 
 @Component({
   selector: 'app-commentaries',
@@ -18,6 +18,7 @@ export class CommentariesComponent implements OnInit {
   id!: string;
   currentUserId: string | null = null;
   private videogameSlug: string = "";
+  selectedCommentToDelete: any = null;
 
   private authService: AuthService = inject(AuthService);
   private route: ActivatedRoute = inject(ActivatedRoute);
@@ -87,5 +88,29 @@ export class CommentariesComponent implements OnInit {
     updateDoc(commentDoc, { likes: comment.likes }).catch((error) => {
       console.error('Error al actualizar los likes:', error);
     });
+  }
+
+  showDeleteModal(comment: any): void {
+    this.selectedCommentToDelete = comment;
+  }
+
+  confirmDelete(): void {
+    if (!this.selectedCommentToDelete) {
+      return;
+    }
+
+    const commentDoc = doc(this.firestore, 'comments', this.selectedCommentToDelete.id);
+    deleteDoc(commentDoc)
+      .then(() => {
+        this.comments = this.comments.filter(c => c.id !== this.selectedCommentToDelete.id);
+        this.selectedCommentToDelete = null;
+      })
+      .catch(error => {
+        console.error('Error al eliminar el comentario:', error);
+      });
+  }
+
+  cancelDelete(): void {
+    this.selectedCommentToDelete = null;
   }
 }
