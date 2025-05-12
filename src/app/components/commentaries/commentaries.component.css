@@ -81,6 +81,34 @@ a {
   display: block;
 }
 
+.like-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.like-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: gray;
+  transition: color 0.3s ease;
+}
+
+.like-button.liked {
+  color: darkblue; /* Color azul oscuro si el usuario ya dio like */
+}
+
+.like-button:hover {
+  color: blue;
+}
+
+.like-count {
+  font-size: 1rem;
+  color: #555;
+}
+
 @media (max-width: 1023px) {
   .comment {
     flex-direction: column;

@@ -19,18 +19,27 @@
       <app-stars [rating]="comment.rating"></app-stars>
       <button
       *ngIf="comment.userId === currentUserId && type === 'user'"
-      (click)="navigateToEditCommentFromUserProfile(comment.videogame.slug)"
+      title="Editar comentario"
       class="edit-button"
-      title="Editar comentario">
-      ✏️
-      </button>
+      (click)="navigateToEditCommentFromUserProfile(comment.videogame.slug)">
+      <i class="fas fa-pen"></i>
+    </button>
       <button
         *ngIf="comment.userId === currentUserId && type === 'videogame'"
-        (click)="navigateToEditCommentFromVideogame()"
         class="edit-button"
+        (click)="navigateToEditCommentFromVideogame()"
         title="Editar comentario">
-        ✏️
+        <i class="fas fa-pen"></i>
       </button>
     </aside>
+    <div *ngIf="comment.userId !== currentUserId" class="like-container">
+      <button
+        class="like-button"
+        [ngClass]="{'liked': comment.likes?.includes(currentUserId)}"
+        (click)="toggleLike(comment)">
+        <i class="fas fa-thumbs-up"></i>
+      </button>
+      <span class="like-count">{{ comment.likes?.length || 0 }}</span>
+    </div>
   </div>
 </div>
