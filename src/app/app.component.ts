@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {FooterComponent} from './components/footer/footer.component';
 import {HeaderComponent} from './components/header/header.component';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,10 @@ import {HeaderComponent} from './components/header/header.component';
 })
 export class AppComponent {
   title = 'game-critic-angular';
+
+  constructor(private translate: TranslateService) {
+    this.translate.addLangs(["es", "en"]);
+    this.translate.setDefaultLang('es');
+    this.translate.use("es");
+  }
 }
