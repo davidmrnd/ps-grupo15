@@ -3,12 +3,20 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   font-family: Oswald, sans-serif;
-  background-color: #F0ECE3;
+  background-color: #f0ece3;
+  color: #000000;
+  transition: background-color 0.3s, color 0.3s;
 
   padding: 0;
+}
+
+body.dark-mode {
+  background-color: #1C1C1F;
+  color: #f5f5f5;
 }
 
 h1 {
@@ -28,6 +36,114 @@ p {
   font-size: 18px;
   margin-bottom: 5px;
   text-align: left;
+}
+
+/* Estilos generales para botones */
+button {
+  background-color: #baafaf;
+  color: #000000;
+  border: 1px solid #cccccc;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode button {
+  background-color: #ffe066;
+  color: #181818;
+  border: none;
+}
+
+/* Tarjetas de información (plataformas, géneros, etc.) */
+body.dark-mode .info-card,
+body.dark-mode .platforms,
+body.dark-mode .genres {
+  background-color: #232323 !important;
+  color: #ffe066 !important;
+  border: 1px solid #333 !important;
+}
+
+/* Botón principal */
+body.dark-mode .cta-button {
+  background-color: #ffe066;
+  color: #181818;
+  border: none;
+}
+
+/* Estilos específicos para los botones del header */
+.header-container .cta-button,
+.header-container .menu-button {
+  background-color: #f0f0f0;
+  color: #000000;
+  border: none;
+}
+
+.header-container .dark-mode-toggle {
+  background-color: transparent;
+  border: none;
+}
+
+.header-container .nav-links a {
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+body.dark-mode .header-container .cta-button,
+body.dark-mode .header-container .menu-button {
+  background-color: #f4d73e;
+  color: #000000;
+}
+
+body.dark-mode .header-container .nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+/* Buscador */
+body.dark-mode input[type="text"],
+body.dark-mode .search-bar {
+  background-color: #31313C;
+  color: #ffffff;
+  border: 1px solid #444;
+  border: none;
+}
+body.dark-mode .welcome-description {
+  color: #ffffff !important;
+}
+body.dark-mode .form-box {
+  background-color: #31313C;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+body.dark-mode .search-container {
+  background-color: #31313C;
+  border-color: rgb(79, 79, 79);
+}
+/* Logo en modo oscuro */
+body.dark-mode .image-container {
+  content: url('/assets/images/logo-no-background-darkmode.png');
+  width: 400px;
+}
+
+/* Comentarios y usuarios */
+body.dark-mode .comment,
+body.dark-mode .user-info {
+  background-color: #232323;
+  color: #f5f5f5;
+}
+
+/* Estilos para otros elementos de texto */
+.nav-links a,
+.cta-button,
+.login-text {
+  color: inherit;
+}
+
+body.dark-mode .nav-links a,
+body.dark-mode .cta-button,
+body.dark-mode .login-text {
+  color: #ffffff;
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {

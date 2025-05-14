@@ -105,4 +105,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.showSearchResults = false;
     }
   }
+
+  toggleDarkMode(): void {
+    document.body.classList.toggle('dark-mode');
+  }
 }
