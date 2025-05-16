@@ -1,5 +1,11 @@
 <div class="comments-container">
-  <div class="comment" *ngFor="let comment of getSortedComments()">
+  <label for="order">Mostrar primero:</label>
+  <select id="order" [(ngModel)]="selectedOrder" (change)="sortComments()">
+    <option *ngFor="let option of orderOptions" [value]="option.value">
+      {{option.text}}
+    </option>
+  </select>
+  <div class="comment" *ngFor="let comment of comments">
     <div class="user">
       <a *ngIf="type === 'videogame'" [routerLink]="['/user', comment.user?.id]">
         <img [src]="setProfileIcon(comment)" [alt]="comment.user?.username" class="userprofile-image">
