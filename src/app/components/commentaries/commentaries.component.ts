@@ -110,13 +110,14 @@ export class CommentariesComponent implements OnInit {
         console.log("leastStars");
         comments.sort((a,b)=>a.rating-b.rating);
         break;
-      /*
-    case "mostVoted":
-      comments.sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
-      break;
-    case "leastVoted":
-      comments.sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
-      break;*/
+      case "mostVoted":
+        console.log("mostVoted")
+        comments.sort((a,b)=>b.likes.length-a.likes.length);
+        break;
+      case "leastVoted":
+        console.log("leastVoted")
+        comments.sort((a,b)=>a.likes.length-b.likes.length);
+        break;
     }
   }
 
