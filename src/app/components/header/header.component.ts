@@ -24,6 +24,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   apiService: ApiService = inject(ApiService);
   searchResults: any[] = [];
   showSearchResults: boolean = false;
+  isDarkModeEnabled: boolean = false;
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
@@ -40,6 +41,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const darkMode = localStorage.getItem('dark-mode');
     if (darkMode === 'enabled') {
       document.body.classList.add('dark-mode');
+      this.isDarkModeEnabled = true;
+    } else {
+      document.body.classList.remove('dark-mode');
+      this.isDarkModeEnabled = false;
     }
 
     window.addEventListener("resize", (event) => {
@@ -113,10 +118,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleDarkMode(): void {
-    const isDark = document.body.classList.toggle('dark-mode');
-    if (isDark) {
+    this.isDarkModeEnabled = !this.isDarkModeEnabled;
+    if (this.isDarkModeEnabled) {
+      document.body.classList.add('dark-mode');
       localStorage.setItem('dark-mode', 'enabled');
     } else {
+      document.body.classList.remove('dark-mode');
       localStorage.setItem('dark-mode', 'disabled');
     }
   }
