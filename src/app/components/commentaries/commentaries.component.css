@@ -104,6 +104,12 @@ a {
   color: blue;
 }
 
+.like-button:disabled {
+  color: #bbb !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .like-count {
   font-size: 1rem;
   color: #555;
