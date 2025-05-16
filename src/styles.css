@@ -100,7 +100,7 @@ body.dark-mode .header-container .nav-links a {
 }
 
 /* Buscador */
-body.dark-mode input[type="text"],
+body.dark-mode .search-box,
 body.dark-mode .search-bar {
   background-color: #31313C;
   color: #ffffff;
@@ -126,11 +126,36 @@ body.dark-mode .image-container {
   width: 400px;
 }
 
+body.dark-mode .register-title {
+  color: #B9B9B9;
+}
+
+body.dark-mode h2 {
+  color: #B9B9B9;
+}
+
 /* Comentarios y usuarios */
 body.dark-mode .comment,
 body.dark-mode .user-info {
-  background-color: #232323;
-  color: #f5f5f5;
+  background-color: #31313C;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+body.dark-mode .profile-description {
+  color: #ffffff;
+}
+
+body.dark-mode .profile-title {
+  color: #b9b9b9;
+}
+
+/* Fondo blanco para comentarios y usuarios en modo claro */
+.comment,
+.user-info {
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  color: #000000;
 }
 
 /* Estilos para otros elementos de texto */
@@ -143,6 +168,11 @@ body.dark-mode .user-info {
 body.dark-mode .nav-links a,
 body.dark-mode .cta-button,
 body.dark-mode .login-text {
+  color: #ffffff;
+}
+
+body.dark-mode footer {
+  background-color: #31313C;
   color: #ffffff;
 }
 
