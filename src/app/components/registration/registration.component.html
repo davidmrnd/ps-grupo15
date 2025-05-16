@@ -61,6 +61,11 @@
         <small *ngIf="passwordInput.errors?.['required']">La contraseña es obligatoria.</small>
         <small *ngIf="passwordInput.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</small>
       </div>
+      
+      <div class="g-recaptcha" data-sitekey="6Lf5Xz0rAAAAAPiAcDxFX5clDaNiwY72_M0zfpxD"></div>
+      <div *ngIf="captchaError" class="error-message">
+        <small>{{ captchaError }}</small>
+      </div>
 
       <div class="checkbox-container">
         <input
