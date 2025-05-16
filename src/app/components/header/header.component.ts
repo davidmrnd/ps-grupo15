@@ -36,6 +36,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userId = user?.uid || null;
     });
 
+    // Restaurar preferencia de dark mode
+    const darkMode = localStorage.getItem('dark-mode');
+    if (darkMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+
     window.addEventListener("resize", (event) => {
       this.positionSearchResults();
     })
@@ -107,6 +113,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   toggleDarkMode(): void {
-    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.toggle('dark-mode');
+    if (isDark) {
+      localStorage.setItem('dark-mode', 'enabled');
+    } else {
+      localStorage.setItem('dark-mode', 'disabled');
+    }
   }
 }
