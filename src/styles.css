@@ -178,6 +178,10 @@ body.dark-mode .like-count {
   color: #B9B9B9;
 }
 
+body.dark-mode .search-toggle {
+  background-color: #31313C;
+}
+
 /* Fondo blanco para comentarios y usuarios en modo claro */
 .comment,
 .user-info {
