@@ -94,7 +94,8 @@ export class NewcomentComponent implements OnInit {
       videogameId: this.videogameId,
       content: this.commentContent,
       rating: this.rating,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      likes: []
     };
 
     try {
