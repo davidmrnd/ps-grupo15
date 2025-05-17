@@ -11,11 +11,11 @@
 
 <!-- Conditionally render Follow or Unfollow button only if it's not the current user's profile -->
 <div *ngIf="!isCurrentUserProfile && !this.showErrorMessage">
-  <button *ngIf="!isFollowing" (click)="followUser()" class="follow-button">Seguir</button>
-  <button *ngIf="isFollowing" (click)="unfollowUser()" class="unfollow-button">Dejar de seguir</button>
+  <button *ngIf="!isFollowing" (click)="followUser()" class="follow-button">{{ 'user_profile_page.follow' | translate }}</button>
+  <button *ngIf="isFollowing" (click)="unfollowUser()" class="unfollow-button">{{ 'user_profile_page.stop_following' | translate }}</button>
 </div>
 <div *ngIf="isCurrentUserProfile && !this.showErrorMessage">
-  <button (click)="logout()" class="logout-button">Cerrar sesión</button>
+  <button (click)="logout()" class="logout-button">{{ 'user_profile_page.log_out' | translate }}</button>
 </div>
 
 
@@ -23,7 +23,6 @@
 
 <main *ngIf="this.showErrorMessage" class="error-message">
   <h1>Ups...</h1>
-  <p>Parece que el perfil de usuario que estás intentando ver no existe</p>
-  <p>Utiliza el buscador o <button
-    (click)="navigateToRoot()" class="follow-button" id="return-to-root-button">regresa al inicio</button></p>
+  <p>{{ 'user_profile_page.error.invalid_user' | translate }}</p>
+  <p [innerHTML]="'user_profile_page.error.go_to_home' | translate"></p>
 </main>

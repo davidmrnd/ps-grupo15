@@ -1,18 +1,20 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {DataService} from '../../services/data.service';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
   selector: 'app-registration',
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, TranslatePipe],
   standalone: true,
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
   email: string = '';
   password: string = '';
   name: string = '';
@@ -22,22 +24,42 @@ export class RegistrationComponent {
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
+  private translate: TranslateService = inject(TranslateService);
+
+  private mustAcceptTOSMessage = 'Debes aceptar los términos y condiciones.';
+  private completeAllFieldsMessage = 'Por favor, completa todos los campos.';
+  private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
+  private genericErrorMessage = 'Ocurrió un error. Inténtalo de nuevo.';
 
   constructor() {}
 
+  ngOnInit() {
+    this.translate.get(_([
+      "sign_up.must_accept_tos",
+      "sign_up.message.complete_all_fields",
+      "sign_up.message.non_available_username",
+      "sign_up.message.generic_error_message",
+    ])).subscribe((translations: {[key:string]: string}) => {
+      this.mustAcceptTOSMessage = translations["sign_up.must_accept_tos"];
+      this.completeAllFieldsMessage = translations["sign_up.message.complete_all_fields"];
+      this.nonAvailableUsernameMessage = translations["sign_up.message.non_available_username"];
+      this.genericErrorMessage = translations["sign_up.message.generic_error_message"];
+    });
+  }
+
   register() {
     if (!this.termsAccepted) {
-      this.errorMessage = 'Debes aceptar los términos y condiciones.';
+      this.errorMessage = this.mustAcceptTOSMessage;
       return;
     }
 
     if (!this.email || !this.password || !this.name || !this.username) {
-      this.errorMessage = 'Por favor, completa todos los campos.';
+      this.errorMessage = this.completeAllFieldsMessage;
       return;
     }
     this.checkUsernameAvailability(this.username).then((isUsernameAvailable) => {
       if (!isUsernameAvailable) {
-        this.errorMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
+        this.errorMessage = this.nonAvailableUsernameMessage;
         return;
       }
       this.authService.register(this.email, this.password, this.name, this.username)
@@ -55,7 +77,7 @@ export class RegistrationComponent {
           this.errorMessage = '';
         })
         .catch(error => {
-          this.errorMessage = error.message || 'Ocurrió un error. Inténtalo de nuevo.';
+          this.errorMessage = error.message || this.genericErrorMessage;
         });
     }).catch(error => {
       console.error('Error al comprobar disponibilidad del nombre de usuario:', error);

@@ -7,11 +7,13 @@ import { AuthService } from '../../services/auth.service';
 import { StarsComponent } from '../stars/stars.component';
 import { Firestore, collection, query, where, getDocs, updateDoc, doc, addDoc, deleteDoc } from '@angular/fire/firestore';
 import {ApiService} from '../../services/api.service';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
   selector: 'app-newcoment',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, StarsComponent],
+  imports: [CommonModule, RouterModule, FormsModule, StarsComponent, TranslatePipe],
   templateUrl: './newcoment.component.html',
   styleUrls: ['./newcoment.component.css']
 })
@@ -31,10 +33,44 @@ export class NewcomentComponent implements OnInit {
   private router: Router = inject(Router);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private apiService: ApiService = inject(ApiService);
+  private translate: TranslateService = inject(TranslateService);
+
+  protected modifyCommentText = "Modificar Comentario";
+  protected sendCommentText = "Enviar Comentario";
+
+  private successfullyDeletedCommentMessage = 'Comentario eliminado con éxito.';
+  private genericDeletionErrorMessage = 'Hubo un error al eliminar el comentario. Inténtalo de nuevo.';
+  private completeAllFieldsMessage = 'Por favor, completa todos los campos antes de enviar el comentario.';
+  private moreThan500CharactersMessage = 'El comentario no debe superar los 500 caracteres.';
+  private successfullyUpdatedMessage = 'Comentario actualizado con éxito.';
+  private successfullySentMessage = 'Comentario enviado con éxito.';
+  private genericSendingErrorMessage = 'Hubo un error al enviar el comentario. Inténtalo de nuevo.';
 
   constructor() {}
 
   ngOnInit(): void {
+    this.translate.get(_([
+      "new_comment.modify_comment",
+      "new_comment.send_comment",
+      "new_comment.messages.successfully_deleted",
+      "new_comment.messages.generic_deletion_error",
+      "new_comment.messages.complete_all_fields",
+      "new_comment.messages.more_than_500_characters",
+      "new_comment.messages.successfully_updated",
+      "new_comment.messages.successfully_sent",
+      "new_comment.messages.generic_sending_message"
+    ])).subscribe((translations: {[key: string]: string}) => {
+      this.modifyCommentText = translations["new_comment.modify_comment"];
+      this.sendCommentText = translations["new_comment.send_comment"];
+      this.successfullyDeletedCommentMessage = translations["new_comment.messages.successfully_deleted"];
+      this.genericDeletionErrorMessage = translations["new_comment.messages.generic_deletion_error"];
+      this.completeAllFieldsMessage = translations["new_comment.messages.complete_all_fields"];
+      this.moreThan500CharactersMessage = translations["new_comment.messages.more_than_500_characters"];
+      this.successfullyUpdatedMessage = translations["new_comment.messages.successfully_updated"];
+      this.successfullySentMessage = translations["new_comment.messages.successfully_updated"];
+      this.genericSendingErrorMessage = translations["new_comment.messages.generic_sending_message"];
+    });
+
     this.route.params.subscribe(params => {
       this.videogameSlug = params["slug"];
     });
@@ -80,12 +116,12 @@ export class NewcomentComponent implements OnInit {
 
   async submitComment(): Promise<void> {
     if (!this.commentContent || this.rating === 0 || !this.videogameId) {
-      this.message = 'Por favor, completa todos los campos antes de enviar el comentario.';
+      this.message = this.completeAllFieldsMessage;
       return;
     }
 
     if (this.commentContent.length > 500) {
-      this.message = 'El comentario no debe superar los 500 caracteres.';
+      this.message = this.moreThan500CharactersMessage;
       return;
     }
 
@@ -103,10 +139,10 @@ export class NewcomentComponent implements OnInit {
       if (this.existingCommentId) {
         const commentDoc = doc(this.firestore, 'comments', this.existingCommentId);
         await updateDoc(commentDoc, newComment);
-        this.message = 'Comentario actualizado con éxito.';
+        this.message = this.successfullyUpdatedMessage;
       } else {
         await addDoc(commentsCollection, newComment);
-        this.message = 'Comentario enviado con éxito.';
+        this.message = this.successfullySentMessage;
       }
 
       this.router.navigate(['/videogame', this.videogameSlug]);
@@ -115,7 +151,7 @@ export class NewcomentComponent implements OnInit {
       this.rating = 0;
     } catch (error) {
       console.error('Error al enviar el comentario:', error);
-      alert('Hubo un error al enviar el comentario. Inténtalo de nuevo.');
+      alert(this.genericSendingErrorMessage);
     }
   }
 
@@ -132,11 +168,11 @@ export class NewcomentComponent implements OnInit {
     try {
       const commentDoc = doc(this.firestore, 'comments', this.existingCommentId!);
       await deleteDoc(commentDoc);
-      this.message = 'Comentario eliminado con éxito.';
+      this.message = this.successfullyDeletedCommentMessage;
       this.router.navigate(['/videogame', this.videogameSlug]);
     } catch (error) {
       console.error('Error al eliminar el comentario:', error);
-      this.message = 'Hubo un error al eliminar el comentario. Inténtalo de nuevo.';
+      this.message = this.genericDeletionErrorMessage;
     } finally {
       this.showDeleteConfirmation = false;
     }

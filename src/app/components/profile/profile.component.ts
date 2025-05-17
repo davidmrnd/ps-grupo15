@@ -5,11 +5,13 @@ import {Component, inject, Input, OnChanges, OnInit, SimpleChanges} from '@angul
 import {ApiService} from '../../services/api.service';
 import { getAuth, onAuthStateChanged  } from 'firebase/auth';
 import {FormsModule} from '@angular/forms';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, TranslatePipe],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
@@ -37,10 +39,28 @@ export class ProfileComponent implements OnInit, OnChanges {
   @Input() isCurrentUser: boolean = false;
 
   private dataService: DataService = inject(DataService);
+  private translate: TranslateService = inject(TranslateService);
+
+  private emptyNameAndUsernameMessage = 'El nombre y el nombre de usuario no pueden estar vacíos.';
+  private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
+  private genericSavingProfileMessage = 'Hubo un error al guardar los cambios. Inténtalo de nuevo.';
+  private genericUsernameAvailabilityMessage = 'Hubo un error al comprobar la disponibilidad del nombre de usuario.';
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.translate.get(_([
+      "profile.message.empty_name_and_username_message",
+      "profile.message.non_available_username_message",
+      "profile.message.generic_saving_message",
+      "profile.message.generic_availability_message"
+    ])).subscribe((translations: {[key: string]: string}) => {
+      this.emptyNameAndUsernameMessage = translations["profile.message.empty_name_and_username_message"];
+      this.nonAvailableUsernameMessage = translations["profile.message.non_available_username_message"];
+      this.genericSavingProfileMessage = translations["profile.message.generic_saving_message"];
+      this.genericUsernameAvailabilityMessage = translations["profile.message.generic_availability_message"];
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["userInfo"]) {
@@ -91,17 +111,16 @@ export class ProfileComponent implements OnInit, OnChanges {
     }
   }
 
-
   saveProfile(): void {
     this.formErrorMessage = '';
     const { name, username } = this.editableData;
     if (!name.trim() || !username.trim()) {
-      this.formErrorMessage = 'El nombre y el nombre de usuario no pueden estar vacíos.';
+      this.formErrorMessage = this.emptyNameAndUsernameMessage;
       return;
     }
     this.checkUsernameAvailability(username).then((isUsernameAvailable) => {
       if (!isUsernameAvailable) {
-        this.errorMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
+        this.errorMessage = this.nonAvailableUsernameMessage;
         return;
       }
       if (this.selectedFile) {
@@ -112,11 +131,11 @@ export class ProfileComponent implements OnInit, OnChanges {
         this.editMode = false;
       }).catch(error => {
         console.error('Error al actualizar el perfil:', error);
-        this.formErrorMessage = 'Hubo un error al guardar los cambios. Inténtalo de nuevo.';
+        this.formErrorMessage = this.genericSavingProfileMessage;
       });
     }).catch(error => {
       console.error('Error al comprobar disponibilidad del nombre de usuario:', error);
-      this.formErrorMessage = 'Hubo un error al comprobar la disponibilidad del nombre de usuario.';
+      this.formErrorMessage = this.genericUsernameAvailabilityMessage;
     });
   }
   checkUsernameAvailability(username: string): Promise<boolean> {

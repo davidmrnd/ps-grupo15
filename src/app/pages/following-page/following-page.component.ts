@@ -5,12 +5,13 @@ import { StarsComponent } from "../../components/stars/stars.component";
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {ApiService} from '../../services/api.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-following-page',
   templateUrl: './following-page.component.html',
   styleUrls: ['./following-page.component.css'],
-  imports: [StarsComponent, CommonModule, RouterLink],
+  imports: [StarsComponent, CommonModule, RouterLink, TranslatePipe],
 })
 export class FollowingPageComponent implements OnInit {
   groupedComments: any[] = [];

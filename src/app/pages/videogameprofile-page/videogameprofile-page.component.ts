@@ -8,6 +8,8 @@ import { CommentariesComponent } from '../../components/commentaries/commentarie
 import { AuthService } from '../../services/auth.service';
 import {ApiService} from '../../services/api.service';
 import {collection, Firestore, getDocs, query, where} from '@angular/fire/firestore';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
   selector: 'app-videogameprofile-page',
@@ -18,7 +20,8 @@ import {collection, Firestore, getDocs, query, where} from '@angular/fire/firest
     CommonModule,
     ProfileComponent,
     StarsComponent,
-    CommentariesComponent
+    CommentariesComponent,
+    TranslatePipe
   ]
 })
 export class VideogamePageComponent implements OnInit {
@@ -39,10 +42,22 @@ export class VideogamePageComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private apiService: ApiService = inject(ApiService);
   private router: Router = inject(Router);
+  private translate: TranslateService = inject(TranslateService);
+
+  protected modifyReviewText: string = 'Modificar valoración';
+  protected addReviewText: string = 'Añadir valoración';
 
   constructor() {}
 
   ngOnInit(): void {
+    this.translate.get(_([
+      "videogame_profile_page.modify_review",
+      "videogame_profile_page.add_review",
+    ])).subscribe((translations: {[key: string]: string}) => {
+      this.modifyReviewText = translations["videogame_profile_page.modify_review"];
+      this.addReviewText = translations["videogame_profile_page.add_review"];
+    });
+
     this.route.params.subscribe(params => {
       this.videogameSlug = params['slug'];
       if (this.videogameSlug) {

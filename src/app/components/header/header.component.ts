@@ -7,10 +7,11 @@ import {FormsModule} from '@angular/forms';
 import {ApiService} from '../../services/api.service';
 import {SearchResultsComponent} from '../search-results/search-results.component';
 import {DataService} from '../../services/data.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, RouterLink, FormsModule, SearchResultsComponent],
+  imports: [CommonModule, RouterLink, FormsModule, SearchResultsComponent, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })

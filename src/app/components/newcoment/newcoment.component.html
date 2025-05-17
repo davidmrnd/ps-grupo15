@@ -6,7 +6,7 @@
         <h3>{{ user?.username }}</h3>
         <input
           [(ngModel)]="commentContent"
-          placeholder="Escribe tu comentario aquí..."
+          placeholder="{{ 'new_comment.write_comment' | translate }}"
           class="comment-input"
           type="text">
       </div>
@@ -20,13 +20,13 @@
       <button
         (click)="submitComment()"
         class="submit-button">
-        {{ existingCommentId ? 'Modificar Comentario' : 'Enviar Comentario' }}
+        {{ existingCommentId ? this.modifyCommentText : this.sendCommentText }}
       </button>
       <button
         *ngIf="existingCommentId"
         (click)="deleteComment()"
         class="delete-button">
-        Eliminar Comentario
+        {{ 'new_comment.delete_comment' | translate }}
       </button>
     </ng-container>
 
@@ -34,12 +34,12 @@
       <button
         (click)="confirmDelete()"
         class="confirm-button">
-        Aceptar
+        {{ 'new_comment.accept' | translate }}
       </button>
       <button
         (click)="cancelDelete()"
         class="cancel-button">
-        Cancelar
+        {{ 'new_comment.cancel' | translate }}
       </button>
     </ng-container>
   </div>

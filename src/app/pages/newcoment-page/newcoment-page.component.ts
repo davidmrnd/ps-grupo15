@@ -5,13 +5,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ApiService} from '../../services/api.service';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-newcoment-page',
   imports: [
     ProfileComponent,
     NewcomentComponent,
-    NgIf
+    NgIf,
+    TranslatePipe
   ],
   templateUrl: './newcoment-page.component.html',
   styleUrl: './newcoment-page.component.css'

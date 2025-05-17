@@ -4,15 +4,13 @@
 </main>
 
 <button *ngIf="this.gameInfo  && this.showContent" (click)="navigateToAddComment()" class="add-comment-button">
-  {{ hasComment ? 'Modificar valoración' : 'Añadir valoración' }}
+  {{ hasComment ? this.modifyReviewText : this.addReviewText }}
 </button>
 
 <app-commentaries *ngIf="this.gameInfo  && this.showContent" [type]="'videogame'" [comments]="this.comments"></app-commentaries>
 
 <main *ngIf="this.showErrorMessage" class="error-message">
   <h1>Ups...</h1>
-  <p>Parece que el videojuego que has introducido en la URL no es válido</p>
-  <p>Utiliza el buscador o <button
-    class="add-comment-button" id="return-to-explore-button"
-    (click)="navigateToExplore()">explora las diferentes categorías</button></p>
+  <p>{{ 'videogame_profile_page.error.invalid_game' | translate }}</p>
+  <p [innerHTML]="'videogame_profile_page.error.go_to_home' | translate"></p>
 </main>

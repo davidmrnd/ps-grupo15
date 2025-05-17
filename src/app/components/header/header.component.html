@@ -6,11 +6,11 @@
         <a routerLink="/"><img src="/assets/images/logo.webp" alt="Logo"></a>
       </div>
       <nav class="nav-links">
-        <a routerLink="/">Inicio</a>
-        <a routerLink="/categories">Explorar</a>
-        <a *ngIf="isLoggedIn; else redirectToLogin" routerLink="/following">Siguiendo</a>
+        <a routerLink="/">{{ 'header.home' | translate }}</a>
+        <a routerLink="/categories">{{ 'header.categories' | translate }}</a>
+        <a *ngIf="isLoggedIn; else redirectToLogin" routerLink="/following"> {{ 'header.following' | translate }}</a>
         <ng-template #redirectToLogin>
-          <a routerLink="/login">Siguiendo</a>
+          <a routerLink="/login">{{ 'header.following' | translate }}</a>
         </ng-template>
       </nav>
       <button class="menu-button">☰</button>
@@ -22,7 +22,7 @@
       <input
         type="text"
         class="search-box"
-        placeholder="Buscar"
+        placeholder="{{ 'header.search' | translate }}"
         [(ngModel)]="searchText"
         (keydown)="onKeyDowmInSearchInput($event)"
       />
@@ -35,9 +35,9 @@
     </div>
     <div class="search-toggle">
       <input type="radio" id="user" name="searchType" value="user" [(ngModel)]="searchType" />
-      <label for="user">Usuario</label>
+      <label for="user">{{ 'header.toogle.user' | translate }}</label>
       <input type="radio" id="videogame" name="searchType" value="videogame" [(ngModel)]="searchType" />
-      <label for="videogame">Videojuego</label>
+      <label for="videogame">{{ 'header.toogle.videogame' | translate }}</label>
       <div class="toggle-slider"></div>
     </div>
     <app-search-results
@@ -49,11 +49,11 @@
 
     <div class="right-container">
       <ng-container *ngIf="isLoggedIn; else guestButtons">
-        <a [routerLink]="['/user', userId]"><button class="cta-button">Mi Perfil</button></a>
+        <a [routerLink]="['/user', userId]"><button class="cta-button">{{ 'header.my_profile' | translate }}</button></a>
       </ng-container>
       <ng-template #guestButtons>
-        <a routerLink="/registration"><button class="cta-button">Registrarse</button></a>
-        <a routerLink="/login" class="login-text">Iniciar sesión</a>
+        <a routerLink="/registration"><button class="cta-button">{{ 'header.sign_up' | translate }}</button></a>
+        <a routerLink="/login" class="login-text">{{ 'header.login' | translate}}</a>
       </ng-template>
     </div>
     <a id="iconbutton" href="/registration">

@@ -1,5 +1,5 @@
 <div class="comments-container">
-  <h2>Comentarios de las personas que sigues</h2>
+  <h2>{{ 'following.header' | translate }}</h2>
   <ng-container *ngIf="groupedComments.length > 0; else noFollowing">
     <div *ngFor="let user of groupedComments">
       <div class="carousel-title">
@@ -37,11 +37,11 @@
         <button class="carousel-button next-button" (click)="moveCarousel(user.username, 'next')">></button>
       </div>
       <ng-template #noComments>
-        <p class="no-comments-message">Este usuario no tiene comentarios.</p>
+        <p class="no-comments-message">{{ 'following.no_comments' | translate }}</p>
       </ng-template>
     </div>
   </ng-container>
   <ng-template #noFollowing>
-    <p class="no-following-message">No sigues a nadie.</p>
+    <p class="no-following-message">{{ 'following.no_following' | translate }}</p>
   </ng-template>
 </div>

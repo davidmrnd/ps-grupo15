@@ -1,17 +1,19 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
+import { marker as _ } from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, TranslatePipe],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
@@ -20,12 +22,38 @@ export class LoginComponent {
   modalErrorMessage: string = '';
 
   private authService: AuthService = inject(AuthService);
+  private translate: TranslateService = inject(TranslateService);
+
+  private completeFieldsMessage: string = "Por favor, completa todos los campos.";
+  private userNotFoundMessage: string = "Usuario no encontrado.";
+  private wrongPasswordMessage: string = "Contraseña incorrecta.";
+  private genericErrorMessage: string = 'Ocurrió un error. Inténtalo de nuevo.';
+  private invalidEmailMessage: string = "Por favor, introduce un correo válido.";
+  private emailSentMessage = 'Se ha enviado un correo para restablecer tu contraseña.';
 
   constructor() {}
 
+  ngOnInit() {
+    this.translate.get(_([
+      "login.messages.complete_fields",
+      "login.messages.user_not_found",
+      "login.messages.wrong_password",
+      "login.messages.generic",
+      "login.messages.invalid_email",
+      "login.messages.email_sent"
+    ])).subscribe((translations: {[key: string]: string}) => {
+      this.completeFieldsMessage = translations["login.messages.complete_fields"];
+      this.userNotFoundMessage = translations["login.messages.user_not_found"];
+      this.wrongPasswordMessage = translations["login.messages.wrong_password"];
+      this.genericErrorMessage = translations["login.messages.generic"];
+      this.invalidEmailMessage = translations["login.messages.invalid_email"];
+      this.emailSentMessage = translations["login.messages.email_sent"];
+    });
+  }
+
   login() {
     if (!this.email || !this.password) {
-      this.errorMessage = 'Por favor, completa todos los campos.';
+      this.errorMessage = this.completeFieldsMessage;
       return;
     }
 
@@ -38,11 +66,11 @@ export class LoginComponent {
       })
       .catch(error => {
         if (error.code === 'auth/user-not-found') {
-          this.errorMessage = 'Usuario no encontrado.';
+          this.errorMessage = this.userNotFoundMessage;
         } else if (error.code === 'auth/wrong-password') {
-          this.errorMessage = 'Contraseña incorrecta.';
+          this.errorMessage = this.wrongPasswordMessage;
         } else {
-          this.errorMessage = 'Ocurrió un error. Inténtalo de nuevo.';
+          this.errorMessage = this.genericErrorMessage;
         }
       });
   }
@@ -59,13 +87,13 @@ export class LoginComponent {
 
   sendPasswordReset() {
     if (!this.resetEmail) {
-      this.modalErrorMessage = 'Por favor, introduce un correo válido.';
+      this.modalErrorMessage = this.invalidEmailMessage;
       return;
     }
 
     this.authService.recoverPassword(this.resetEmail)
       .then(() => {
-        alert('Se ha enviado un correo para restablecer tu contraseña.');
+        alert(this.emailSentMessage);
         this.closeModal();
       })
       .catch(error => {

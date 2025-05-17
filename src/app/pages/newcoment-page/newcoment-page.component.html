@@ -5,14 +5,12 @@
 
 <main *ngIf="this.showErrorMessage && this.showErrorMessageType === 'invalid-game'" class="error-message">
   <h1>Ups...</h1>
-  <p>Parece que el videojuego que has introducido en la URL no es válido</p>
-  <p>Utiliza el buscador o <button
-    (click)="navigateToExplore()">explora las diferentes categorías</button></p>
+  <p>{{ 'new_comment_page.error.invalid_game_message' | translate }}</p>
+  <p [innerHTML]="'new_comment_page.error.explore_categories' | translate"></p>
 </main>
 
 <main *ngIf="this.showErrorMessage && this.showErrorMessageType === 'no-logged-in'" class="error-message">
   <h1>Ups...</h1>
-  <p>Para publicar una reseña debes iniciar sesión con tu cuenta</p>
-  <p><button (click)="navigateToLogin()">Inicia sesión</button> o <button
-    (click)="navigateToRegister()">regístrate</button></p>
+  <p>{{ 'new_comment_page.error.no_logged_in' | translate }}</p>
+  <p [innerHTML]="'new_comment_page.go_to_login_or_sign_up' | translate"></p>
 </main>

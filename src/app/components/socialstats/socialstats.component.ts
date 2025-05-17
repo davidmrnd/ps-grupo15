@@ -1,10 +1,11 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-socialstats',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   standalone: true,
   templateUrl: './socialstats.component.html',
   styleUrls: ['./socialstats.component.css']

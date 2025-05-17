@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { StarsComponent } from '../stars/stars.component';
 import {AuthService} from '../../services/auth.service';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-commentaries',
   standalone: true,
-  imports: [CommonModule, StarsComponent, RouterLink],
+  imports: [CommonModule, StarsComponent, RouterLink, TranslatePipe],
   templateUrl: './commentaries.component.html',
   styleUrls: ['./commentaries.component.css']
 })

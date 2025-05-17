@@ -9,6 +9,7 @@ import { Firestore, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from '@ang
 import {DataService} from '../../services/data.service';
 import {ApiService} from '../../services/api.service';
 import {Subscription} from 'rxjs';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-page',
@@ -16,7 +17,8 @@ import {Subscription} from 'rxjs';
     ProfileComponent,
     SocialstatsComponent,
     CommentariesComponent,
-    CommonModule
+    CommonModule,
+    TranslatePipe
   ],
   templateUrl: './userprofile-page.component.html',
   styleUrl: './userprofile-page.component.css'

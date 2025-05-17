@@ -1,19 +1,32 @@
-import { Component, HostListener } from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import { CarouselComponent } from '../../components/carousel/carousel.component';
 import { CommonModule } from '@angular/common';
+import {TranslatePipe} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-categories-page',
   imports: [
-    CarouselComponent, CommonModule
+    CarouselComponent, CommonModule, TranslatePipe
   ],
   templateUrl: './categories-page.component.html',
   styleUrl: './categories-page.component.css'
 })
 export class CategoriesPageComponent {
   showDropdown: boolean = false;
-  allCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes', 'Aventura', 'Terror'];
-  defaultCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes'];
+  allCategories: string[] = [
+    "categories.action",
+    "categories.survival",
+    "categories.shooter",
+    "categories.sports",
+    "categories.adventure",
+    "categories.horror"
+  ];
+  defaultCategories: string[] = [
+    "categories.action",
+    "categories.survival",
+    "categories.shooter",
+    "categories.sports",
+  ];
   selectedCategories: string[] = [];
   isUsingDefault: boolean = true;
 

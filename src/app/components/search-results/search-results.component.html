@@ -28,6 +28,6 @@
 
   <!-- MENSAJE DE SIN RESULTADOS -->
   <p *ngIf="searchResults.length === 0 && showSearchResults">
-    No hay resultados de búsqueda
+    {{ 'search_results.no_results' | translate }}
   </p>
 </div>
