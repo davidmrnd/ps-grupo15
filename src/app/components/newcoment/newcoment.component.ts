@@ -138,7 +138,8 @@ export class NewcomentComponent implements OnInit, OnDestroy {
       videogameId: this.videogameId,
       content: this.commentContent,
       rating: this.rating,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      likes: []
     };
 
     try {

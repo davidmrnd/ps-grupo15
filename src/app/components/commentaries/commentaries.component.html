@@ -19,18 +19,52 @@
       <app-stars [rating]="comment.rating"></app-stars>
       <button
       *ngIf="comment.userId === currentUserId && type === 'user'"
-      (click)="navigateToEditCommentFromUserProfile(comment.videogame.slug)"
+      title="Editar comentario"
       class="edit-button"
-      title="{{ 'commentaries.edit_comment' | translate }}">
-      ✏️
+      (click)="navigateToEditCommentFromUserProfile(comment.videogame.slug)">
+      <i class="fas fa-pen"></i>
+    </button>
+      <button
+        *ngIf="comment.userId === currentUserId && type === 'videogame'"
+        class="edit-button"
+        (click)="navigateToEditCommentFromVideogame()"
+        title="Editar comentario">
+        <i class="fas fa-pen"></i>
+      </button>
+      <button
+        *ngIf="comment.userId === currentUserId && type === 'user'"
+        class="delete-button"
+        (click)="showDeleteModal(comment)"
+        title="Eliminar comentario">
+        <i class="far fa-trash-alt"></i>
       </button>
       <button
         *ngIf="comment.userId === currentUserId && type === 'videogame'"
-        (click)="navigateToEditCommentFromVideogame()"
-        class="edit-button"
-        title="{{ 'commentaries.edit_comment' | translate }}">
-        ✏️
+        class="delete-button"
+        (click)="showDeleteModal(comment)"
+        title="Eliminar comentario">
+        <i class="far fa-trash-alt"></i>
       </button>
     </aside>
+    <div *ngIf="comment.userId !== currentUserId" class="like-container">
+      <button
+        class="like-button"
+        [ngClass]="{'liked': comment.likes?.includes(currentUserId)}"
+        [disabled]="!currentUserId"
+        (click)="toggleLike(comment)">
+        <i class="fas fa-thumbs-up"></i>
+      </button>
+      <span class="like-count">{{ comment.likes?.length || 0 }}</span>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="selectedCommentToDelete" class="modal-overlay">
+  <div class="modal">
+    <h2>¿Estás seguro de que quieres eliminar este comentario?</h2>
+    <div class="modal-buttons">
+      <button (click)="confirmDelete()" class="confirm-button">Aceptar</button>
+      <button (click)="cancelDelete()" class="cancel-button">Cancelar</button>
+    </div>
   </div>
 </div>

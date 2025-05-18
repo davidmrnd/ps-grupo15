@@ -4,6 +4,7 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { StarsComponent } from '../stars/stars.component';
 import {AuthService} from '../../services/auth.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import { Firestore, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-commentaries',
@@ -18,15 +19,16 @@ export class CommentariesComponent implements OnInit {
   id!: string;
   currentUserId: string | null = null;
   private videogameSlug: string = "";
+  selectedCommentToDelete: any = null;
 
   private authService: AuthService = inject(AuthService);
   private route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
+  private firestore: Firestore = inject(Firestore);
 
   constructor() {}
 
   ngOnInit(): void {
-    // Obtener el ID del usuario autenticado
     this.authService.getCurrentUserObservable().subscribe((user) => {
       this.currentUserId = user ? user.uid : null;
     });
@@ -68,5 +70,48 @@ export class CommentariesComponent implements OnInit {
       }
       return 0;
     });
+  }
+
+  toggleLike(comment: any): void {
+    if (!this.currentUserId) {
+      alert('Debes iniciar sesión para dar like.');
+      return;
+    }
+
+    const commentDoc = doc(this.firestore, 'comments', comment.id);
+
+    if (comment.likes?.includes(this.currentUserId)) {
+      comment.likes = comment.likes.filter((id: string) => id !== this.currentUserId);
+    } else {
+      comment.likes = [...(comment.likes || []), this.currentUserId];
+    }
+
+    updateDoc(commentDoc, { likes: comment.likes }).catch((error) => {
+      console.error('Error al actualizar los likes:', error);
+    });
+  }
+
+  showDeleteModal(comment: any): void {
+    this.selectedCommentToDelete = comment;
+  }
+
+  confirmDelete(): void {
+    if (!this.selectedCommentToDelete) {
+      return;
+    }
+
+    const commentDoc = doc(this.firestore, 'comments', this.selectedCommentToDelete.id);
+    deleteDoc(commentDoc)
+      .then(() => {
+        this.comments = this.comments.filter(c => c.id !== this.selectedCommentToDelete.id);
+        this.selectedCommentToDelete = null;
+      })
+      .catch(error => {
+        console.error('Error al eliminar el comentario:', error);
+      });
+  }
+
+  cancelDelete(): void {
+    this.selectedCommentToDelete = null;
   }
 }

@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,13 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {Subscription} from 'rxjs';
 
+declare var grecaptcha: any;
+
+interface GrecaptchaWindow extends Window {
+  grecaptcha?: any;
+}
+declare const window: GrecaptchaWindow;
+
 @Component({
   selector: 'app-registration',
   imports: [FormsModule, CommonModule, RouterModule, TranslatePipe],
@@ -15,13 +22,15 @@ import {Subscription} from 'rxjs';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit, OnDestroy {
+export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
   email: string = '';
   password: string = '';
   name: string = '';
   username: string = '';
   errorMessage: string = '';
   termsAccepted: boolean = false;
+  siteKey: string = '6Lf5Xz0rAAAAAPiAcDxFX5clDaNiwY72_M0zfpxD';
+  captchaError: string = '';
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
@@ -34,6 +43,15 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   private genericErrorMessage = 'Ocurrió un error. Inténtalo de nuevo.';
 
   constructor() {}
+
+  ngAfterViewInit() {
+    // Espera a que el DOM esté listo y renderiza el captcha
+    if (window['grecaptcha']) {
+      window['grecaptcha'].render(document.querySelector('.g-recaptcha'), {
+        'sitekey': this.siteKey
+      });
+    }
+  }
 
   ngOnInit() {
     this.translationSubscription = this.translate.stream(_([
@@ -65,6 +83,16 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.errorMessage = this.completeAllFieldsMessage;
       return;
     }
+
+    // Validación del captcha
+    const captchaResponse = (document.querySelector('.g-recaptcha-response') as HTMLInputElement)?.value;
+    if (!captchaResponse) {
+      this.captchaError = 'Por favor, verifica que no eres un robot.';
+      return;
+    } else {
+      this.captchaError = '';
+    }
+
     this.checkUsernameAvailability(this.username).then((isUsernameAvailable) => {
       if (!isUsernameAvailable) {
         this.errorMessage = this.nonAvailableUsernameMessage;
@@ -83,6 +111,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           this.username = '';
           this.termsAccepted = false;
           this.errorMessage = '';
+          this.captchaError = '';
         })
         .catch(error => {
           this.errorMessage = error.message || this.genericErrorMessage;

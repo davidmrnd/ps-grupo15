@@ -61,6 +61,11 @@
         <small *ngIf="passwordInput.errors?.['required']">{{ 'sign_up.required_password' | translate }}</small>
         <small *ngIf="passwordInput.errors?.['minlength']">{{ 'sign_up.wrong_password_characters' | translate }}</small>
       </div>
+      
+      <div class="g-recaptcha" data-sitekey="6Lf5Xz0rAAAAAPiAcDxFX5clDaNiwY72_M0zfpxD"></div>
+      <div *ngIf="captchaError" class="error-message">
+        <small>{{ captchaError }}</small>
+      </div>
 
       <div class="checkbox-container">
         <input
