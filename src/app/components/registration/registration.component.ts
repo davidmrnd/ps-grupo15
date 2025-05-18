@@ -1,9 +1,16 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, AfterViewInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {DataService} from '../../services/data.service';
+
+declare var grecaptcha: any;
+
+interface GrecaptchaWindow extends Window {
+  grecaptcha?: any;
+}
+declare const window: GrecaptchaWindow;
 
 @Component({
   selector: 'app-registration',
@@ -12,18 +19,29 @@ import {DataService} from '../../services/data.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements AfterViewInit {
   email: string = '';
   password: string = '';
   name: string = '';
   username: string = '';
   errorMessage: string = '';
   termsAccepted: boolean = false;
+  siteKey: string = '6Lf5Xz0rAAAAAPiAcDxFX5clDaNiwY72_M0zfpxD';
+  captchaError: string = '';
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
 
   constructor() {}
+
+  ngAfterViewInit() {
+    // Espera a que el DOM esté listo y renderiza el captcha
+    if (window['grecaptcha']) {
+      window['grecaptcha'].render(document.querySelector('.g-recaptcha'), {
+        'sitekey': this.siteKey
+      });
+    }
+  }
 
   register() {
     if (!this.termsAccepted) {
@@ -35,6 +53,16 @@ export class RegistrationComponent {
       this.errorMessage = 'Por favor, completa todos los campos.';
       return;
     }
+
+    // Validación del captcha
+    const captchaResponse = (document.querySelector('.g-recaptcha-response') as HTMLInputElement)?.value;
+    if (!captchaResponse) {
+      this.captchaError = 'Por favor, verifica que no eres un robot.';
+      return;
+    } else {
+      this.captchaError = '';
+    }
+
     this.checkUsernameAvailability(this.username).then((isUsernameAvailable) => {
       if (!isUsernameAvailable) {
         this.errorMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
@@ -53,6 +81,7 @@ export class RegistrationComponent {
           this.username = '';
           this.termsAccepted = false;
           this.errorMessage = '';
+          this.captchaError = '';
         })
         .catch(error => {
           this.errorMessage = error.message || 'Ocurrió un error. Inténtalo de nuevo.';

@@ -50,6 +50,7 @@
       <button
         class="like-button"
         [ngClass]="{'liked': comment.likes?.includes(currentUserId)}"
+        [disabled]="!currentUserId"
         (click)="toggleLike(comment)">
         <i class="fas fa-thumbs-up"></i>
       </button>
