@@ -39,4 +39,5 @@ Thumbs.db
 
 src/environments/environment.ts
 /package-lock.json
-/backend/api/keys.json
+/backend/api/igdb_keys.json
+/backend/api/deepl_key.json

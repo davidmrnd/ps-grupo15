@@ -21,6 +21,7 @@ paths:
 
   /query:
     post:
+      tags: ["igdb"]
       description: "Realiza una consulta a la base de datos de IGDB."
       requestBody:
         content:
@@ -75,6 +76,7 @@ paths:
                 apiReponse: []
   /get-game/{id}:
     get:
+      tags: ["igdb"]
       description: "Obtiene toda la información de un videojuego disponible en la base de datos. Más información: "
       parameters:
         - in: path
@@ -129,6 +131,7 @@ paths:
 
   /search:
     post:
+      tags: ["igdb"]
       description: "Realiza una búsqueda utilizando el parámetro de búsquedas de la API de IGDB"
       requestBody:
         content:
@@ -187,6 +190,7 @@ paths:
 
   /cover/{id}/{sizeType}:
     get:
+      tags: ["igdb"]
       description: "Obtiene la URL de una portada de un videojuego en un tamaño especifico"
       parameters:
         - in: path
@@ -257,6 +261,7 @@ paths:
 
   /covers:
     post:
+      tags: ["igdb"]
       description: "Devuelve una lista de portadas a partir de una lista de IDs."
       requestBody:
         content:
@@ -310,6 +315,7 @@ paths:
 
   /get-game-profile/{id}:
     get:
+      tags: ["igdb"]
       description: "Devuelve la información para utilizarla en el perfil de un videojuego a partir de un ID numérico."
       parameters:
         - in: path
@@ -367,6 +373,7 @@ paths:
 
   /release-year/{releaseDate}:
     get:
+      tags: ["igdb"]
       description: "Devuelve el año de salida de un videojuego."
       parameters:
         - in: path
@@ -410,6 +417,7 @@ paths:
 
   /get-videogame-profile-from-slug/{slug}:
     get:
+      tags: ["igdb"]
       description: "Devuelve la información para el perfil del videojuego a partir de un nombre en la URL. Sin información sobre la portada."
       parameters:
         - in: path
@@ -451,6 +459,7 @@ paths:
 
   /get-videogame-info-from-id-list:
     post:
+      tags: ["igdb"]
       description: Devuelve el nombre, el slug e información de la portada de una lista de videojuegos
       requestBody:
         content:
@@ -524,6 +533,7 @@ paths:
 
   /get-platform-names-from-id-list:
     post:
+      tags: ["igdb"]
       description: Devuelve una lista de nombres de plataformas a partir de una lista de ID
       requestBody:
         content:
@@ -579,6 +589,7 @@ paths:
 
   /get-genre-names-from-id-list:
     post:
+      tags: ["igdb"]
       description: Devuelve una lista de nombres de géneros a partir de una lista de ID
       requestBody:
         content:
@@ -634,6 +645,7 @@ paths:
 
   /get-genre-and-platform-names-from-id-lists:
     post:
+      tags: ["igdb"]
       description: Devuelve una lista de nombres de géneros y plataformas a partir de dos listas de ID en una única petición
       requestBody:
         content:
@@ -713,6 +725,51 @@ paths:
                   }
                 ]
 
+  /translate/{language}:
+    post:
+      tags: [ "translation" ]
+      description: Traduce un texto del inglés a un idioma disponible
+      parameters:
+        - in: path
+          name: language
+          schema:
+            type: string
+            example: "es"
+          required: true
+          description: "Código del idioma de destino de la traducción"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: "Texto a traducir"
+              example:
+                text: "Good morning"
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TranslateResponse"
+              example:
+                status: 200
+                statusText: "OK"
+                translatedText: "Buenos días."
+        400:
+          description: "Petición no valida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TranslateResponse"
+              example:
+                status: 400
+                statusText: Bad Request
+                message: "Bad request, message: Value for 'target_lang' not supported."
+
 components:
   schemas:
     Response:
@@ -728,6 +785,19 @@ components:
         apiResponse:
           type: array
           description: "Respuesta de la API de IGDB"
+    TranslateResponse:
+      description: "Respuesta de los endpoints de traducción"
+      type: object
+      properties:
+        status:
+          type: integer
+          description: "Código de estado HTTP"
+        statusText:
+          type: string
+          description: "Mensaje de estado HTTP"
+        translatedText:
+          type: string
+          description: "Texto traducido"
     CoversResponse:
       description: "Respuesta del endpoint /covers"
       type: object

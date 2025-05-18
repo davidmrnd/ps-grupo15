@@ -1,9 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const deepl = require('deepl-node');
 const apiFunctions = require('./api/api.cjs');
-const keys = require('./api/keys.json');
+const igdbKeys = require('./api/igdb_keys.json');
+const translationKeys = require('./api/deepl_key.json');
 const app = express();
 const port = 4000;
+
+const deeplClient = new deepl.DeepLClient(translationKeys.key);
 
 app.use(express.json());
 app.use(cors());
@@ -14,8 +18,8 @@ app.get('/', (req, res) => {
 
 app.post('/query', (req, res) => {
     apiFunctions.makeQuery(
-        keys["client-id"],
-        keys["access-token"],
+        igdbKeys["client-id"],
+        igdbKeys["access-token"],
         req.body["query"],
         req.body["url"]
     )
@@ -26,8 +30,8 @@ app.post('/query', (req, res) => {
 
 app.get('/get-game/:id', (req, res) => {
     apiFunctions.getVideogameData(
-        keys["client-id"],
-        keys["access-token"],
+        igdbKeys["client-id"],
+        igdbKeys["access-token"],
         req.params.id,
     )
         .then(result => {
@@ -47,8 +51,8 @@ app.post('/search', (req, res) => {
     }
     else {
         apiFunctions.searchByGenreAndName(
-            keys["client-id"],
-            keys["access-token"],
+            igdbKeys["client-id"],
+            igdbKeys["access-token"],
             req.body["limit"],
             req.body["query"],
             req.body["genreList"],
@@ -82,8 +86,8 @@ app.get('/cover/:id/:sizeType', (req, res) => {
     }
     else {
         apiFunctions.getCoverURL(
-            keys["client-id"],
-            keys["access-token"],
+            igdbKeys["client-id"],
+            igdbKeys["access-token"],
             req.params.id,
             req.params.sizeType
         )
@@ -95,8 +99,8 @@ app.get('/cover/:id/:sizeType', (req, res) => {
 
 app.post('/covers', (req, res) => {
     apiFunctions.getCovers(
-        keys["client-id"],
-        keys["access-token"],
+        igdbKeys["client-id"],
+        igdbKeys["access-token"],
         req.body.idList
     )
         .then(result => {
@@ -106,8 +110,8 @@ app.post('/covers', (req, res) => {
 
 app.get('/get-game-profile/:id', (req, res) => {
     apiFunctions.getCoverAndGameInfo(
-        keys["client-id"],
-        keys["access-token"],
+        igdbKeys["client-id"],
+        igdbKeys["access-token"],
         req.params.id,
     )
         .then(result => {
@@ -136,8 +140,8 @@ app.get('/release-year/:releaseDate', (req, res) => {
 
 app.get('/get-videogame-profile-from-slug/:slug', (req, res) => {
     apiFunctions.getVideogameProfileFromSlug(
-        keys["client-id"],
-        keys["access-token"],
+        igdbKeys["client-id"],
+        igdbKeys["access-token"],
         req.params.slug,
       )
         .then((result) => {
@@ -147,8 +151,8 @@ app.get('/get-videogame-profile-from-slug/:slug', (req, res) => {
 
 app.post('/get-videogame-info-from-id-list', (req, res) => {
     apiFunctions.getVideogameInfoFromIdList(
-      keys["client-id"],
-      keys["access-token"],
+      igdbKeys["client-id"],
+      igdbKeys["access-token"],
       req.body.idList
     )
       .then(result => {
@@ -158,8 +162,8 @@ app.post('/get-videogame-info-from-id-list', (req, res) => {
 
 app.post('/get-platform-names-from-id-list', (req, res) => {
     apiFunctions.getPlatformNamesFromIdList(
-      keys["client-id"],
-      keys["access-token"],
+      igdbKeys["client-id"],
+      igdbKeys["access-token"],
       req.body.idList,
       "platforms"
     )
@@ -170,8 +174,8 @@ app.post('/get-platform-names-from-id-list', (req, res) => {
 
 app.post('/get-genre-names-from-id-list', (req, res) => {
     apiFunctions.getPlatformNamesFromIdList(
-      keys["client-id"],
-      keys["access-token"],
+      igdbKeys["client-id"],
+      igdbKeys["access-token"],
       req.body.idList,
       "genres"
     )
@@ -182,13 +186,31 @@ app.post('/get-genre-names-from-id-list', (req, res) => {
 
 app.post('/get-genre-and-platform-names-from-id-lists', (req, res) => {
     apiFunctions.getPlatformAndGenreNamesFromIdLists(
-      keys["client-id"],
-      keys["access-token"],
+      igdbKeys["client-id"],
+      igdbKeys["access-token"],
       req.body.genreIdList,
       req.body.platformIdList
     )
       .then(result => {
         res.status(result.status).send(result);
+      });
+});
+
+app.post('/translate/:language', (req, res) => {
+    deeplClient.translateText(req.body.text, "en", req.params.language)
+      .then(result => {
+        res.status(200).send({
+          status: 200,
+          statusText: 'OK',
+          translatedText: result.text
+        });
+      })
+      .catch(err => {
+        res.status(400).send({
+          status: 400,
+          statusText: 'Bad Request',
+          message: err.message
+        })
       });
 });
 
