@@ -49,6 +49,14 @@
     ></app-search-results>
 
     <div class="right-container">
+      <div class="dark-mode-switch">
+        <span class="icon-sun">☀️</span>
+        <label class="switch">
+          <input type="checkbox" [checked]="isDarkModeEnabled" (change)="toggleDarkMode()">
+          <span class="slider"></span>
+        </label>
+        <span class="icon-moon">🌙</span>
+      </div>
       <ng-container *ngIf="isLoggedIn; else guestButtons">
         <a [routerLink]="['/user', userId]"><button class="cta-button">{{ 'header.my_profile' | translate }}</button></a>
       </ng-container>

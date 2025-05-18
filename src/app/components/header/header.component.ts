@@ -25,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   apiService: ApiService = inject(ApiService);
   searchResults: any[] = [];
   showSearchResults: boolean = false;
+  isDarkModeEnabled: boolean = false;
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
@@ -36,6 +37,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isLoggedIn = !!user;
       this.userId = user?.uid || null;
     });
+
+    const darkMode = localStorage.getItem('dark-mode');
+    if (darkMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+      this.isDarkModeEnabled = true;
+    } else {
+      document.body.classList.remove('dark-mode');
+      this.isDarkModeEnabled = false;
+    }
 
     window.addEventListener("resize", (event) => {
       this.positionSearchResults();
@@ -104,6 +114,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       !searchContainerElement.contains(event.target as Node)
     ) {
       this.showSearchResults = false;
+    }
+  }
+
+  toggleDarkMode(): void {
+    this.isDarkModeEnabled = !this.isDarkModeEnabled;
+    if (this.isDarkModeEnabled) {
+      document.body.classList.add('dark-mode');
+      localStorage.setItem('dark-mode', 'enabled');
+    } else {
+      document.body.classList.remove('dark-mode');
+      localStorage.setItem('dark-mode', 'disabled');
     }
   }
 }
