@@ -37,7 +37,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userId = user?.uid || null;
     });
 
-    // Restaurar preferencia de dark mode
     const darkMode = localStorage.getItem('dark-mode');
     if (darkMode === 'enabled') {
       document.body.classList.add('dark-mode');

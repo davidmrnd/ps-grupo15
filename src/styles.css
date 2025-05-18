@@ -10,8 +10,64 @@ body {
   background-color: #f0ece3;
   color: #000000;
   transition: background-color 0.3s, color 0.3s;
-
   padding: 0;
+}
+
+h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+h2 {
+  font-size: 18px;
+  color: #706b6b;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+p {
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+button {
+  background-color: #baafaf;
+  color: #000000;
+  border: 1px solid #cccccc;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.header-container .cta-button,
+.header-container .menu-button {
+  background-color: #f0f0f0;
+  color: #000000;
+  border: none;
+}
+
+.header-container .dark-mode-toggle {
+  background-color: transparent;
+  border: none;
+}
+
+.header-container .nav-links a {
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.comment,
+.user-info {
+  background-color: #e5e5e5;
+  border-radius: 10px;
+  color: #000000;
+}
+
+.nav-links a,
+.cta-button,
+.login-text {
+  color: inherit;
 }
 
 body.dark-mode {
@@ -34,40 +90,12 @@ body.dark-mode .column p {
   color: #ffffff !important;
 }
 
-h1 {
-  font-size: 34px;
-  margin-bottom: 10px;
-  text-align: left;
-}
-
-h2 {
-  font-size: 18px;
-  color: #706b6b;
-  text-transform: uppercase;
-  font-weight: bold;
-}
-
-p {
-  font-size: 18px;
-  margin-bottom: 5px;
-  text-align: left;
-}
-
-/* Estilos generales para botones */
-button {
-  background-color: #baafaf;
-  color: #000000;
-  border: 1px solid #cccccc;
-  transition: background-color 0.3s, color 0.3s;
-}
-
 body.dark-mode button {
   background-color: #ffe066;
   color: #181818;
   border: none;
 }
 
-/* Tarjetas de información (plataformas, géneros, etc.) */
 body.dark-mode .info-card,
 body.dark-mode .platforms,
 body.dark-mode .genres {
@@ -76,30 +104,10 @@ body.dark-mode .genres {
   border: 1px solid #333 !important;
 }
 
-/* Botón principal */
 body.dark-mode .cta-button {
   background-color: #ffe066;
   color: #181818;
   border: none;
-}
-
-/* Estilos específicos para los botones del header */
-.header-container .cta-button,
-.header-container .menu-button {
-  background-color: #f0f0f0;
-  color: #000000;
-  border: none;
-}
-
-.header-container .dark-mode-toggle {
-  background-color: transparent;
-  border: none;
-}
-
-.header-container .nav-links a {
-  color: #000000;
-  text-decoration: none;
-  transition: color 0.3s;
 }
 
 body.dark-mode .header-container .cta-button,
@@ -114,7 +122,6 @@ body.dark-mode .header-container .nav-links a {
   transition: color 0.3s;
 }
 
-/* Buscador */
 body.dark-mode .search-box,
 body.dark-mode .search-bar {
   background-color: #31313C;
@@ -122,9 +129,11 @@ body.dark-mode .search-bar {
   border: 1px solid #444;
   border: none;
 }
+
 body.dark-mode .welcome-description {
   color: #ffffff !important;
 }
+
 body.dark-mode .form-box {
   background-color: #31313C;
   color: #ffffff;
@@ -135,7 +144,7 @@ body.dark-mode .search-container {
   background-color: #31313C;
   border-color: rgb(79, 79, 79);
 }
-/* Logo en modo oscuro */
+
 body.dark-mode .image-container {
   content: url('/assets/images/logo-no-background-darkmode.png');
   width: 400px;
@@ -149,7 +158,6 @@ body.dark-mode h2 {
   color: #B9B9B9;
 }
 
-/* Comentarios y usuarios */
 body.dark-mode .comment,
 body.dark-mode .user-info {
   background-color: #31313C;
@@ -180,21 +188,6 @@ body.dark-mode .like-count {
 
 body.dark-mode .search-toggle {
   background-color: #31313C;
-}
-
-/* Fondo blanco para comentarios y usuarios en modo claro */
-.comment,
-.user-info {
-  background-color: #e5e5e5;
-  border-radius: 10px;
-  color: #000000;
-}
-
-/* Estilos para otros elementos de texto */
-.nav-links a,
-.cta-button,
-.login-text {
-  color: inherit;
 }
 
 body.dark-mode .nav-links a,
