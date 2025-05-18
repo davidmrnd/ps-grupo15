@@ -26,6 +26,13 @@
         [(ngModel)]="searchText"
         (keydown)="onKeyDowmInSearchInput($event)"
       />
+      <div class="search-toggle">
+        <input type="radio" id="user" name="searchType" value="user" [(ngModel)]="searchType" />
+        <label for="user">{{ 'header.toogle.user' | translate }}</label>
+        <input type="radio" id="videogame" name="searchType" value="videogame" [(ngModel)]="searchType" />
+        <label for="videogame">{{ 'header.toogle.videogame' | translate }}</label>
+        <div class="toggle-slider"></div>
+      </div>
       <button class="search-button" (click)="onSearchButtonClicked()">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="9" cy="9" r="8" stroke="black" stroke-width="2"/>
@@ -33,13 +40,7 @@
         </svg>
       </button>
     </div>
-    <div class="search-toggle">
-      <input type="radio" id="user" name="searchType" value="user" [(ngModel)]="searchType" />
-      <label for="user">{{ 'header.toogle.user' | translate }}</label>
-      <input type="radio" id="videogame" name="searchType" value="videogame" [(ngModel)]="searchType" />
-      <label for="videogame">{{ 'header.toogle.videogame' | translate }}</label>
-      <div class="toggle-slider"></div>
-    </div>
+
     <app-search-results
       [searchResults]="searchResults"
       [searchType]="searchType"

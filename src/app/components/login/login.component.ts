@@ -1,10 +1,11 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import { marker as _ } from '@colsen1991/ngx-translate-extract-marker';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { marker as _ } from '@colsen1991/ngx-translate-extract-marker';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
   private translate: TranslateService = inject(TranslateService);
 
+  private translationSubscription: Subscription | undefined;
   private completeFieldsMessage: string = "Por favor, completa todos los campos.";
   private userNotFoundMessage: string = "Usuario no encontrado.";
   private wrongPasswordMessage: string = "Contraseña incorrecta.";
@@ -34,7 +36,7 @@ export class LoginComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.translate.get(_([
+    this.translationSubscription = this.translate.stream(_([
       "login.messages.complete_fields",
       "login.messages.user_not_found",
       "login.messages.wrong_password",
@@ -49,6 +51,12 @@ export class LoginComponent implements OnInit {
       this.invalidEmailMessage = translations["login.messages.invalid_email"];
       this.emailSentMessage = translations["login.messages.email_sent"];
     });
+  }
+
+  ngOnDestroy() {
+    if (this.translationSubscription) {
+      this.translationSubscription.unsubscribe();
+    }
   }
 
   login() {

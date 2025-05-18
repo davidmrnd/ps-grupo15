@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {RouterModule, Router, ActivatedRoute} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,7 @@ import { Firestore, collection, query, where, getDocs, updateDoc, doc, addDoc, d
 import {ApiService} from '../../services/api.service';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-newcoment',
@@ -17,7 +18,7 @@ import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
   templateUrl: './newcoment.component.html',
   styleUrls: ['./newcoment.component.css']
 })
-export class NewcomentComponent implements OnInit {
+export class NewcomentComponent implements OnInit, OnDestroy {
   user: any = null;
   commentContent: string = '';
   rating: number = 0;
@@ -38,6 +39,7 @@ export class NewcomentComponent implements OnInit {
   protected modifyCommentText = "Modificar Comentario";
   protected sendCommentText = "Enviar Comentario";
 
+  private translateSubscription: Subscription | undefined;
   private successfullyDeletedCommentMessage = 'Comentario eliminado con éxito.';
   private genericDeletionErrorMessage = 'Hubo un error al eliminar el comentario. Inténtalo de nuevo.';
   private completeAllFieldsMessage = 'Por favor, completa todos los campos antes de enviar el comentario.';
@@ -49,7 +51,7 @@ export class NewcomentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.translate.get(_([
+    this.translateSubscription = this.translate.stream(_([
       "new_comment.modify_comment",
       "new_comment.send_comment",
       "new_comment.messages.successfully_deleted",
@@ -86,6 +88,12 @@ export class NewcomentComponent implements OnInit {
         }
       });
     });
+  }
+
+  ngOnDestroy() {
+    if (this.translateSubscription) {
+      this.translateSubscription.unsubscribe();
+    }
   }
 
   private setProfileIcon() {

@@ -1,5 +1,11 @@
 <footer>
   <div class="footer-container">
+    <label for="language-selector" class="selector-label">{{ 'header.language' | translate }}</label>
+    <select id="language-selector" class="selector" [(ngModel)]="selectedLanguage" (change)="changeLanguage()">
+      <option *ngFor="let language of availableLanguages" [value]="getLanguageCode(language)">
+        {{ language }}
+      </option>
+    </select>
     <div class="items">
       <a href="#">
         <div class="item" id="instagram">

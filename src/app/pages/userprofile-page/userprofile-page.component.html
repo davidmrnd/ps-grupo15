@@ -24,5 +24,9 @@
 <main *ngIf="this.showErrorMessage" class="error-message">
   <h1>Ups...</h1>
   <p>{{ 'user_profile_page.error.invalid_user' | translate }}</p>
-  <p [innerHTML]="'user_profile_page.error.go_to_home' | translate"></p>
+  <p>
+    {{ 'user_profile_page.error.go_to_home.1' | translate }}<button
+    (click)="navigateToRoot()" class="follow-button" id="return-to-root-button">
+    {{ 'user_profile_page.error.go_to_home.2' | translate }}</button>
+  </p>
 </main>

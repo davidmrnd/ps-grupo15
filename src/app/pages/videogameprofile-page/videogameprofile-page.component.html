@@ -12,5 +12,9 @@
 <main *ngIf="this.showErrorMessage" class="error-message">
   <h1>Ups...</h1>
   <p>{{ 'videogame_profile_page.error.invalid_game' | translate }}</p>
-  <p [innerHTML]="'videogame_profile_page.error.go_to_home' | translate"></p>
+  <p>
+    {{ 'videogame_profile_page.error.go_to_home.1' | translate }}<button
+    class="add-comment-button" id="return-to-explore-button"
+    (click)="navigateToExplore()">{{ 'videogame_profile_page.error.go_to_home.2' | translate }}</button>
+  </p>
 </main>

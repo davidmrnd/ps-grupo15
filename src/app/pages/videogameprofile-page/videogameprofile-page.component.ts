@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
@@ -10,6 +10,7 @@ import {ApiService} from '../../services/api.service';
 import {collection, Firestore, getDocs, query, where} from '@angular/fire/firestore';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-videogameprofile-page',
@@ -24,7 +25,7 @@ import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
     TranslatePipe
   ]
 })
-export class VideogamePageComponent implements OnInit {
+export class VideogamePageComponent implements OnInit, OnDestroy {
   comments: any[] = [];
   averageRating: number = 0;
   videogameId!: string;
@@ -44,13 +45,14 @@ export class VideogamePageComponent implements OnInit {
   private router: Router = inject(Router);
   private translate: TranslateService = inject(TranslateService);
 
+  private translationSubscription: Subscription | undefined;
   protected modifyReviewText: string = 'Modificar valoración';
   protected addReviewText: string = 'Añadir valoración';
 
   constructor() {}
 
   ngOnInit(): void {
-    this.translate.get(_([
+    this.translationSubscription = this.translate.stream(_([
       "videogame_profile_page.modify_review",
       "videogame_profile_page.add_review",
     ])).subscribe((translations: {[key: string]: string}) => {
@@ -99,6 +101,12 @@ export class VideogamePageComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.translationSubscription) {
+      this.translationSubscription.unsubscribe();
+    }
   }
 
   loadComments(): void {

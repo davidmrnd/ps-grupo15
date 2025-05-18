@@ -6,11 +6,18 @@
 <main *ngIf="this.showErrorMessage && this.showErrorMessageType === 'invalid-game'" class="error-message">
   <h1>Ups...</h1>
   <p>{{ 'new_comment_page.error.invalid_game_message' | translate }}</p>
-  <p [innerHTML]="'new_comment_page.error.explore_categories' | translate"></p>
+  <p>
+    {{ 'new_comment_page.error.go_to_categories.1' | translate }}<button
+    (click)="navigateToExplore()">{{ 'new_comment_page.error.go_to_categories.2' | translate }}</button>
+  </p>
 </main>
 
 <main *ngIf="this.showErrorMessage && this.showErrorMessageType === 'no-logged-in'" class="error-message">
   <h1>Ups...</h1>
   <p>{{ 'new_comment_page.error.no_logged_in' | translate }}</p>
-  <p [innerHTML]="'new_comment_page.go_to_login_or_sign_up' | translate"></p>
+  <p>
+    <button (click)="navigateToLogin()">{{ 'new_comment_page.error.login_or_signup.1' | translate }}</button>
+    {{ 'new_comment_page.error.login_or_signup.or' | translate }} <button
+    (click)="navigateToRegister()">{{ 'new_comment_page.error.login_or_signup.2' | translate }}</button>
+  </p>
 </main>

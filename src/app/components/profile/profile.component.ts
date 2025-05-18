@@ -1,12 +1,13 @@
 import { DataService } from '../../services/data.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {Component, inject, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import { getAuth, onAuthStateChanged  } from 'firebase/auth';
 import {FormsModule} from '@angular/forms';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
-export class ProfileComponent implements OnInit, OnChanges {
+export class ProfileComponent implements OnInit, OnChanges, OnDestroy {
   @Input() type: string = '';
   @Input() userInfo: any = null;
   @Input() gameInfo: any = null;
@@ -41,6 +42,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   private dataService: DataService = inject(DataService);
   private translate: TranslateService = inject(TranslateService);
 
+  private translationSubscription: Subscription | undefined;
   private emptyNameAndUsernameMessage = 'El nombre y el nombre de usuario no pueden estar vacíos.';
   private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
   private genericSavingProfileMessage = 'Hubo un error al guardar los cambios. Inténtalo de nuevo.';
@@ -49,7 +51,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   constructor() {}
 
   ngOnInit(): void {
-    this.translate.get(_([
+    this.translationSubscription = this.translate.stream(_([
       "profile.message.empty_name_and_username_message",
       "profile.message.non_available_username_message",
       "profile.message.generic_saving_message",
@@ -65,6 +67,12 @@ export class ProfileComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["userInfo"]) {
       this.prepareUserProfile();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.translationSubscription) {
+      this.translationSubscription.unsubscribe();
     }
   }
 

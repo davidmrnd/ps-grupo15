@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import {DataService} from '../../services/data.service';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +15,7 @@ import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
   email: string = '';
   password: string = '';
   name: string = '';
@@ -26,6 +27,7 @@ export class RegistrationComponent implements OnInit {
   private dataService: DataService = inject(DataService);
   private translate: TranslateService = inject(TranslateService);
 
+  private translationSubscription: Subscription | undefined;
   private mustAcceptTOSMessage = 'Debes aceptar los términos y condiciones.';
   private completeAllFieldsMessage = 'Por favor, completa todos los campos.';
   private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
@@ -34,7 +36,7 @@ export class RegistrationComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.translate.get(_([
+    this.translationSubscription = this.translate.stream(_([
       "sign_up.must_accept_tos",
       "sign_up.message.complete_all_fields",
       "sign_up.message.non_available_username",
@@ -45,6 +47,12 @@ export class RegistrationComponent implements OnInit {
       this.nonAvailableUsernameMessage = translations["sign_up.message.non_available_username"];
       this.genericErrorMessage = translations["sign_up.message.generic_error_message"];
     });
+  }
+
+  ngOnDestroy() {
+    if (this.translationSubscription) {
+      this.translationSubscription.unsubscribe();
+    }
   }
 
   register() {
