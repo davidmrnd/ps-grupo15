@@ -15,12 +15,13 @@ import {NgForOf} from "@angular/common";
 })
 export class FooterComponent {
   protected availableLanguages: string[] = ["Español (es)", "English (en)"];
-  protected selectedLanguage: string = "es";
+  protected selectedLanguage: string = localStorage.getItem('lang') || 'es';
 
   private translate: TranslateService = inject(TranslateService);
 
   changeLanguage() {
     this.translate.use(this.selectedLanguage);
+    localStorage.setItem('lang', this.selectedLanguage);
   }
 
   getLanguageCode(language: string) {
