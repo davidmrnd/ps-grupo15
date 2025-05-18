@@ -61,7 +61,7 @@
         <small *ngIf="passwordInput.errors?.['required']">{{ 'sign_up.required_password' | translate }}</small>
         <small *ngIf="passwordInput.errors?.['minlength']">{{ 'sign_up.wrong_password_characters' | translate }}</small>
       </div>
-      
+
       <div class="g-recaptcha" data-sitekey="6Lf5Xz0rAAAAAPiAcDxFX5clDaNiwY72_M0zfpxD"></div>
       <div *ngIf="captchaError" class="error-message">
         <small>{{ captchaError }}</small>
@@ -75,7 +75,12 @@
           [(ngModel)]="termsAccepted"
           name="termsAccepted">
         <label for="checkbox">
-          <div [innerHTML]="'sign_up.checbox_text' | translate"></div>
+          <div>
+            {{ 'sign_up.accept_tos.1' | translate }}
+            <span class="link" (click)="onPoliciesClick()">{{ 'sign_up.accept_tos.2' | translate }}</span>
+            {{ 'sign_up.accept_tos.3' | translate }}
+            <span class="link" (click)="onPoliciesClick()">{{ 'sign_up.accept_tos.4' | translate }}</span>.
+          </div>
         </label>
       </div>
       <div *ngIf="!termsAccepted && registrationForm.submitted" class="error-message">

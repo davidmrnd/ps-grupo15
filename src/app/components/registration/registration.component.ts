@@ -41,6 +41,7 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
   private completeAllFieldsMessage = 'Por favor, completa todos los campos.';
   private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
   private genericErrorMessage = 'Ocurrió un error. Inténtalo de nuevo.';
+  private failedCaptchaMessage = 'Por favor, verifica que no eres un robot.';
 
   constructor() {}
 
@@ -56,14 +57,16 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     this.translationSubscription = this.translate.stream(_([
       "sign_up.must_accept_tos",
-      "sign_up.message.complete_all_fields",
-      "sign_up.message.non_available_username",
-      "sign_up.message.generic_error_message",
+      "sign_up.messages.complete_all_fields",
+      "sign_up.messages.non_available_username",
+      "sign_up.messages.generic_error_message",
+      "sign_up.messages.failed_captcha",
     ])).subscribe((translations: {[key:string]: string}) => {
       this.mustAcceptTOSMessage = translations["sign_up.must_accept_tos"];
-      this.completeAllFieldsMessage = translations["sign_up.message.complete_all_fields"];
-      this.nonAvailableUsernameMessage = translations["sign_up.message.non_available_username"];
-      this.genericErrorMessage = translations["sign_up.message.generic_error_message"];
+      this.completeAllFieldsMessage = translations["sign_up.messages.complete_all_fields"];
+      this.nonAvailableUsernameMessage = translations["sign_up.messages.non_available_username"];
+      this.genericErrorMessage = translations["sign_up.messages.generic_error_message"];
+      this.failedCaptchaMessage = translations["sign_up.messages.failed_captcha"];
     });
   }
 
@@ -87,7 +90,7 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
     // Validación del captcha
     const captchaResponse = (document.querySelector('.g-recaptcha-response') as HTMLInputElement)?.value;
     if (!captchaResponse) {
-      this.captchaError = 'Por favor, verifica que no eres un robot.';
+      this.captchaError = this.failedCaptchaMessage;
       return;
     } else {
       this.captchaError = '';

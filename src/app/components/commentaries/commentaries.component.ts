@@ -1,10 +1,12 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, inject, Input, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { StarsComponent } from '../stars/stars.component';
 import {AuthService} from '../../services/auth.service';
-import {TranslatePipe} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import { Firestore, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import {Subscription} from 'rxjs';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
   selector: 'app-commentaries',
@@ -13,7 +15,7 @@ import { Firestore, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
   templateUrl: './commentaries.component.html',
   styleUrls: ['./commentaries.component.css']
 })
-export class CommentariesComponent implements OnInit {
+export class CommentariesComponent implements OnInit, OnDestroy {
   @Input() type: string = '';
   @Input() comments: any[] = [];
   id!: string;
@@ -25,10 +27,18 @@ export class CommentariesComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
   private firestore: Firestore = inject(Firestore);
+  private translate: TranslateService = inject(TranslateService);
+
+  private translationSubscription: Subscription | undefined;
+  private shouldLogInMessage = 'Debes iniciar sesión para dar like.';
 
   constructor() {}
 
   ngOnInit(): void {
+    this.translationSubscription = this.translate.stream(_("commentaries.alert.should_log_in"))
+      .subscribe((translation: string) => {
+        this.shouldLogInMessage = translation;
+      });
     this.authService.getCurrentUserObservable().subscribe((user) => {
       this.currentUserId = user ? user.uid : null;
     });
@@ -37,6 +47,13 @@ export class CommentariesComponent implements OnInit {
       this.videogameSlug = params["slug"];
     });
   }
+
+  ngOnDestroy(): void {
+    if (this.translationSubscription) {
+      this.translationSubscription.unsubscribe();
+    }
+  }
+
   setProfileIcon(comment: any){
     if (comment.userId === this.currentUserId) {
       const localImage = localStorage.getItem(`profile-image-${comment.userId}`);
@@ -74,7 +91,7 @@ export class CommentariesComponent implements OnInit {
 
   toggleLike(comment: any): void {
     if (!this.currentUserId) {
-      alert('Debes iniciar sesión para dar like.');
+      alert(this.shouldLogInMessage);
       return;
     }
 
