@@ -5,7 +5,7 @@
   </div>
   <div class="column">
     <h1>Seguidores</h1>
-    <p id="followers" (click)="toggleFollowersDropdown()">{{ followerList.length }}</p>
+    <p id="followers" class="clickable-number" (click)="toggleFollowersDropdown()">{{ followerList.length }}</p>
     <div *ngIf="showFollowersDropdown" class="modal">
       <div class="modal-content">
         <h2>Seguidores</h2>
@@ -20,7 +20,7 @@
   </div>
   <div class="column">
     <h1>Seguidos</h1>
-    <p id="following" (click)="toggleFollowingDropdown()">{{ followingList.length }}</p>
+    <p id="following" class="clickable-number" (click)="toggleFollowingDropdown()">{{ followingList.length }}</p>
     <div *ngIf="showFollowingDropdown" class="modal">
       <div class="modal-content">
         <h2>Seguidos</h2>
