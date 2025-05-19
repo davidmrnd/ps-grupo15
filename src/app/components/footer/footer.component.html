@@ -30,7 +30,7 @@
     </div>
     <div class="title">Copyright &copy; 2025</div>
     <div class="title">{{ 'footer.tos' | translate }}</div>
-    <button class="help-button" (click)="openHelpModal()">Ayuda</button>
+    <button class="help-button" (click)="openHelpModal()">{{ 'footer.help' | translate }}</button>
   </div>
 
   <!-- Modal de ayuda -->
@@ -39,14 +39,14 @@
       <button class="close-help-modal" (click)="closeHelpModal()">&times;</button>
       <div class="help-carousel">
         <div class="help-step">
-          <img *ngIf="helpSteps[currentHelpStep].image" [src]="helpSteps[currentHelpStep].image" alt="Paso {{currentHelpStep + 1}}" class="help-image">
+          <img *ngIf="helpSteps[currentHelpStep].image" [src]="helpSteps[currentHelpStep].image" alt="{{ 'footer.step' | translate }} {{currentHelpStep + 1}}" class="help-image">
           <p class="help-text">{{ helpSteps[currentHelpStep].text }}</p>
         </div>
         <div class="help-controls">
           <button (click)="prevHelpStep()" [disabled]="currentHelpStep === 0">&lt;</button>
           <span>{{currentHelpStep + 1}} / {{helpSteps.length}}</span>
           <button (click)="nextHelpStep()" *ngIf="currentHelpStep < helpSteps.length - 1">&gt;</button>
-          <button (click)="closeHelpModal()" *ngIf="currentHelpStep === helpSteps.length - 1" class="start-tour-btn">¡Empezar!</button>
+          <button (click)="closeHelpModal()" *ngIf="currentHelpStep === helpSteps.length - 1" class="start-tour-btn">{{ 'footer.start' | translate }}</button>
         </div>
       </div>
     </div>

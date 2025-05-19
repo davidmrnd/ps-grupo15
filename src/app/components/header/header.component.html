@@ -59,13 +59,13 @@
       </div>
       <ng-container *ngIf="isLoggedIn; else guestButtons">
         <div class="user-dropdown-container" (click)="toggleUserDropdown()" tabindex="0">
-          <img class="profile-img" [src]="userProfileIcon" alt="Perfil">
+          <img class="profile-img" [src]="userProfileIcon" alt="{{ 'header.my_profile' | translate }}">
           <div class="user-dropdown" *ngIf="showUserDropdown">
             <a [routerLink]="['/user', userId]" (click)="closeUserDropdown()">
-              <i class="fas fa-user"></i> Mi Perfil
+              <i class="fas fa-user"></i> {{ 'header.my_profile' | translate }}
             </a>
             <button (click)="logout(); closeUserDropdown()" class="logout-dropdown-btn logout-red">
-              <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+              <i class="fas fa-sign-out-alt"></i> {{ 'header.log_out' | translate }}
             </button>
           </div>
         </div>

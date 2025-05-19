@@ -1,8 +1,10 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import { CommonModule } from '@angular/common';
+import {Subscription} from 'rxjs';
+import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 
 @Component({
   selector: 'app-footer',
@@ -15,11 +17,12 @@ import { CommonModule } from '@angular/common';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
-export class FooterComponent {
+export class FooterComponent implements OnInit, OnDestroy {
   protected availableLanguages: string[] = ["Español (es)", "English (en)"];
   protected selectedLanguage: string = localStorage.getItem('lang') || 'es';
 
   private translate: TranslateService = inject(TranslateService);
+  private translationSubscription: Subscription | undefined;
 
   showHelpModal = false;
   currentHelpStep = 0;
@@ -45,6 +48,45 @@ export class FooterComponent {
       text: 'Sigue a otros usuarios y consulta sus valoraciones desde la sección "Siguiendo".'
     }
   ];
+
+  ngOnInit(): void {
+    this.translationSubscription = this.translate.stream(_([
+      "footer.tutorial.step_1",
+      "footer.tutorial.step_2",
+      "footer.tutorial.step_3",
+      "footer.tutorial.step_4",
+      "footer.tutorial.step_5"
+    ])).subscribe((translations: {[key: string]: string}) => {
+      this.helpSteps = [
+        {
+          image: '/assets/help/step1.png',
+          text: translations["footer.tutorial.step_1"]
+        },
+        {
+          image: '/assets/help/step2.png',
+          text: translations["footer.tutorial.step_2"]
+        },
+        {
+          image: '/assets/help/step3.png',
+          text: translations["footer.tutorial.step_3"]
+        },
+        {
+          image: '/assets/help/step4.png',
+          text: translations["footer.tutorial.step_4"]
+        },
+        {
+          image: '/assets/help/step5.png',
+          text: translations["footer.tutorial.step_5"]
+        }
+      ];
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.translationSubscription) {
+      this.translationSubscription.unsubscribe();
+    }
+  }
 
   openHelpModal() {
     this.showHelpModal = true;

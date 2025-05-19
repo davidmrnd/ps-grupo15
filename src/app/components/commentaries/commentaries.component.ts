@@ -47,9 +47,25 @@ export class CommentariesComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
-    this.translationSubscription = this.translate.stream(_("commentaries.alert.should_log_in"))
-      .subscribe((translation: string) => {
-        this.shouldLogInMessage = translation;
+    this.translationSubscription = this.translate.stream(_([
+      "commentaries.alert.should_log_in",
+      "commentaries.sort.more_recent",
+      "commentaries.sort.more_old",
+      "commentaries.sort.more_stars",
+      "commentaries.sort.less_stars",
+      "commentaries.sort.more_voted",
+      "commentaries.sort.less_voted",
+    ]))
+      .subscribe((translations: {[key: string]: string}) => {
+        this.shouldLogInMessage = translations["commentaries.alert.should_log_in"];
+        this.orderOptions = [
+          {value: "recentFirst", text: translations["commentaries.sort.more_recent"]},
+          {value: "oldFirst", text: translations["commentaries.sort.more_old"]},
+          {value: "mostStars", text: translations["commentaries.sort.more_stars"]},
+          {value: "leastStars", text: translations["commentaries.sort.less_stars"]},
+          {value: "mostVoted", text: translations["commentaries.sort.more_voted"]},
+          {value: "leastVoted", text: translations["commentaries.sort.less_voted"]},
+        ];
       });
     this.authService.getCurrentUserObservable().subscribe((user) => {
       this.currentUserId = user ? user.uid : null;

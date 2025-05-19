@@ -1,5 +1,5 @@
 <div class="comments-container">
-  <label for="order" class="order-label">Mostrar primero:</label>
+  <label for="order" class="order-label">{{ 'commentaries.sort.show_first' | translate }}</label>
   <select id="order" class="order-select" [(ngModel)]="selectedOrder" (change)="sortComments()">
     <option *ngFor="let option of orderOptions" [value]="option.value">
       {{option.text}}
