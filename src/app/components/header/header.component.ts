@@ -8,6 +8,7 @@ import {ApiService} from '../../services/api.service';
 import {SearchResultsComponent} from '../search-results/search-results.component';
 import {DataService} from '../../services/data.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
+  private storageService: StorageService = inject(StorageService);
 
   constructor() {}
 
@@ -40,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.userId = user?.uid || null;
 
       if (user && user.uid) {
-        const localImage = localStorage.getItem(`profile-image-${user.uid}`);
+        const localImage = this.storageService.getItem(`profile-image-${user.uid}`);
         if (localImage) {
           this.userProfileIcon = localImage;
         } else {
@@ -57,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     });
 
-    const darkMode = localStorage.getItem('dark-mode');
+    const darkMode = this.storageService.getItem('dark-mode');
     if (darkMode === 'enabled') {
       document.body.classList.add('dark-mode');
       this.isDarkModeEnabled = true;
@@ -150,10 +152,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isDarkModeEnabled = !this.isDarkModeEnabled;
     if (this.isDarkModeEnabled) {
       document.body.classList.add('dark-mode');
-      localStorage.setItem('dark-mode', 'enabled');
+      this.storageService.setItem('dark-mode', 'enabled');
     } else {
       document.body.classList.remove('dark-mode');
-      localStorage.setItem('dark-mode', 'disabled');
+      this.storageService.setItem('dark-mode', 'disabled');
     }
   }
 

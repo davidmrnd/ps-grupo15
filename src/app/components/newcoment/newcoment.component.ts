@@ -10,6 +10,7 @@ import {ApiService} from '../../services/api.service';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {Subscription} from 'rxjs';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-newcoment',
@@ -35,6 +36,7 @@ export class NewcomentComponent implements OnInit, OnDestroy {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private apiService: ApiService = inject(ApiService);
   private translate: TranslateService = inject(TranslateService);
+  private storageService: StorageService = inject(StorageService);
 
   protected modifyCommentText = "Modificar Comentario";
   protected sendCommentText = "Enviar Comentario";
@@ -97,7 +99,7 @@ export class NewcomentComponent implements OnInit, OnDestroy {
   }
 
   private setProfileIcon() {
-    const localImage = localStorage.getItem(`profile-image-${this.user.id}`);
+    const localImage = this.storageService.getItem(`profile-image-${this.user.id}`);
     if (localImage){
       this.user.profileicon = localImage;
     }

@@ -8,6 +8,7 @@ import { Firestore, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-commentaries',
@@ -40,6 +41,7 @@ export class CommentariesComponent implements OnInit, OnDestroy {
   private router: Router = inject(Router);
   private firestore: Firestore = inject(Firestore);
   private translate: TranslateService = inject(TranslateService);
+  private storageService: StorageService = inject(StorageService);
 
   private translationSubscription: Subscription | undefined;
   private shouldLogInMessage = 'Debes iniciar sesión para dar like.';
@@ -91,7 +93,7 @@ export class CommentariesComponent implements OnInit, OnDestroy {
 
   setProfileIcon(comment: any){
     if (comment.userId === this.currentUserId) {
-      const localImage = localStorage.getItem(`profile-image-${comment.userId}`);
+      const localImage = this.storageService.getItem(`profile-image-${comment.userId}`);
       return localImage || comment.user?.profileicon;
     }
     return comment.user?.profileicon;

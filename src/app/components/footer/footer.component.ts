@@ -5,6 +5,7 @@ import {NgForOf} from "@angular/common";
 import { CommonModule } from '@angular/common';
 import {Subscription} from 'rxjs';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-footer',
@@ -18,10 +19,12 @@ import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit, OnDestroy {
-  protected availableLanguages: string[] = ["Español (es)", "English (en)"];
-  protected selectedLanguage: string = localStorage.getItem('lang') || 'es';
-
   private translate: TranslateService = inject(TranslateService);
+  private storageService: StorageService = inject(StorageService);
+
+  protected availableLanguages: string[] = ["Español (es)", "English (en)"];
+  protected selectedLanguage: string = this.storageService.getItem('lang') || 'es';
+
   private translationSubscription: Subscription | undefined;
 
   showHelpModal = false;
@@ -112,7 +115,7 @@ export class FooterComponent implements OnInit, OnDestroy {
 
   changeLanguage() {
     this.translate.use(this.selectedLanguage);
-    localStorage.setItem('lang', this.selectedLanguage);
+    this.storageService.setItem('lang', this.selectedLanguage);
   }
 
   getLanguageCode(language: string) {
