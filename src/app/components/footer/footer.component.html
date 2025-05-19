@@ -24,5 +24,25 @@
     </div>
     <div class="title">Copyright &copy; 2025</div>
     <div class="title">Términos de Servicio y Política de Privacidad</div>
+    <button class="help-button" (click)="openHelpModal()">Ayuda</button>
+  </div>
+
+  <!-- Modal de ayuda -->
+  <div class="help-modal-overlay" *ngIf="showHelpModal">
+    <div class="help-modal">
+      <button class="close-help-modal" (click)="closeHelpModal()">&times;</button>
+      <div class="help-carousel">
+        <div class="help-step">
+          <img *ngIf="helpSteps[currentHelpStep].image" [src]="helpSteps[currentHelpStep].image" alt="Paso {{currentHelpStep + 1}}" class="help-image">
+          <p class="help-text">{{ helpSteps[currentHelpStep].text }}</p>
+        </div>
+        <div class="help-controls">
+          <button (click)="prevHelpStep()" [disabled]="currentHelpStep === 0">&lt;</button>
+          <span>{{currentHelpStep + 1}} / {{helpSteps.length}}</span>
+          <button (click)="nextHelpStep()" *ngIf="currentHelpStep < helpSteps.length - 1">&gt;</button>
+          <button (click)="closeHelpModal()" *ngIf="currentHelpStep === helpSteps.length - 1" class="start-tour-btn">¡Empezar!</button>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>
