@@ -29,6 +29,112 @@
   height: auto;
 }
 
+.help-button {
+  background-color: #ECD54C;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.help-button:hover {
+  background-color: #d1b842;
+}
+
+.help-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  z-index: 3000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.help-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  max-width: 500px;
+  width: 90vw;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+  position: relative;
+  text-align: center;
+}
+
+.close-help-modal {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #888;
+  cursor: pointer;
+}
+
+.help-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.help-step {
+  margin-bottom: 1rem;
+}
+
+.help-image {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.help-text {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.help-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.help-controls button {
+  background-color: #ECD54C;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.help-controls button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.help-controls .start-tour-btn {
+  border-radius: 20px;
+  width: auto;
+  padding: 0 18px;
+  font-size: 1rem;
+}
+
 @media (max-width: 1024px) {
   footer {
     padding: 15px 0;
@@ -60,5 +166,15 @@
 
   .items {
     gap: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .help-modal {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    max-width: 95vw;
+  }
+  .help-image {
+    max-width: 90vw;
   }
 }
