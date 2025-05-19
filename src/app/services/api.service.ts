@@ -134,4 +134,30 @@ export class ApiService {
       }
     );
   }
+
+  translateText(text: string, language: string): Observable<{
+    status: number;
+    statusText: string;
+    translatedText: string;
+  }> {
+    return this.http.post<{ status: number, statusText: string, translatedText: string }>(
+      `${this.backendURL}/translate/${language}`,
+      {
+        text: text,
+      }
+    );
+  }
+
+  translateGenres(genreList: string[], language: string): Observable<{
+    status: number;
+    statusText: string;
+    translatedGenres: string[]
+  }> {
+    return this.http.post<{ status: number, statusText: string, translatedGenres: string[] }>(
+      `${this.backendURL}/translate-genres/${language}`,
+      {
+        genreList: genreList,
+      }
+    );
+  }
 }

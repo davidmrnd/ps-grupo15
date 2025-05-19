@@ -173,4 +173,26 @@ describe('ApiService', () => {
       done();
     });
   });
+
+  it('should return expected translation', (done: DoneFn) => {
+    service.translateText("Good morning", "es").subscribe((response) => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      expect(response.translatedText).toEqual("Buenos días.");
+      done();
+    });
+  });
+
+  it('should return expected genres translation', (done: DoneFn) => {
+    const expectedTranslations = ["Aventura", "Disparos", "Deporte"];
+    service.translateGenres(["Adventure", "Shooter", "Sport"], "es").subscribe(response => {
+      expect(response).toBeTruthy();
+      expect(response.status).toBe(200);
+      const translatedGenres = response.translatedGenres;
+      for (const genre of translatedGenres) {
+        expect(expectedTranslations.includes(genre)).toBeTruthy();
+      }
+      done();
+    });
+  });
 });

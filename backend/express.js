@@ -176,7 +176,7 @@ app.post('/get-platform-names-from-id-list', (req, res) => {
     )
       .then(result => {
         res.status(result.status).send(result);
-      });genreList
+      });
 });
 
 app.post('/get-genre-names-from-id-list', (req, res) => {
