@@ -1,14 +1,15 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit, SimpleChanges} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { StarsComponent } from '../stars/stars.component';
 import {AuthService} from '../../services/auth.service';
-import { Firestore, doc, updateDoc, deleteDoc } from '@angular/fire/firestore'; 
+import {FormsModule} from '@angular/forms';
+import { Firestore, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-commentaries',
   standalone: true,
-  imports: [CommonModule, StarsComponent, RouterLink],
+  imports: [CommonModule, StarsComponent, RouterLink, FormsModule],
   templateUrl: './commentaries.component.html',
   styleUrls: ['./commentaries.component.css']
 })
@@ -19,6 +20,17 @@ export class CommentariesComponent implements OnInit {
   currentUserId: string | null = null;
   private videogameSlug: string = "";
   selectedCommentToDelete: any = null;
+
+  orderOptions = [
+    {value: "recentFirst", text: "Más recientes"},
+    {value: "oldFirst", text: "Más antiguos"},
+    {value: "mostStars", text: "Más estrellas"},
+    {value: "leastStars", text: "Menos estrellas"},
+    {value: "mostVoted", text: "Más votados"},
+    {value: "leastVoted", text: "Menos votados"},
+  ]
+
+  selectedOrder = "recentFirst";
 
   private authService: AuthService = inject(AuthService);
   private route: ActivatedRoute = inject(ActivatedRoute);
@@ -35,6 +47,13 @@ export class CommentariesComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.videogameSlug = params["slug"];
     });
+    this.sortComments()
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['comments'] && this.comments?.length) {
+      this.sortComments();
+    }
   }
   setProfileIcon(comment: any){
     if (comment.userId === this.currentUserId) {
@@ -55,20 +74,51 @@ export class CommentariesComponent implements OnInit {
     this.router.navigate(['/new-comment', this.videogameSlug]);
   }
 
-  getSortedComments(): any[] {
-    if (!this.comments || !this.currentUserId) {
-      return this.comments;
+  sortComments(): void {
+    if (this.type === "user"){
+      this.sortAllComments(this.comments);
+      return;
+    }
+    if (this.type === "videogame"){
+      const userComment = this.comments.find(comment => comment.userId === this.currentUserId);
+      const otherComments = this.comments.filter(comment => comment.userId !== this.currentUserId);
+
+      this.sortAllComments(otherComments)
+      this.comments = userComment ? [userComment, ...otherComments] : otherComments;
     }
 
-    return this.comments.sort((a, b) => {
-      if (a.userId === this.currentUserId) {
-        return -1;
-      }
-      if (b.userId === this.currentUserId) {
-        return 1;
-      }
-      return 0;
-    });
+    if (!this.comments || !this.currentUserId) {
+      return;
+    }
+  }
+
+  private sortAllComments(comments: any[]) {
+    switch (this.selectedOrder) {
+      case "recentFirst":
+        console.log("recent");
+        comments.sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+        break;
+      case "oldFirst":
+        console.log("old");
+        comments.sort((a,b)=>a.createdAt.localeCompare(b.createdAt));
+        break;
+      case "mostStars":
+        console.log("mostStars");
+        comments.sort((a,b)=>b.rating-a.rating);
+        break;
+      case "leastStars":
+        console.log("leastStars");
+        comments.sort((a,b)=>a.rating-b.rating);
+        break;
+      case "mostVoted":
+        console.log("mostVoted")
+        comments.sort((a,b)=>b.likes.length-a.likes.length);
+        break;
+      case "leastVoted":
+        console.log("leastVoted")
+        comments.sort((a,b)=>a.likes.length-b.likes.length);
+        break;
+    }
   }
 
   toggleLike(comment: any): void {
@@ -76,9 +126,9 @@ export class CommentariesComponent implements OnInit {
       alert('Debes iniciar sesión para dar like.');
       return;
     }
-  
+
     const commentDoc = doc(this.firestore, 'comments', comment.id);
-  
+
     if (comment.likes?.includes(this.currentUserId)) {
       comment.likes = comment.likes.filter((id: string) => id !== this.currentUserId);
     } else {
