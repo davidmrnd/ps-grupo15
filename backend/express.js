@@ -15,6 +15,10 @@ const deeplClient = new deepl.DeepLClient(translationKeys.key);
 app.use(express.json());
 app.use(cors());
 
+genreTranslations = {
+  "es": genreSpanishTranslations
+}
+
 app.get('/', (req, res) => {
     res.status(418).send('GameCritic backend working');
 });
@@ -217,10 +221,21 @@ app.post('/translate/:language', (req, res) => {
       });
 });
 
-app.post('/translate-genres', (req, res) => {
-    let genreList = req.body.genreList;
+app.post('/translate-genres/:language', (req, res) => {
+    const language = req.params.language;
+    const currentLanguageTranslations = genreTranslations[language];
 
-    if(!(genreList instanceof Array)) {
+    const genreList = req.body.genreList;
+
+    if (!currentLanguageTranslations) {
+      res.status(404).send({
+        status: 404,
+        statusText: 'Not Found',
+        message: 'Language is invalid or not available.'
+      });
+    }
+
+    else if(!(genreList instanceof Array)) {
       res.status(400).send({
         status: 400,
         statusText: 'Bad Request',

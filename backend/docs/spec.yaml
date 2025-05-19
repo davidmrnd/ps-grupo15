@@ -770,10 +770,18 @@ paths:
                 statusText: Bad Request
                 message: "Bad request, message: Value for 'target_lang' not supported."
 
-  /translate-genres:
+  /translate-genres/{language}:
     post:
       tags: [ "translation" ]
       description: Traduce un género en inglés a un idioma disponible
+      parameters:
+        - in: path
+          name: language
+          schema:
+            type: string
+            example: "es"
+          required: true
+          description: "Código del idioma de destino de la traducción"
       requestBody:
         content:
           application/json:
@@ -806,6 +814,16 @@ paths:
                 status: 400
                 statusText: Bad Request
                 message: "genreList must be an array. Example: ['Adventure', 'Shooter']"
+        404:
+          description: "Traducción no encontrada"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreTranslationResponse"
+              example:
+                status: 404
+                statusText: Not Found
+                message: "Language is invalid or not available."
 
 components:
   schemas:
