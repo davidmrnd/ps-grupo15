@@ -1,6 +1,6 @@
 openapi: "3.1.10"
 info:
-  version: "1.0.0"
+  version: "2.0.0"
   title: "GameCritic backend"
   description: "Backend que maneja las peticiones a la API de IGDB."
 servers:
@@ -754,7 +754,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TranslateResponse"
+                $ref: "#/components/schemas/TranslationResponse"
               example:
                 status: 200
                 statusText: "OK"
@@ -764,11 +764,48 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TranslateResponse"
+                $ref: "#/components/schemas/TranslationResponse"
               example:
                 status: 400
                 statusText: Bad Request
                 message: "Bad request, message: Value for 'target_lang' not supported."
+
+  /translate-genres:
+    post:
+      tags: [ "translation" ]
+      description: Traduce un género en inglés a un idioma disponible
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                genreList:
+                  type: Array
+                  description: "Lista de géneros a traducir"
+              example:
+                genreList: ["Adventure", "Shooter"]
+      responses:
+        200:
+          description: "Petición realizada correctamente"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreTranslationResponse"
+              example:
+                status: 200
+                statusText: "OK"
+                translatedGenres: ["Aventura", "Disparos"]
+        400:
+          description: "Petición no valida"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenreTranslationResponse"
+              example:
+                status: 400
+                statusText: Bad Request
+                message: "genreList must be an array. Example: ['Adventure', 'Shooter']"
 
 components:
   schemas:
@@ -785,8 +822,8 @@ components:
         apiResponse:
           type: array
           description: "Respuesta de la API de IGDB"
-    TranslateResponse:
-      description: "Respuesta de los endpoints de traducción"
+    TranslationResponse:
+      description: "Respuesta del endpoint de traducción"
       type: object
       properties:
         status:
@@ -798,6 +835,19 @@ components:
         translatedText:
           type: string
           description: "Texto traducido"
+    GenreTranslationResponse:
+      description: "Respuesta del endpoint de traducción de géneros"
+      type: object
+      properties:
+        status:
+          type: integer
+          description: "Código de estado HTTP"
+        statusText:
+          type: string
+          description: "Mensaje de estado HTTP"
+        translatedGenres:
+          type: Array
+          description: "Lista de géneros traducidos"
     CoversResponse:
       description: "Respuesta del endpoint /covers"
       type: object

@@ -1,9 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const deepl = require('deepl-node');
+
 const apiFunctions = require('./api/api.cjs');
 const igdbKeys = require('./api/igdb_keys.json');
 const translationKeys = require('./api/deepl_key.json');
+const genreSpanishTranslations = require('./api/i18n/es.json');
+
 const app = express();
 const port = 4000;
 
@@ -169,7 +172,7 @@ app.post('/get-platform-names-from-id-list', (req, res) => {
     )
       .then(result => {
         res.status(result.status).send(result);
-      });
+      });genreList
 });
 
 app.post('/get-genre-names-from-id-list', (req, res) => {
@@ -212,6 +215,33 @@ app.post('/translate/:language', (req, res) => {
           message: err.message
         })
       });
+});
+
+app.post('/translate-genres', (req, res) => {
+    let genreList = req.body.genreList;
+
+    if(!(genreList instanceof Array)) {
+      res.status(400).send({
+        status: 400,
+        statusText: 'Bad Request',
+        message: "genreList must be an array. Example: ['Adventure', 'Shooter']"
+      });
+    }
+
+    else {
+      const translatedGenres = [];
+      for (const genre of genreList) {
+        const currentTranslation = genreSpanishTranslations[genre];
+        if (currentTranslation) {
+          translatedGenres.push(currentTranslation);
+        }
+      }
+      res.status(200).send({
+        status: 200,
+        statusText: 'OK',
+        translatedGenres: translatedGenres
+      });
+    }
 });
 
 app.get('/docs', (req, res) => {

@@ -1,0 +1,26 @@
+{
+  "Point-and-click": "Señalar y click",
+  "Fighting": "Lucha",
+  "Shooter": "Disparos",
+  "Music": "Música",
+  "Platform": "Plataformas",
+  "Puzzle": "Puzzle",
+  "Racing": "Carreras",
+  "Real Time Strategy (RTS)": "Estrategia en Tiempo Real (RTS)",
+  "Role-playing (RPG)": "Juego de rol (RPG)",
+  "Simulator": "Simulación",
+  "Sport": "Deporte",
+  "Strategy": "Estrategia",
+  "Turn-based strategy (TBS)": "Estrategia por turnos",
+  "Tactical": "Táctico",
+  "Hack and slash/Beat 'em up": "Hack and slash/Beat 'em up",
+  "Quiz/Trivia": "Preguntas",
+  "Pinball": "Pinball",
+  "Adventure": "Aventura",
+  "Indie": "Indie",
+  "Arcade": "Arcade",
+  "Visual Novel": "Novela Visual",
+  "Card & Board Game": "Juego de mesa y/o cartas",
+  "MOBA": "MOBA"
+}
+
