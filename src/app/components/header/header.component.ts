@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userName: string | null = null;
   private userSubscription: Subscription | null = null;
   userId: any|string;
-  searchType: 'user' | 'videogame' = 'videogame'; // Default to 'videogame'
+  searchType: 'user' | 'videogame' = 'videogame';
   searchText: string = "";
   apiService: ApiService = inject(ApiService);
   searchResults: any[] = [];
@@ -27,6 +27,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isDarkModeEnabled: boolean = false;
   showUserDropdown: boolean = false;
   userProfileIcon: string = '/assets/images/usericondefault.png';
+  showDropdown: boolean = false;
+  allCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes', 'Aventura', 'Terror'];
+  defaultCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes'];
+  selectedCategories: string[] = [];
+  isUsingDefault: boolean = true;
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
@@ -74,7 +79,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout().then(() => {
       this.isLoggedIn = false;
       this.userName = null;
-      window.location.href = '/'; // Redirigir tras logout
+      window.location.href = '/';
     });
   }
 
@@ -90,7 +95,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
     } else if (this.searchType === 'user') {
       this.dataService.searchUser(this.searchText).subscribe((result) => {
-        console.log("Resultado", result);
         this.searchResults = result;
         this.showSearchResults = true;
       });
@@ -122,26 +126,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('document:click', ['$event'])
-  onClickOutside(event: MouseEvent) {
+  onDocumentClick(event: MouseEvent) {
     const searchResultsElement = document.getElementById('search-results');
     const searchContainerElement = document.querySelector(".search-container");
     const userDropdown = document.querySelector('.user-dropdown-container');
+    const dropdown = document.querySelector('.categories-dropdown-container');
+    const target = event.target as HTMLElement;
 
     if (
       searchResultsElement &&
       searchContainerElement &&
-      !searchResultsElement.contains(event.target as Node) &&
-      !searchContainerElement.contains(event.target as Node)
+      !searchResultsElement.contains(target) &&
+      !searchContainerElement.contains(target)
     ) {
       this.showSearchResults = false;
     }
 
-    // Cerrar el dropdown si se hace click fuera
     if (
       userDropdown &&
-      !userDropdown.contains(event.target as Node)
+      !userDropdown.contains(target)
     ) {
       this.showUserDropdown = false;
+    }
+
+    if (dropdown && !dropdown.contains(target)) {
+      this.showDropdown = false;
     }
   }
 
@@ -156,7 +165,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Dropdown para usuario
   toggleUserDropdown() {
     this.showUserDropdown = !this.showUserDropdown;
   }
@@ -164,4 +172,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
   closeUserDropdown() {
     this.showUserDropdown = false;
   }
+
+  toggleDropdown(): void {
+    this.showDropdown = !this.showDropdown;
+  }
+
+  onCategoryChange(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    const category = checkbox.value;
+
+    if (checkbox.checked) {
+      if (!this.selectedCategories.includes(category)) {
+        this.selectedCategories.push(category);
+      }
+      this.isUsingDefault = false;
+    } else {
+      this.selectedCategories = this.selectedCategories.filter(c => c !== category);
+      if (this.selectedCategories.length === 0) {
+        this.isUsingDefault = true;
+      }
+    }
+  }
+
+  getDisplayedCategories(): string[] {
+    return this.isUsingDefault ? this.defaultCategories : this.selectedCategories;
+  }
 }
+

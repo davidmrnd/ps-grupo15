@@ -5,6 +5,7 @@
       <div class="logo-container">
         <a routerLink="/"><img src="/assets/images/logo.webp" alt="Logo"></a>
       </div>
+      
       <nav class="nav-links">
         <a routerLink="/">Inicio</a>
         <a routerLink="/categories">Explorar</a>
@@ -17,6 +18,23 @@
 
 
     </div>
+
+    <div class="categories-dropdown-container">
+     <button (click)="toggleDropdown()" class="dropdown-button">Filtrar Categorías</button>
+      <div *ngIf="showDropdown" class="categories-dropdown">
+        <div class="categories-grid">
+          <label *ngFor="let category of allCategories" class="category-item" [class.selected]="selectedCategories.includes(category)">
+            <input
+              type="checkbox"
+              [value]="category"
+              [checked]="selectedCategories.includes(category)"
+              (change)="onCategoryChange($event)"
+            />
+            {{ category }}
+          </label>
+        </div>
+      </div>
+  </div>
 
     <div class="search-container">
       <input

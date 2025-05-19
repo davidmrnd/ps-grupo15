@@ -2,13 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 20px;
+  padding: 12px 24px;
   background-color: transparent;
   position: relative;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .left-container {
-  margin-right: auto;
+  
   display: flex;
   align-items: center;
   gap: 20px;
@@ -21,7 +23,7 @@
 
 .nav-links {
   display: flex;
-  gap: 50px;
+  gap: 40px;
 }
 
 .nav-links a {
@@ -42,14 +44,9 @@
   border-radius: 20px;
   overflow: hidden;
   background-color: #f9f9f9;
-  flex-grow: 1;
+  max-width: 400px;
   width: 100%;
-  max-width: 500px;
-  margin: 0 20px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
+  margin: 0 10px;
 }
 
 .search-box {
@@ -57,6 +54,7 @@
   padding: 8px 12px;
   outline: none;
   width: 100%;
+  background: transparent;
 }
 
 .search-button {
@@ -256,6 +254,64 @@ a {
 .logout-dropdown-btn {
   color: #f44336;
   font-weight: bold;
+}
+
+.categories-dropdown-container {
+  position: relative;
+}
+
+.dropdown-button {
+  background-color: #ECD54C;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 0 10px;
+  display: block;
+}
+
+.dropdown-button:hover {
+  background-color: #D4C03A;
+}
+
+.categories-dropdown {
+  position: absolute;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  top: 45px;
+  left: 0;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.categories-grid input[type="checkbox"] {
+  display: none;
+}
+
+.category-item.selected {
+  background-color: #ECD54C;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+  padding: 5px;
 }
 
 @media (max-width: 767px) {
