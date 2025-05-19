@@ -7,28 +7,48 @@
       </option>
     </select>
     <div class="items">
-      <a href="#">
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener">
         <div class="item" id="instagram">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/2048px-Instagram_logo_2022.svg.png" width="40" alt="Item 1">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Instagram_logo_2022.svg/2048px-Instagram_logo_2022.svg.png" width="40" alt="Instagram">
         </div>
       </a>
-      <a href="#">
+      <a href="https://www.facebook.com/" target="_blank" rel="noopener">
         <div class="item" id="facebook">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png" width="40" alt="Item 2">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/2048px-Facebook_f_logo_%282019%29.svg.png" width="40" alt="Facebook">
         </div>
       </a>
-      <a href="#">
+      <a href="https://x.com/" target="_blank" rel="noopener">
         <div class="item" id="xlogo">
-          <img src="https://img.freepik.com/vector-gratis/nuevo-diseno-icono-x-logotipo-twitter-2023_1017-45418.jpg" width="40" alt="Item 3">
+          <img src="https://img.freepik.com/vector-gratis/nuevo-diseno-icono-x-logotipo-twitter-2023_1017-45418.jpg" width="40" alt="X">
         </div>
       </a>
-      <a href="#">
+      <a href="https://www.youtube.com/" target="_blank" rel="noopener">
         <div class="item">
-          <img src="https://play-lh.googleusercontent.com/6am0i3walYwNLc08QOOhRJttQENNGkhlKajXSERf3JnPVRQczIyxw2w3DxeMRTOSdsY" width="40" alt="Item 4">
+          <img src="https://play-lh.googleusercontent.com/6am0i3walYwNLc08QOOhRJttQENNGkhlKajXSERf3JnPVRQczIyxw2w3DxeMRTOSdsY" width="40" alt="YouTube">
         </div>
       </a>
     </div>
     <div class="title">Copyright &copy; 2025</div>
     <div class="title">{{ 'footer.tos' | translate }}</div>
+    <button class="help-button" (click)="openHelpModal()">Ayuda</button>
+  </div>
+
+  <!-- Modal de ayuda -->
+  <div class="help-modal-overlay" *ngIf="showHelpModal">
+    <div class="help-modal">
+      <button class="close-help-modal" (click)="closeHelpModal()">&times;</button>
+      <div class="help-carousel">
+        <div class="help-step">
+          <img *ngIf="helpSteps[currentHelpStep].image" [src]="helpSteps[currentHelpStep].image" alt="Paso {{currentHelpStep + 1}}" class="help-image">
+          <p class="help-text">{{ helpSteps[currentHelpStep].text }}</p>
+        </div>
+        <div class="help-controls">
+          <button (click)="prevHelpStep()" [disabled]="currentHelpStep === 0">&lt;</button>
+          <span>{{currentHelpStep + 1}} / {{helpSteps.length}}</span>
+          <button (click)="nextHelpStep()" *ngIf="currentHelpStep < helpSteps.length - 1">&gt;</button>
+          <button (click)="closeHelpModal()" *ngIf="currentHelpStep === helpSteps.length - 1" class="start-tour-btn">¡Empezar!</button>
+        </div>
+      </div>
+    </div>
   </div>
 </footer>

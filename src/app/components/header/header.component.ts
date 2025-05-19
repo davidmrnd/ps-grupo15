@@ -26,6 +26,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   searchResults: any[] = [];
   showSearchResults: boolean = false;
   isDarkModeEnabled: boolean = false;
+  showUserDropdown: boolean = false;
+  userProfileIcon: string = '/assets/images/usericondefault.png';
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
@@ -36,6 +38,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSubscription = this.authService.getCurrentUserObservable().subscribe((user) => {
       this.isLoggedIn = !!user;
       this.userId = user?.uid || null;
+
+      if (user && user.uid) {
+        const localImage = localStorage.getItem(`profile-image-${user.uid}`);
+        if (localImage) {
+          this.userProfileIcon = localImage;
+        } else {
+          this.dataService.getUsersById(user.uid).subscribe((userData: any) => {
+            if (userData && userData.profileicon) {
+              this.userProfileIcon = userData.profileicon;
+            } else {
+              this.userProfileIcon = '/assets/images/usericondefault.png';
+            }
+          });
+        }
+      } else {
+        this.userProfileIcon = '/assets/images/usericondefault.png';
+      }
     });
 
     const darkMode = localStorage.getItem('dark-mode');
@@ -56,6 +75,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout().then(() => {
       this.isLoggedIn = false;
       this.userName = null;
+      window.location.href = '/'; // Redirigir tras logout
     });
   }
 
@@ -106,6 +126,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onClickOutside(event: MouseEvent) {
     const searchResultsElement = document.getElementById('search-results');
     const searchContainerElement = document.querySelector(".search-container");
+    const userDropdown = document.querySelector('.user-dropdown-container');
 
     if (
       searchResultsElement &&
@@ -114,6 +135,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       !searchContainerElement.contains(event.target as Node)
     ) {
       this.showSearchResults = false;
+    }
+
+    // Cerrar el dropdown si se hace click fuera
+    if (
+      userDropdown &&
+      !userDropdown.contains(event.target as Node)
+    ) {
+      this.showUserDropdown = false;
     }
   }
 
@@ -126,5 +155,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       document.body.classList.remove('dark-mode');
       localStorage.setItem('dark-mode', 'disabled');
     }
+  }
+
+  // Dropdown para usuario
+  toggleUserDropdown() {
+    this.showUserDropdown = !this.showUserDropdown;
+  }
+
+  closeUserDropdown() {
+    this.showUserDropdown = false;
   }
 }

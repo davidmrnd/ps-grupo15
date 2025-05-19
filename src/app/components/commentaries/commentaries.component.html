@@ -1,5 +1,11 @@
 <div class="comments-container">
-  <div class="comment" *ngFor="let comment of getSortedComments()">
+  <label for="order" class="order-label">Mostrar primero:</label>
+  <select id="order" class="order-select" [(ngModel)]="selectedOrder" (change)="sortComments()">
+    <option *ngFor="let option of orderOptions" [value]="option.value">
+      {{option.text}}
+    </option>
+  </select>
+  <div class="comment" *ngFor="let comment of comments">
     <div class="user">
       <a *ngIf="type === 'videogame'" [routerLink]="['/user', comment.user?.id]">
         <img [src]="setProfileIcon(comment)" [alt]="comment.user?.username" class="userprofile-image">
@@ -46,8 +52,8 @@
         <i class="far fa-trash-alt"></i>
       </button>
     </aside>
-    <div *ngIf="comment.userId !== currentUserId" class="like-container">
-      <button
+    <div class="like-container">
+      <button *ngIf="comment.userId !== currentUserId"
         class="like-button"
         [ngClass]="{'liked': comment.likes?.includes(currentUserId)}"
         [disabled]="!currentUserId"

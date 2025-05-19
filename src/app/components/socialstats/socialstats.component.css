@@ -30,6 +30,9 @@
   font-size: clamp(0.95rem, 1.3vw, 1.125rem); /* 15px a 18px */
   margin: 0;
 }
+.clickable-number {
+  cursor: pointer;
+}
 
 /* Modal overlay */
 .modal {
@@ -138,4 +141,5 @@
   .modal-content li {
     font-size: 0.9rem;
   }
+
 }

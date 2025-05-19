@@ -14,10 +14,6 @@
   <button *ngIf="!isFollowing" (click)="followUser()" class="follow-button">{{ 'user_profile_page.follow' | translate }}</button>
   <button *ngIf="isFollowing" (click)="unfollowUser()" class="unfollow-button">{{ 'user_profile_page.stop_following' | translate }}</button>
 </div>
-<div *ngIf="isCurrentUserProfile && !this.showErrorMessage">
-  <button (click)="logout()" class="logout-button">{{ 'user_profile_page.log_out' | translate }}</button>
-</div>
-
 
 <app-commentaries *ngIf="!this.showErrorMessage" [type]="'user'" [comments]="this.comments"></app-commentaries>
 

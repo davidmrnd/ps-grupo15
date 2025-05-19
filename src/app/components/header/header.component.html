@@ -58,15 +58,22 @@
         <span class="icon-moon">🌙</span>
       </div>
       <ng-container *ngIf="isLoggedIn; else guestButtons">
-        <a [routerLink]="['/user', userId]"><button class="cta-button">{{ 'header.my_profile' | translate }}</button></a>
+        <div class="user-dropdown-container" (click)="toggleUserDropdown()" tabindex="0">
+          <img class="profile-img" [src]="userProfileIcon" alt="Perfil">
+          <div class="user-dropdown" *ngIf="showUserDropdown">
+            <a [routerLink]="['/user', userId]" (click)="closeUserDropdown()">
+              <i class="fas fa-user"></i> Mi Perfil
+            </a>
+            <button (click)="logout(); closeUserDropdown()" class="logout-dropdown-btn logout-red">
+              <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+            </button>
+          </div>
+        </div>
       </ng-container>
       <ng-template #guestButtons>
         <a routerLink="/registration"><button class="cta-button">{{ 'header.sign_up' | translate }}</button></a>
         <a routerLink="/login" class="login-text">{{ 'header.login' | translate}}</a>
       </ng-template>
     </div>
-    <a id="iconbutton" href="/registration">
-      <img class="profile-img" src="/assets/images/usericondefault.png" alt="Perfil">
-    </a>
   </div>
 </header>
