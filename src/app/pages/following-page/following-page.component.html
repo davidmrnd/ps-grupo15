@@ -33,8 +33,8 @@
         </div>
       </div>
       <div class="carousel-buttons" [class.hidden]="!user.comments || user.comments.length === 0">
-        <button class="carousel-button prev-button" (click)="moveCarousel(user.username, 'prev')"><</button>
-        <button class="carousel-button next-button" (click)="moveCarousel(user.username, 'next')">></button>
+        <button class="carousel-button prev-button" (click)="moveCarousel(user.username, 'prev')">←</button>
+        <button class="carousel-button next-button" (click)="moveCarousel(user.username, 'next')">→</button>
       </div>
       <ng-template #noComments>
         <p class="no-comments-message">{{ 'following.no_comments' | translate }}</p>

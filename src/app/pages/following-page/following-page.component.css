@@ -105,21 +105,31 @@
 
   .carousel-buttons {
     text-align: center;
-    margin-top: -20px;
-    margin-bottom: 30px;
+    align-items: center;
+    margin-bottom: 20px;
   }
 
   .carousel-button {
     background-color: #ECD54C;
+    align-items: center;
     border: none;
-    padding: 5px 10px;
-    border-radius: 50%;
+    color: black;
+    padding: 7px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 50%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: solid;
+    margin-bottom: 20px;
+    margin: 0 3px;
   }
 
   .carousel-button:hover {
     background-color: #d1b842;
+    transform: scale(1.1);
+  }
+
+  .carousel-button:focus {
+    outline: none;
   }
 
   .carousel-buttons.hidden {
@@ -147,14 +157,14 @@
     color: #666;
     margin: 2rem 0;
   }
-  
+
   .no-following-message {
     text-align: center;
     font-size: 2rem;
     color: #666;
     margin: 2rem 0;
   }
-  
+
   @media (max-width: 767px) {
     .comment-columns {
       flex-direction: column;
