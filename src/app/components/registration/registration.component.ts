@@ -8,8 +8,6 @@ import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {Subscription} from 'rxjs';
 
-declare var grecaptcha: any;
-
 interface GrecaptchaWindow extends Window {
   grecaptcha?: any;
 }

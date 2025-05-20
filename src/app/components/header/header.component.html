@@ -20,7 +20,7 @@
 
     <div class="center-header-row">
       <div class="categories-dropdown-container" [class.invisible]="!isCategoriesPage">
-        <button *ngIf="isCategoriesPage" (click)="toggleDropdown()" class="dropdown-button">Filtrar Categorías</button>
+        <button *ngIf="isCategoriesPage" (click)="toggleDropdown()" class="dropdown-button">{{ 'header.filter' | translate }}</button>
         <div *ngIf="showDropdown" class="categories-dropdown">
           <div class="categories-grid">
             <label *ngFor="let category of allCategories" class="category-item" [class.selected]="selectedCategories.includes(category)">
@@ -30,7 +30,7 @@
                 [checked]="selectedCategories.includes(category)"
                 (change)="onCategoryChange($event)"
               />
-              {{ category }}
+              {{ category | translate }}
             </label>
           </div>
         </div>
@@ -39,7 +39,7 @@
         <input
           type="text"
           class="search-box"
-          placeholder="Buscar"
+          placeholder="{{ 'header.search' | translate }}"
           [(ngModel)]="searchText"
           (keydown)="onKeyDowmInSearchInput($event)"
         />
@@ -52,9 +52,9 @@
       </div>
       <div class="search-toggle">
         <input type="radio" id="user" name="searchType" value="user" [(ngModel)]="searchType" />
-        <label for="user">Usuario</label>
+        <label for="user">{{ 'header.toggle.user' | translate }}</label>
         <input type="radio" id="videogame" name="searchType" value="videogame" [(ngModel)]="searchType" />
-        <label for="videogame">Videojuego</label>
+        <label for="videogame">{{ 'header.toggle.videogame' | translate }}</label>
         <div class="toggle-slider"></div>
       </div>
     </div>

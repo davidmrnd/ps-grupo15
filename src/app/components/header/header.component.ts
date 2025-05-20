@@ -30,8 +30,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showUserDropdown: boolean = false;
   userProfileIcon: string = '/assets/images/usericondefault.png';
   showDropdown: boolean = false;
-  allCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes', 'Aventura', 'Terror'];
-  defaultCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes'];
+  allCategories: string[] = [
+    "carousel.categories.action",
+    "carousel.categories.survival",
+    "carousel.categories.shooter",
+    "carousel.categories.sports",
+    "carousel.categories.adventure",
+    "carousel.categories.horror"
+  ];
   selectedCategories: string[] = [];
   isUsingDefault: boolean = true;
   isCategoriesPage: boolean = false;

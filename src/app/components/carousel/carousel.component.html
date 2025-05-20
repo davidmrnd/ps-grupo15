@@ -1,5 +1,5 @@
 <div class="carousel-container">
-  <span class="carousel-title"><h1>{{ category }}</h1></span>
+  <span class="carousel-title"><h1>{{ category | translate }}</h1></span>
   <div class="carousel">
     <div class="carousel-track" #carouselTrack>
       <a *ngFor="let videogame of videogameData; let index = index" class="carousel-slide" [routerLink]="['/videogame', videogame.slug]">

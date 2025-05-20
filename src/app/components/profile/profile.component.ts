@@ -85,7 +85,7 @@ export class ProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   private prepareUserProfile(): void {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, () => {
       if (this.userInfo) {
         this.id = this.userInfo.id;
         this.originalData = { ...this.userInfo };
