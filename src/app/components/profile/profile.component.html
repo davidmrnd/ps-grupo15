@@ -53,13 +53,24 @@
       </div>
       <div class="game-info" *ngIf="gameInfo.genres">
         <p>{{ 'profile.genres' | translate }}</p>
-        <ul *ngFor="let genre of gameInfo.genresNames">
-          <li>{{ genre.name }}</li>
-        </ul>
+        <div *ngIf="this.selectedLanguage == 'en'">
+          <ul *ngFor="let genre of gameInfo.genresNames">
+            <li>{{ genre.name }}</li>
+          </ul>
+        </div>
+        <div *ngIf="this.selectedLanguage != 'en' && this.gameInfo.translatedGenreNames">
+          <ul *ngFor="let genre of gameInfo.translatedGenreNames[this.selectedLanguage]">
+            {{ genre }}
+          </ul>
+        </div>
       </div>
     </div>
     <h2 class="profile-title">{{ gameInfo.name }} <span *ngIf="showReleaseYear()">
       ({{ apiService.getReleaseYear(gameInfo.first_release_date) }})</span></h2>
-    <p class="profile-description" *ngIf="gameInfo.summary">{{ gameInfo.summary }}</p>
+    <div class="profile-description" *ngIf="gameInfo.summary">
+      <p *ngIf="this.selectedLanguage == 'en'">{{ this.gameInfo.summary }}</p>
+      <p *ngIf="this.selectedLanguage != 'en' && this.gameInfo.translatedSummary">
+        {{ this.gameInfo.translatedSummary[this.selectedLanguage] }}</p>
+    </div>
   </div>
 </div>

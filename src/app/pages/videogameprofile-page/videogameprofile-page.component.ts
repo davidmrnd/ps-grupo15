@@ -11,6 +11,7 @@ import {collection, Firestore, getDocs, query, where} from '@angular/fire/firest
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {Subscription} from 'rxjs';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-videogameprofile-page',
@@ -44,6 +45,9 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
   private apiService: ApiService = inject(ApiService);
   private router: Router = inject(Router);
   private translate: TranslateService = inject(TranslateService);
+  private storageService: StorageService = inject(StorageService);
+
+  protected selectedLanguage: string = this.storageService.getItem("lang") || "es";
 
   private translationSubscription: Subscription | undefined;
   protected modifyReviewText: string = 'Modificar valoración';
@@ -52,6 +56,42 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
+    this.storageService.language$.subscribe(value => {
+      if (this.gameInfo && value != 'en') {
+
+        if (this.gameInfo.genresNames) {
+          if (!this.gameInfo.translatedGenreNames) {
+            this.gameInfo.translatedGenreNames = {};
+          }
+
+          if (!this.gameInfo.translatedGenreNames[value]) {
+            this.apiService.translateGenres(
+              this.getGenreNamesList(this.gameInfo.genresNames),
+              value
+            ).subscribe((response) => {
+              this.gameInfo.translatedGenreNames[value] = response.translatedGenres;
+            });
+          }
+        }
+
+        if (this.gameInfo.summary) {
+          if (!this.gameInfo.translatedSummary) {
+            this.gameInfo.translatedSummary = {};
+          }
+
+          if (!this.gameInfo.translatedSummary[value]) {
+            this.apiService.translateText(
+              this.gameInfo.summary,
+              value
+            ).subscribe((response) => {
+              this.gameInfo.translatedSummary[value] = response.translatedText;
+            });
+          }
+        }
+      }
+      this.selectedLanguage = value;
+    });
+
     this.translationSubscription = this.translate.stream(_([
       "videogame_profile_page.modify_review",
       "videogame_profile_page.add_review",
@@ -73,10 +113,28 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
               this.gameCover = response.fullURL;
             });
 
+            if (this.gameInfo.summary) {
+              if (this.selectedLanguage != 'en') {
+                this.apiService.translateText(this.gameInfo.summary, this.selectedLanguage).subscribe((response) => {
+                  this.gameInfo.translatedSummary = {};
+                  this.gameInfo.translatedSummary[this.selectedLanguage] = response.translatedText;
+                });
+              }
+            }
+
             if (this.gameInfo.platforms && this.gameInfo.genres) {
               this.apiService.getGenreAndPlatformNames(this.gameInfo.genres, this.gameInfo.platforms).subscribe((response) => {
                 this.gameInfo.platformsNames = response.apiResponse[0].result;
                 this.gameInfo.genresNames = response.apiResponse[1].result;
+                if (this.selectedLanguage != "en") {
+                  this.apiService.translateGenres(
+                    this.getGenreNamesList(this.gameInfo.genresNames),
+                    this.selectedLanguage
+                  ).subscribe((response) => {
+                    this.gameInfo.translatedGenreNames = {};
+                    this.gameInfo.translatedGenreNames[this.selectedLanguage] = response.translatedGenres;
+                  });
+                }
               });
             }
 
@@ -87,6 +145,15 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
 
               this.apiService.getGenreNames(this.gameInfo.genres).subscribe((response) => {
                 this.gameInfo.genresNames = response.apiResponse;
+                if (this.selectedLanguage != "en") {
+                  this.apiService.translateGenres(
+                    this.getGenreNamesList(this.gameInfo.genresNames),
+                    this.selectedLanguage
+                  ).subscribe((response) => {
+                    this.gameInfo.translatedGenreNames = {};
+                    this.gameInfo.translatedGenreNames[this.selectedLanguage] = response.translatedGenres;
+                  });
+                }
               });
             }
           }
@@ -164,5 +231,13 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
 
   navigateToExplore() {
     this.router.navigate(['/categories']);
+  }
+
+  private getGenreNamesList(genresNames: any[]) {
+    const genreNamesList = [];
+    for (const genre of genresNames) {
+      genreNamesList.push(genre.name);
+    }
+    return genreNamesList;
   }
 }

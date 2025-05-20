@@ -6,6 +6,7 @@ import {ApiService} from '../../services/api.service';
 import {NgIf} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
 import {TranslatePipe} from '@ngx-translate/core';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-newcoment-page',
@@ -31,11 +32,35 @@ export class NewcomentPageComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private router: Router = inject(Router);
   private apiService: ApiService = inject(ApiService);
+  private storageService: StorageService = inject(StorageService);
+
+  protected selectedLanguage: string = this.storageService.getItem("lang") || 'es';
 
   constructor() {
   }
 
   ngOnInit(): void {
+    this.storageService.language$.subscribe(value => {
+      if (this.gameInfo && value != 'en') {
+
+        if (this.gameInfo.summary) {
+          if (!this.gameInfo.translatedSummary) {
+            this.gameInfo.translatedSummary = {};
+          }
+
+          if (!this.gameInfo.translatedSummary[value]) {
+            this.apiService.translateText(
+              this.gameInfo.summary,
+              value
+            ).subscribe((response) => {
+              this.gameInfo.translatedSummary[value] = response.translatedText;
+            });
+          }
+        }
+      }
+      this.selectedLanguage = value;
+    });
+
     this.route.params.subscribe(params => {
       this.videogameSlug = params["slug"];
       if (this.videogameSlug) {
@@ -44,6 +69,15 @@ export class NewcomentPageComponent implements OnInit {
 
           if (this.gameInfo) {
             this.videogameId = this.gameInfo.id.toString();
+
+            if (this.gameInfo.summary) {
+              if (this.selectedLanguage != 'en') {
+                this.apiService.translateText(this.gameInfo.summary, this.selectedLanguage).subscribe((response) => {
+                  this.gameInfo.translatedSummary = {};
+                  this.gameInfo.translatedSummary[this.selectedLanguage] = response.translatedText;
+                });
+              }
+            }
 
             this.apiService.getCoverURL(parseInt(this.videogameId), "cover_big").subscribe((response) => {
               this.gameCover = response.fullURL;

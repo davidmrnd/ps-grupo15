@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {Subscription} from 'rxjs';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -41,12 +42,14 @@ export class ProfileComponent implements OnInit, OnChanges, OnDestroy {
 
   private dataService: DataService = inject(DataService);
   private translate: TranslateService = inject(TranslateService);
+  private storageService: StorageService = inject(StorageService);
 
   private translationSubscription: Subscription | undefined;
   private emptyNameAndUsernameMessage = 'El nombre y el nombre de usuario no pueden estar vacíos.';
   private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
   private genericSavingProfileMessage = 'Hubo un error al guardar los cambios. Inténtalo de nuevo.';
   private genericUsernameAvailabilityMessage = 'Hubo un error al comprobar la disponibilidad del nombre de usuario.';
+  @Input() selectedLanguage!: string;
 
   constructor() {}
 
@@ -89,7 +92,7 @@ export class ProfileComponent implements OnInit, OnChanges, OnDestroy {
 
         // Si es el perfil del usuario autenticado, intenta usar imagen del localStorage
         if (this.isCurrentUser) {
-          const localImage = localStorage.getItem(`profile-image-${this.id}`);
+          const localImage = this.storageService.getItem(`profile-image-${this.id}`);
           if (localImage) {
             this.userInfo.profileicon = localImage;
           }
@@ -112,7 +115,7 @@ export class ProfileComponent implements OnInit, OnChanges, OnDestroy {
       reader.onload = () => {
         const base64Image = reader.result as string;
         // Guardamos en localStorage con la clave basada en el ID del usuario
-        localStorage.setItem(`profile-image-${this.id}`, base64Image);
+        this.storageService.setItem(`profile-image-${this.id}`, base64Image);
         this.selectedFile = file;
       };
       reader.readAsDataURL(file); // Convierte la imagen a base64

@@ -1,5 +1,8 @@
 <main *ngIf="this.gameInfo && this.showContent && !this.showErrorMessage">
-  <app-profile [type]="'videogame'" [gameInfo]="this.gameInfo" [gameCover]="this.gameCover" [showPlatformsAndGenres]="false"></app-profile>
+  <app-profile [type]="'videogame'"
+               [gameInfo]="this.gameInfo"
+               [gameCover]="this.gameCover"
+               [showPlatformsAndGenres]="false" [selectedLanguage]="this.selectedLanguage"></app-profile>
 </main>
 <app-newcoment *ngIf="this.gameInfo && this.showContent && !this.showErrorMessage"></app-newcoment>
 

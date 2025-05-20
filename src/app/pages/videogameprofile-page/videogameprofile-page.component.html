@@ -1,5 +1,8 @@
 <main *ngIf="this.gameInfo && this.showContent">
-  <app-profile [type]="'videogame'" [gameInfo]="this.gameInfo" [gameCover]="this.gameCover" [showPlatformsAndGenres]="true"></app-profile>
+  <app-profile [type]="'videogame'"
+               [gameInfo]="this.gameInfo"
+               [gameCover]="this.gameCover"
+               [showPlatformsAndGenres]="true" [selectedLanguage]="this.selectedLanguage"></app-profile>
   <app-stars [rating]="averageRating"></app-stars>
 </main>
 
