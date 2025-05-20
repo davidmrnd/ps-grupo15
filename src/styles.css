@@ -173,6 +173,11 @@ body.dark-mode .profile-title {
   color: #b9b9b9;
 }
 
+body.dark-mode .delete-modal {
+  background-color: #31313C;
+  color: #B9B9B9;
+}
+
 body.dark-mode .modal-content {
   background-color: #31313C;
   color: #B9B9B9;
@@ -180,6 +185,14 @@ body.dark-mode .modal-content {
 
 body.dark-mode #search-results {
   background-color: #31313C;
+}
+
+body.dark-mode #search-results li:hover {
+  background-color: #474753 !important;
+}
+
+body.dark-mode #search-results li a {
+  color: #ffffff !important;
 }
 
 body.dark-mode .like-count {
@@ -204,6 +217,39 @@ body.dark-mode footer {
 body.dark-mode header {
   background-color: #232323 !important;
   transition: background 0.3s;
+}
+
+body.dark-mode .help-modal {
+  background-color: #31313C;
+  color: #B9B9B9;
+}
+
+body.dark-mode .edit-form {
+  background-color: #31313C;
+}
+
+body.dark-mode .selector-label,
+body.dark-mode .order-label {
+  color: #ffffff;
+}
+
+body.dark-mode .carousel-title h3 {
+  color: #ffffff;
+}
+
+body.dark-mode .user-dropdown {
+  background-color: #31313C;
+  color: #ffffff;
+}
+
+body.dark-mode .user-dropdown a,
+body.dark-mode .user-dropdown button {
+  color: #ffffff !important;
+}
+
+body.dark-mode .user-dropdown a:hover,
+body.dark-mode .user-dropdown button:hover {
+  background: #474753 !important;
 }
 
 body header {

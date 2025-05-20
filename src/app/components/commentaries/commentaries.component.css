@@ -154,7 +154,7 @@ a {
   z-index: 1000;
 }
 
-.modal {
+.delete-modal {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -164,7 +164,7 @@ a {
   max-width: 400px;
 }
 
-.modal h2 {
+.delete-modal h2 {
   margin-bottom: 20px;
   font-size: 1.2rem;
 }

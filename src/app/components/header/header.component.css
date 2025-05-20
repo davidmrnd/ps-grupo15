@@ -264,7 +264,7 @@ a {
 }
 
 .logout-dropdown-btn {
-  color: #f44336;
+  color: #f44336 !important;
   font-weight: bold;
 }
 
