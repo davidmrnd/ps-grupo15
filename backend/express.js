@@ -5,7 +5,7 @@ const deepl = require('deepl-node');
 const apiFunctions = require('./api/api.cjs');
 const igdbKeys = require('./api/igdb_keys.json');
 const translationKeys = require('./api/deepl_key.json');
-const genreSpanishTranslations = require('./api/i18n/es.json');
+const genreSpanishTranslations = require('./api/i18n/genres_es.json');
 
 const app = express();
 const port = 4000;
