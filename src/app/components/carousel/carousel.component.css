@@ -53,19 +53,22 @@
 
 .carousel-buttons {
     text-align: center;
+    align-items: center;
     margin-bottom: 20px;
 }
 
 .carousel-button {
     background-color: #ECD54C;
+    align-items: center;
     border: none;
     color: black;
-    padding: 5px 10px;
+    padding: 7px;
     cursor: pointer;
     border-radius: 50%;
     transition: background-color 0.3s ease, transform 0.2s ease;
     text-decoration: solid;
     margin-bottom: 20px;
+    margin: 0 3px;
 }
 
 .carousel-button:hover {
@@ -110,10 +113,6 @@
         transform: scale(1);
     }
 
-    .carousel-button {
-        padding: 5px 8px;
-    }
-
     .start-rating {
         font-size: 14px;
         padding: 8px 12px;
@@ -139,9 +138,6 @@
         transform: scale(1);
     }
 
-    .carousel-button {
-        padding: 4px 7px;
-    }
 
     .start-rating {
         font-size: 12px;
