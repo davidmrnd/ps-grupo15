@@ -2,11 +2,11 @@
 
   <div class="header-container">
     <div class="left-container">
-      <div class="logo-container">
+      <div class="logo-container" *ngIf="!mobileMenuOpen">
         <a routerLink="/"><img src="/assets/images/logo.webp" alt="Logo"></a>
       </div>
       
-      <nav class="nav-links">
+      <nav class="nav-links" [class.open]="mobileMenuOpen">
         <a routerLink="/">Inicio</a>
         <a routerLink="/categories">Explorar</a>
         <a *ngIf="isLoggedIn; else redirectToLogin" routerLink="/following">Siguiendo</a>
@@ -14,50 +14,52 @@
           <a routerLink="/login">Siguiendo</a>
         </ng-template>
       </nav>
-      <button class="menu-button">☰</button>
+      <button class="menu-button" (click)="toggleMobileMenu()">☰</button>
 
 
     </div>
 
-    <div class="categories-dropdown-container">
-     <button (click)="toggleDropdown()" class="dropdown-button">Filtrar Categorías</button>
-      <div *ngIf="showDropdown" class="categories-dropdown">
-        <div class="categories-grid">
-          <label *ngFor="let category of allCategories" class="category-item" [class.selected]="selectedCategories.includes(category)">
-            <input
-              type="checkbox"
-              [value]="category"
-              [checked]="selectedCategories.includes(category)"
-              (change)="onCategoryChange($event)"
-            />
-            {{ category }}
-          </label>
+    <div class="center-header-row">
+      <div class="categories-dropdown-container" [class.invisible]="!isCategoriesPage">
+        <button *ngIf="isCategoriesPage" (click)="toggleDropdown()" class="dropdown-button">Filtrar Categorías</button>
+        <div *ngIf="showDropdown" class="categories-dropdown">
+          <div class="categories-grid">
+            <label *ngFor="let category of allCategories" class="category-item" [class.selected]="selectedCategories.includes(category)">
+              <input
+                type="checkbox"
+                [value]="category"
+                [checked]="selectedCategories.includes(category)"
+                (change)="onCategoryChange($event)"
+              />
+              {{ category }}
+            </label>
+          </div>
         </div>
       </div>
-  </div>
+      <div class="search-container">
+        <input
+          type="text"
+          class="search-box"
+          placeholder="Buscar"
+          [(ngModel)]="searchText"
+          (keydown)="onKeyDowmInSearchInput($event)"
+        />
+        <button class="search-button" (click)="onSearchButtonClicked()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="9" cy="9" r="8" stroke="black" stroke-width="2"/>
+            <line x1="14" y1="14" x2="19" y2="19" stroke="black" stroke-width="2"/>
+          </svg>
+        </button>
+      </div>
+      <div class="search-toggle">
+        <input type="radio" id="user" name="searchType" value="user" [(ngModel)]="searchType" />
+        <label for="user">Usuario</label>
+        <input type="radio" id="videogame" name="searchType" value="videogame" [(ngModel)]="searchType" />
+        <label for="videogame">Videojuego</label>
+        <div class="toggle-slider"></div>
+      </div>
+    </div>
 
-    <div class="search-container">
-      <input
-        type="text"
-        class="search-box"
-        placeholder="Buscar"
-        [(ngModel)]="searchText"
-        (keydown)="onKeyDowmInSearchInput($event)"
-      />
-      <button class="search-button" (click)="onSearchButtonClicked()">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <circle cx="9" cy="9" r="8" stroke="black" stroke-width="2"/>
-          <line x1="14" y1="14" x2="19" y2="19" stroke="black" stroke-width="2"/>
-        </svg>
-      </button>
-    </div>
-    <div class="search-toggle">
-      <input type="radio" id="user" name="searchType" value="user" [(ngModel)]="searchType" />
-      <label for="user">Usuario</label>
-      <input type="radio" id="videogame" name="searchType" value="videogame" [(ngModel)]="searchType" />
-      <label for="videogame">Videojuego</label>
-      <div class="toggle-slider"></div>
-    </div>
     <app-search-results
       [searchResults]="searchResults"
       [searchType]="searchType"

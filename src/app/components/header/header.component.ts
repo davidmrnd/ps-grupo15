@@ -1,12 +1,12 @@
-import {Component, OnInit, OnDestroy, inject, HostListener} from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, HostListener } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {FormsModule} from '@angular/forms';
-import {ApiService} from '../../services/api.service';
-import {SearchResultsComponent} from '../search-results/search-results.component';
-import {DataService} from '../../services/data.service';
+import { FormsModule } from '@angular/forms';
+import { ApiService } from '../../services/api.service';
+import { SearchResultsComponent } from '../search-results/search-results.component';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   userName: string | null = null;
   private userSubscription: Subscription | null = null;
-  userId: any|string;
+  userId: any | string;
   searchType: 'user' | 'videogame' = 'videogame';
   searchText: string = "";
   apiService: ApiService = inject(ApiService);
@@ -32,9 +32,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   defaultCategories: string[] = ['Acción', 'Supervivencia', 'Disparos', 'Deportes'];
   selectedCategories: string[] = [];
   isUsingDefault: boolean = true;
+  isCategoriesPage: boolean = false;
+  mobileMenuOpen = false;
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
+  private router: Router = inject(Router);
 
   constructor() {}
 
@@ -70,9 +73,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.isDarkModeEnabled = false;
     }
 
-    window.addEventListener("resize", (event) => {
+    window.addEventListener("resize", () => {
       this.positionSearchResults();
-    })
+    });
+
+    this.router.events.subscribe(() => {
+      this.isCategoriesPage = this.router.url.startsWith('/categories');
+      if (this.isCategoriesPage) {
+        this.selectedCategories = [];
+        this.dataService.setSelectedCategories(this.selectedCategories);
+      }
+      this.mobileMenuOpen = false;
+    });
+
+    this.isCategoriesPage = this.router.url.startsWith('/categories');
+    if (this.isCategoriesPage) {
+      this.selectedCategories = [];
+      this.dataService.setSelectedCategories(this.selectedCategories);
+    }
   }
 
   logout() {
@@ -90,7 +108,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   onSearchButtonClicked() {
     if (this.searchType === 'videogame') {
       this.apiService.search(10, this.searchText).subscribe((result) => {
-        this.searchResults = result.apiResponse;
+        this.searchResults = result.apiResponse; // o prueba con result directamente
         this.showSearchResults = true;
       });
     } else if (this.searchType === 'user') {
@@ -131,6 +149,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const searchContainerElement = document.querySelector(".search-container");
     const userDropdown = document.querySelector('.user-dropdown-container');
     const dropdown = document.querySelector('.categories-dropdown-container');
+    const menuButton = document.querySelector('.menu-button');
+    const navLinks = document.querySelector('.nav-links');
     const target = event.target as HTMLElement;
 
     if (
@@ -151,6 +171,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     if (dropdown && !dropdown.contains(target)) {
       this.showDropdown = false;
+    }
+
+    if (
+      this.mobileMenuOpen &&
+      navLinks &&
+      menuButton &&
+      !navLinks.contains(target) &&
+      !menuButton.contains(target)
+    ) {
+      this.mobileMenuOpen = false;
     }
   }
 
@@ -177,6 +207,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.showDropdown = !this.showDropdown;
   }
 
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
   onCategoryChange(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
     const category = checkbox.value;
@@ -192,10 +226,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.isUsingDefault = true;
       }
     }
-  }
-
-  getDisplayedCategories(): string[] {
-    return this.isUsingDefault ? this.defaultCategories : this.selectedCategories;
+    localStorage.setItem('selectedCategories', JSON.stringify(this.selectedCategories));
+    this.dataService.setSelectedCategories(this.selectedCategories);
   }
 }
 

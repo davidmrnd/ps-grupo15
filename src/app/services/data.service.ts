@@ -11,12 +11,17 @@ import {
   updateDoc
 } from '@angular/fire/firestore';
 import {Observable, switchMap, tap} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   private firestore: Firestore = inject(Firestore);
+
+  // Estado reactivo para las categorías seleccionadas
+  private selectedCategoriesSubject = new BehaviorSubject<string[]>([]);
+  selectedCategories$ = this.selectedCategoriesSubject.asObservable();
 
   constructor() {}
 
@@ -116,5 +121,9 @@ export class DataService {
         console.log('Usuarios encontrados:', users); // Ver los usuarios obtenidos
       })
     );
+  }
+
+  setSelectedCategories(categories: string[]) {
+    this.selectedCategoriesSubject.next(categories);
   }
 }

@@ -201,6 +201,15 @@ body.dark-mode footer {
   color: #ffffff;
 }
 
+body.dark-mode header {
+  background-color: #232323 !important;
+  transition: background 0.3s;
+}
+
+body header {
+  background-color: #e0e0e0;
+}
+
 @media (min-width: 768px) and (max-width: 1024px) {
   h1 {
     font-size: 28px;
