@@ -51,6 +51,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
+    window.addEventListener('storage', this.onStorageChange.bind(this));
+
     this.userSubscription = this.authService.getCurrentUserObservable().subscribe((user) => {
       this.isLoggedIn = !!user;
       this.userId = user?.uid || null;
@@ -237,6 +239,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     localStorage.setItem('selectedCategories', JSON.stringify(this.selectedCategories));
     this.dataService.setSelectedCategories(this.selectedCategories);
+  }
+
+  onStorageChange(event: StorageEvent): void {
+    if (event.key === 'dark-mode') {
+      this.toggleDarkMode();
+    }
   }
 }
 

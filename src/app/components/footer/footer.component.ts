@@ -53,6 +53,8 @@ export class FooterComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit(): void {
+    window.addEventListener("storage", this.onStorageChange.bind(this));
+
     this.translationSubscription = this.translate.stream(_([
       "footer.tutorial.step_1",
       "footer.tutorial.step_2",
@@ -124,5 +126,13 @@ export class FooterComponent implements OnInit, OnDestroy {
       return languageCode[0].substring(1, 3);
     }
     return "";
+  }
+
+  onStorageChange(event: StorageEvent) {
+    if (event.key === "lang") {
+      this.translate.use(event.newValue || 'es');
+      this.selectedLanguage = event.newValue || 'es';
+      this.storageService.setItem('lang', event.newValue || 'es');
+    }
   }
 }
