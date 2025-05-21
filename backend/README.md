@@ -25,7 +25,7 @@ Este paso no es necesario hacerlo si ya se han instalado los paquetes previament
 
 Los paquetes relacionados con la API son [express](https://www.npmjs.com/package/express), [cors](https://www.npmjs.com/package/cors) y [deepl_node](https://www.npmjs.com/package/deepl-node).
 
-3. Arrancar el backend con npm.
+4. Arrancar el backend con npm.
 ```
 npm run start-backend
 ```
