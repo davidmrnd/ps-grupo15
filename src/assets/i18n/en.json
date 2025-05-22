@@ -121,7 +121,7 @@
 	"sign_up.required_username": "Username is required.",
 	"sign_up.sign_up": "Sign Up",
 	"sign_up.username": "Username",
-	"sign_up.wrong_password_characters": "The password must be at least 6 characters long.",
+	"sign_up.wrong_password_characters": "The password must be at least 8 characters long.",
 	"social_stats.close": "Close",
 	"social_stats.followers": "Followers",
 	"social_stats.following": "Following",

@@ -121,7 +121,7 @@
 	"sign_up.required_username": "El nombre de usuario es obligatorio.",
 	"sign_up.sign_up": "Registrarse",
 	"sign_up.username": "Nombre de Usuario",
-	"sign_up.wrong_password_characters": "La contraseña debe tener al menos 6 caracteres.",
+	"sign_up.wrong_password_characters": "La contraseña debe tener al menos 8 caracteres.",
 	"social_stats.close": "Cerrar",
 	"social_stats.followers": "Seguidores",
 	"social_stats.following": "Seguidos",
