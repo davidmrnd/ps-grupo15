@@ -7,7 +7,7 @@
 </main>
 
 <button *ngIf="this.gameInfo  && this.showContent" (click)="navigateToAddComment()" class="add-comment-button">
-  {{ hasComment ? this.modifyReviewText : this.addReviewText }}
+  {{ hasComment ? (this.modifyReviewText | translate) : (this.addReviewText | translate) }}
 </button>
 
 <app-commentaries *ngIf="this.gameInfo  && this.showContent" [type]="'videogame'" [comments]="this.comments"></app-commentaries>
