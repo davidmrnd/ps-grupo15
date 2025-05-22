@@ -175,6 +175,50 @@
   font-size: 1rem;
 }
 
+.tos-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tos-modal {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 10px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+
+.close-tos-modal {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #888;
+}
+
+.tos-content h2 {
+  margin-top: 0;
+}
+
+.tos-content p {
+  white-space: pre-line;
+}
+
 @media (max-width: 1024px) {
   footer {
     padding: 15px 0;

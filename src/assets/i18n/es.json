@@ -136,5 +136,6 @@
 	"videogame_profile_page.error.go_to_home.2": "explora las diferentes categorías",
 	"videogame_profile_page.error.invalid_game": "Parece que el videojuego que has introducido en la URL no es válido",
 	"videogame_profile_page.modify_review": "Modificar valoración",
-	"welcome.description": "Game-Critic es el portal definitivo para los amantes de los videojuegos que buscan análisis detallados, reseñas imparciales y calificaciones expertas. Desde los últimos lanzamientos hasta clásicos atemporales, aquí encontrarás opiniones fundamentadas sobre gráficos, jugabilidad, historia y más."
+	"welcome.description": "Game-Critic es el portal definitivo para los amantes de los videojuegos que buscan análisis detallados, reseñas imparciales y calificaciones expertas. Desde los últimos lanzamientos hasta clásicos atemporales, aquí encontrarás opiniones fundamentadas sobre gráficos, jugabilidad, historia y más.",
+	"footer.tosTitle": "Términos de Servicio y Política de Privacidad"
 }
