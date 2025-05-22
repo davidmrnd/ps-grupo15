@@ -73,6 +73,18 @@ a {
 .edit-button:hover {
   color: #000;
 }
+.delete-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #555;
+  margin-left: 0.5rem;
+  transition: color 0.3s ease;
+}
+.delete-button:hover{
+  color: #000;
+}
 
 .comment-date {
   color: #a9a9a9;
