@@ -111,6 +111,7 @@
 	"sign_up.messages.failed_captcha": "Por favor, verifica que no eres un robot.",
 	"sign_up.messages.generic_error_message": "Ocurrió un error. Inténtalo de nuevo.",
 	"sign_up.messages.non_available_username": "El nombre de usuario ya está en uso. Por favor, elige otro.",
+  "sign_up.messages.weak_password": "La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo.",
 	"sign_up.must_accept_tos": "Debes aceptar los términos y condiciones.",
 	"sign_up.name": "Nombre",
 	"sign_up.password": "Contraseña",

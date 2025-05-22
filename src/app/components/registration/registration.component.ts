@@ -40,6 +40,7 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
   private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
   private genericErrorMessage = 'Ocurrió un error. Inténtalo de nuevo.';
   private failedCaptchaMessage = 'Por favor, verifica que no eres un robot.';
+  private weakPasswordMessage: string = 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo.';
 
   constructor() {}
 
@@ -59,12 +60,14 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
       "sign_up.messages.non_available_username",
       "sign_up.messages.generic_error_message",
       "sign_up.messages.failed_captcha",
+      "sign_up.messages.weak_password",
     ])).subscribe((translations: {[key:string]: string}) => {
       this.mustAcceptTOSMessage = translations["sign_up.must_accept_tos"];
       this.completeAllFieldsMessage = translations["sign_up.messages.complete_all_fields"];
       this.nonAvailableUsernameMessage = translations["sign_up.messages.non_available_username"];
       this.genericErrorMessage = translations["sign_up.messages.generic_error_message"];
       this.failedCaptchaMessage = translations["sign_up.messages.failed_captcha"];
+      this.weakPasswordMessage = translations["sign_up.messages.weak_password"];
     });
   }
 
@@ -73,7 +76,15 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
       this.translationSubscription.unsubscribe();
     }
   }
-
+  validatePassword(password: string): boolean {
+    const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!strongPasswordRegex.test(password)) {
+      this.errorMessage = this.weakPasswordMessage;
+      return false;
+    }
+    this.weakPasswordMessage = '';
+    return true;
+  }
   register() {
     if (!this.termsAccepted) {
       this.errorMessage = this.mustAcceptTOSMessage;
@@ -82,6 +93,10 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (!this.email || !this.password || !this.name || !this.username) {
       this.errorMessage = this.completeAllFieldsMessage;
+      return;
+    }
+
+    if (!this.validatePassword(this.password)) {
       return;
     }
 
@@ -99,6 +114,7 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = this.nonAvailableUsernameMessage;
         return;
       }
+      this.errorMessage = '';
       this.authService.register(this.email, this.password, this.name, this.username)
         .then(() => {
           document.body.innerHTML = '<div style="font-size: 8rem; text-align: center;">✅</div>';
