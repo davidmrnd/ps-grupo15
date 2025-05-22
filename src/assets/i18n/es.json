@@ -27,6 +27,8 @@
 	"footer.start": "¡Empezar!",
 	"footer.step": "Paso",
 	"footer.tos": "Términos de Servicio y Política de Privacidad",
+  "footer.tos-text": "\nTérminos de Servicio\n\nÚltima actualización: 22 de mayo de 2025\n\nBienvenido a Game-Critic. Al acceder y utilizar nuestro sitio web, aceptas estar sujeto a los siguientes Términos de Servicio. Si no estás de acuerdo con estos términos, por favor no utilices este sitio.\n\n1. Uso del sitio web\nPuedes usar nuestro sitio web solo para fines legales y de acuerdo con estos términos. No puedes utilizar nuestro contenido para actividades ilegales, abusivas o que infrinjan derechos de terceros.\n\n2. Propiedad intelectual\nTodo el contenido presente en este sitio web (textos, imágenes, logos, diseños, etc.) es propiedad de Game-Critic o de sus licenciantes y está protegido por las leyes de propiedad intelectual. No puedes copiar, modificar ni distribuir ningún contenido sin autorización previa por escrito.\n\n3. Cuenta de usuario\nSi creas una cuenta, eres responsable de mantener la confidencialidad de tu información de acceso y de todas las actividades que ocurran bajo tu cuenta.\n\n4. Limitación de responsabilidad\nGame-Critic no se hace responsable por daños directos o indirectos derivados del uso o la imposibilidad de uso de nuestro sitio web.\n\n5. Modificaciones\nNos reservamos el derecho de modificar estos Términos de Servicio en cualquier momento. Las actualizaciones serán publicadas en esta página con la fecha correspondiente.\n\nPolítica de Privacidad\n\nÚltima actualización: 22 de mayo de 2025\n\nEn Game-Critic, respetamos tu privacidad y nos comprometemos a proteger tus datos personales. Esta Política de Privacidad describe qué información recopilamos, cómo la usamos y qué derechos tienes sobre ella.\n\n1. Información que recopilamos\nDatos personales: como nombre, correo electrónico, dirección IP, y otros datos proporcionados al registrarte o contactar con nosotros.\n\nDatos de uso: información sobre cómo accedes y usas el sitio web.\n\n2. Cómo usamos tu información\nUsamos tu información para:\n\nProveer y mejorar nuestros servicios\n\nComunicarnos contigo\n\nCumplir con obligaciones legales\n\n3. Cookies\nUsamos cookies y tecnologías similares para mejorar la experiencia del usuario. Puedes gestionar tus preferencias de cookies desde tu navegador.\n\n4. Compartir información\nNo compartimos tus datos personales con terceros, salvo cuando sea necesario para prestar nuestros servicios o cumplir con obligaciones legales.\n\n5. Seguridad\nImplementamos medidas de seguridad razonables para proteger tus datos. Sin embargo, ninguna transmisión por Internet es completamente segura.\n\n6. Tus derechos\nTienes derecho a acceder, corregir o eliminar tus datos personales. Para ejercer estos derechos, contáctanos en: [psgrupo15&#64;gmail.com]\n\n7. Cambios a esta política\nPodemos actualizar esta Política de Privacidad ocasionalmente. Te notificaremos mediante nuestro sitio web si realizamos cambios importantes.",
+  "footer.tos-title": "Términos de Servicio y Política de Privacidad",
 	"footer.tutorial.step_1": "¡Bienvenido a Game-Critic! Aquí puedes descubrir y valorar videojuegos fácilmente.",
 	"footer.tutorial.step_2": "Utiliza la barra de búsqueda para encontrar videojuegos o usuarios rápidamente.",
 	"footer.tutorial.step_3": "Explora las categorías para descubrir juegos por género o novedades.",
@@ -41,6 +43,7 @@
 	"header.my_profile": "Mi Perfil",
 	"header.search": "Buscar",
 	"header.sign_up": "Registrarse",
+  "header.switch-dark-mode": "Alternar modo oscuro",
 	"header.toggle.user": "Usuario",
 	"header.toggle.videogame": "Videojuego",
 	"home.start_rating": "Empezar a valorar",
@@ -136,6 +139,5 @@
 	"videogame_profile_page.error.go_to_home.2": "explora las diferentes categorías",
 	"videogame_profile_page.error.invalid_game": "Parece que el videojuego que has introducido en la URL no es válido",
 	"videogame_profile_page.modify_review": "Modificar valoración",
-	"welcome.description": "Game-Critic es el portal definitivo para los amantes de los videojuegos que buscan análisis detallados, reseñas imparciales y calificaciones expertas. Desde los últimos lanzamientos hasta clásicos atemporales, aquí encontrarás opiniones fundamentadas sobre gráficos, jugabilidad, historia y más.",
-	"footer.tosTitle": "Términos de Servicio y Política de Privacidad"
+	"welcome.description": "Game-Critic es el portal definitivo para los amantes de los videojuegos que buscan análisis detallados, reseñas imparciales y calificaciones expertas. Desde los últimos lanzamientos hasta clásicos atemporales, aquí encontrarás opiniones fundamentadas sobre gráficos, jugabilidad, historia y más."
 }

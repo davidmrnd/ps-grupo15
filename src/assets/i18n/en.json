@@ -27,6 +27,8 @@
 	"footer.start": "Get started!",
 	"footer.step": "Step",
 	"footer.tos": "Terms of Service and Privacy Policy",
+  "footer.tos-text": "\nTerms of Service\n\nLast Updated: May 22, 2025\n\nWelcome to Game-Critic. By accessing and using our website, you agree to be bound by the following Terms of Service. If you do not agree to these terms, please do not use this site.\n\nUse of the\nwebsite You may use our website only for lawful purposes and in accordance with these terms. You may not use our content for illegal, abusive or infringing activities.\n\n2. Intellectual property\nAll content on this website (text, images, logos, designs, etc.) is the property of Game-Critic or its licensors and is protected by intellectual property laws. You may not copy, modify or distribute any content without prior written permission.\n\n3. User Account\nIf you create an account, you are responsible for maintaining the confidentiality of your login information and for all activities that occur under your account.\n\n4. Limitation of Liability\nGame-Critic is not liable for any direct or indirect damages arising out of the use or inability to use our website.\n\n5. Modifications\nWe reserve the right to modify these Terms of Service at any time. Updates will be posted on this page with the corresponding date.\n\nPrivacy Policy\n\nLast updated: May 22, 2025\n\nAt Game-Critic, we respect your privacy and are committed to protecting your personal information. This Privacy Policy describes what information we collect, how we use it and what rights you have over it.\n\n1. Information we collect\nPersonal data: such as name, email address, IP address, and other information provided when you register or contact us.\n\nUsage data: information about how you access and use the website.\n\n2. How we use your information\nWe use your information to:\n\nProvide and improve our services\n\nCommunicate with you\n\nComply with legal obligations\n\n3. Cookies\nWe use cookies and similar technologies to enhance the user experience. You can manage your cookie preferences from your browser.\n\n4. Sharing information\nWe do not share your personal information with third parties, except as necessary to provide our services or comply with legal obligations.\n\n5. Security\nWe implement reasonable security measures to protect your information. However, no Internet transmission is completely secure.\n\n6. Your rights\nYou have the right to access, correct or delete your personal data. To exercise these rights, contact us at: [psgrupo15&#64;gmail.com].\n\n7. Changes to this policy\nWe may update this Privacy Policy from time to time. We will notify you via our website if we make material changes.",
+  "footer.tos-title": "Terms of Service and Privacy Policy",
 	"footer.tutorial.step_1": "Welcome to Game-Critic! Here you can easily discover and rate video games.",
 	"footer.tutorial.step_2": "Use the search bar to find video games or users quickly.",
 	"footer.tutorial.step_3": "Browse categories to discover games by genre or new releases.",
@@ -41,6 +43,7 @@
 	"header.my_profile": "My Profile",
 	"header.search": "Search",
 	"header.sign_up": "Sign Up",
+  "header.switch-dark-mode": "Switch dark mode",
 	"header.toggle.user": "User",
 	"header.toggle.videogame": "Videogame",
 	"home.start_rating": "Start rating",
@@ -136,6 +139,5 @@
 	"videogame_profile_page.error.go_to_home.2": "explore the different categories",
 	"videogame_profile_page.error.invalid_game": "It seems that the videogame you have entered in the URL is not valid",
 	"videogame_profile_page.modify_review": "Modify review",
-	"welcome.description": "Game-Critic is the ultimate portal for video game lovers looking for in-depth analysis, unbiased reviews and expert ratings. From the latest releases to timeless classics, here you'll find informed opinions on graphics, gameplay, story and more.",
-	"footer.tosTitle": "Terms of Service and Privacy Policy"
+	"welcome.description": "Game-Critic is the ultimate portal for video game lovers looking for in-depth analysis, unbiased reviews and expert ratings. From the latest releases to timeless classics, here you'll find informed opinions on graphics, gameplay, story and more."
 }
