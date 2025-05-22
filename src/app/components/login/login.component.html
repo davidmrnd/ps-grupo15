@@ -33,7 +33,7 @@
 
       <button type="submit" class="button" [disabled]="loginForm.invalid">{{ 'login.login' | translate }}</button>
     </form>
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage | translate }}</p>
     <div class="register-footer">
       <span class="bold-text">{{ 'login.no_account' | translate }}</span>
       <a routerLink="/registration" class="register-link"><button class="shadow-text">{{ 'login.signup' | translate }}</button></a>
@@ -51,6 +51,6 @@
     <input type="email" id="resetEmail" class="input" [(ngModel)]="resetEmail" placeholder="{{ 'login.enter_email' | translate }}">
     <button class="button" (click)="sendPasswordReset()">{{ 'login.send_email' | translate }}</button>
     <button class="button close-button" (click)="closeModal()">{{ 'login.close' | translate }}</button>
-    <p *ngIf="modalErrorMessage" class="error-message">{{ modalErrorMessage }}</p>
+    <p *ngIf="modalErrorMessage" class="error-message">{{ modalErrorMessage | translate }}</p>
   </div>
 </div>

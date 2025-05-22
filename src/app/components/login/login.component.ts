@@ -26,29 +26,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   private translate: TranslateService = inject(TranslateService);
 
   private translationSubscription: Subscription | undefined;
-  private completeFieldsMessage: string = "Por favor, completa todos los campos.";
-  private userNotFoundMessage: string = "Usuario no encontrado.";
-  private wrongPasswordMessage: string = "Contraseña incorrecta.";
-  private genericErrorMessage: string = 'Ocurrió un error. Inténtalo de nuevo.';
-  private invalidEmailMessage: string = "Por favor, introduce un correo válido.";
+  private completeFieldsMessage: string = "login.messages.complete_fields";
+  private userNotFoundMessage: string = "login.messages.user_not_found";
+  private wrongPasswordMessage: string = "login.messages.wrong_password";
+  private genericErrorMessage: string = 'login.messages.generic';
+  private invalidEmailMessage: string = "login.messages.invalid_email";
   private emailSentMessage = 'Se ha enviado un correo para restablecer tu contraseña.';
 
   constructor() {}
 
   ngOnInit() {
     this.translationSubscription = this.translate.stream(_([
-      "login.messages.complete_fields",
-      "login.messages.user_not_found",
-      "login.messages.wrong_password",
-      "login.messages.generic",
-      "login.messages.invalid_email",
       "login.messages.email_sent"
     ])).subscribe((translations: {[key: string]: string}) => {
-      this.completeFieldsMessage = translations["login.messages.complete_fields"];
-      this.userNotFoundMessage = translations["login.messages.user_not_found"];
-      this.wrongPasswordMessage = translations["login.messages.wrong_password"];
-      this.genericErrorMessage = translations["login.messages.generic"];
-      this.invalidEmailMessage = translations["login.messages.invalid_email"];
       this.emailSentMessage = translations["login.messages.email_sent"];
     });
   }

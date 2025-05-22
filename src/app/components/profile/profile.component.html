@@ -18,14 +18,14 @@
     </div>
     <input type="text" [(ngModel)]="editableData.username" name="username" placeholder="{{ 'profile.username' | translate }}" required
            #usernameField="ngModel">
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage | translate }}</p>
     <div *ngIf="usernameField.invalid && usernameField.touched" class="error-message">
       {{ 'profile.empty_username' | translate }}
     </div>
     <textarea [(ngModel)]="editableData.description" name="description" placeholder="{{ 'profile.description' | translate }}"></textarea>
     <input type="file" (change)="onFileSelected($event)" accept="image/*">
     <div *ngIf="formErrorMessage" class="error-message">
-      {{ formErrorMessage }}
+      {{ formErrorMessage | translate }}
     </div>
     <div class="button-group">
       <button type="submit" [disabled]="!editForm.valid">{{ 'profile.save' | translate }}</button>

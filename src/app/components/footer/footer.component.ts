@@ -1,10 +1,8 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {FormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 import { CommonModule } from '@angular/common';
-import {Subscription} from 'rxjs';
-import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
 import {StorageService} from '../../services/storage.service';
 
 @Component({
@@ -18,79 +16,40 @@ import {StorageService} from '../../services/storage.service';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
-export class FooterComponent implements OnInit, OnDestroy {
+export class FooterComponent implements OnInit {
   private translate: TranslateService = inject(TranslateService);
   private storageService: StorageService = inject(StorageService);
 
   protected availableLanguages: string[] = ["Español (es)", "English (en)"];
   protected selectedLanguage: string = this.storageService.getItem('lang') || 'es';
 
-  private translationSubscription: Subscription | undefined;
-
   showHelpModal = false;
   currentHelpStep = 0;
   helpSteps = [
     {
       image: '/assets/help/step1.png',
-      text: '¡Bienvenido a Game-Critic! Aquí puedes descubrir y valorar videojuegos fácilmente.'
+      text: 'footer.tutorial.step_1'
     },
     {
       image: '/assets/help/step2.png',
-      text: 'Utiliza la barra de búsqueda para encontrar videojuegos o usuarios rápidamente.'
+      text: 'footer.tutorial.step_2'
     },
     {
       image: '/assets/help/step3.png',
-      text: 'Explora las categorías para descubrir juegos por género o novedades.'
+      text: 'footer.tutorial.step_3'
     },
     {
       image: '/assets/help/step4.png',
-      text: 'Haz clic en un juego para ver su perfil, leer reseñas y añadir tu propia valoración.'
+      text: 'footer.tutorial.step_4'
     },
     {
       image: '/assets/help/step5.png',
-      text: 'Sigue a otros usuarios y consulta sus valoraciones desde la sección "Siguiendo".'
+      text: 'footer.tutorial.step_5'
     }
   ];
 
   ngOnInit(): void {
     window.addEventListener("storage", this.onStorageChange.bind(this));
-
-    this.translationSubscription = this.translate.stream(_([
-      "footer.tutorial.step_1",
-      "footer.tutorial.step_2",
-      "footer.tutorial.step_3",
-      "footer.tutorial.step_4",
-      "footer.tutorial.step_5"
-    ])).subscribe((translations: {[key: string]: string}) => {
-      this.helpSteps = [
-        {
-          image: '/assets/help/step1.png',
-          text: translations["footer.tutorial.step_1"]
-        },
-        {
-          image: '/assets/help/step2.png',
-          text: translations["footer.tutorial.step_2"]
-        },
-        {
-          image: '/assets/help/step3.png',
-          text: translations["footer.tutorial.step_3"]
-        },
-        {
-          image: '/assets/help/step4.png',
-          text: translations["footer.tutorial.step_4"]
-        },
-        {
-          image: '/assets/help/step5.png',
-          text: translations["footer.tutorial.step_5"]
-        }
-      ];
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.translationSubscription) {
-      this.translationSubscription.unsubscribe();
-    }
   }
 
   openHelpModal() {

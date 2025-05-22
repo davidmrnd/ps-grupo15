@@ -1,13 +1,11 @@
 import { DataService } from '../../services/data.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {Component, inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ApiService} from '../../services/api.service';
 import { getAuth, onAuthStateChanged  } from 'firebase/auth';
 import {FormsModule} from '@angular/forms';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
-import {Subscription} from 'rxjs';
+import {TranslatePipe} from '@ngx-translate/core';
 import {StorageService} from '../../services/storage.service';
 
 @Component({
@@ -17,7 +15,7 @@ import {StorageService} from '../../services/storage.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
-export class ProfileComponent implements OnInit, OnChanges, OnDestroy {
+export class ProfileComponent implements OnChanges {
   @Input() type: string = '';
   @Input() userInfo: any = null;
   @Input() gameInfo: any = null;
@@ -41,41 +39,19 @@ export class ProfileComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isCurrentUser: boolean = false;
 
   private dataService: DataService = inject(DataService);
-  private translate: TranslateService = inject(TranslateService);
   private storageService: StorageService = inject(StorageService);
 
-  private translationSubscription: Subscription | undefined;
-  private emptyNameAndUsernameMessage = 'El nombre y el nombre de usuario no pueden estar vacíos.';
-  private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
-  private genericSavingProfileMessage = 'Hubo un error al guardar los cambios. Inténtalo de nuevo.';
-  private genericUsernameAvailabilityMessage = 'Hubo un error al comprobar la disponibilidad del nombre de usuario.';
+  private emptyNameAndUsernameMessage = 'profile.message.empty_name_and_username_message';
+  private nonAvailableUsernameMessage = 'profile.message.non_available_username_message';
+  private genericSavingProfileMessage = 'profile.message.generic_saving_message';
+  private genericUsernameAvailabilityMessage = 'profile.message.generic_availability_message';
   @Input() selectedLanguage!: string;
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.translationSubscription = this.translate.stream(_([
-      "profile.message.empty_name_and_username_message",
-      "profile.message.non_available_username_message",
-      "profile.message.generic_saving_message",
-      "profile.message.generic_availability_message"
-    ])).subscribe((translations: {[key: string]: string}) => {
-      this.emptyNameAndUsernameMessage = translations["profile.message.empty_name_and_username_message"];
-      this.nonAvailableUsernameMessage = translations["profile.message.non_available_username_message"];
-      this.genericSavingProfileMessage = translations["profile.message.generic_saving_message"];
-      this.genericUsernameAvailabilityMessage = translations["profile.message.generic_availability_message"];
-    });
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["userInfo"]) {
       this.prepareUserProfile();
-    }
-  }
-
-  ngOnDestroy(): void {
-    if (this.translationSubscription) {
-      this.translationSubscription.unsubscribe();
     }
   }
 

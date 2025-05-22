@@ -40,7 +40,7 @@
       <div class="help-carousel">
         <div class="help-step">
           <img *ngIf="helpSteps[currentHelpStep].image" [src]="helpSteps[currentHelpStep].image" alt="{{ 'footer.step' | translate }} {{currentHelpStep + 1}}" class="help-image">
-          <p class="help-text">{{ helpSteps[currentHelpStep].text }}</p>
+          <p class="help-text">{{ helpSteps[currentHelpStep].text | translate }}</p>
         </div>
         <div class="help-controls">
           <button (click)="prevHelpStep()" [disabled]="currentHelpStep === 0">&lt;</button>

@@ -89,7 +89,7 @@
 
       <button type="submit" class="button" [disabled]="registrationForm.invalid">{{ 'sign_up.sign_up' | translate }}</button>
     </form>
-    <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <p *ngIf="errorMessage" class="error-message">{{ errorMessage | translate }}</p>
 
     <div class="register-footer">
       <span class="bold-text">{{ 'sign_up.if_have_account' | translate }}</span>

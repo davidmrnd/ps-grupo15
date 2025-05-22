@@ -1,12 +1,10 @@
-import {Component, inject, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
+import {Component, inject, AfterViewInit} from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {DataService} from '../../services/data.service';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
-import {Subscription} from 'rxjs';
+import {TranslatePipe} from '@ngx-translate/core';
 
 interface GrecaptchaWindow extends Window {
   grecaptcha?: any;
@@ -20,7 +18,7 @@ declare const window: GrecaptchaWindow;
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
+export class RegistrationComponent implements AfterViewInit {
   email: string = '';
   password: string = '';
   name: string = '';
@@ -32,15 +30,13 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private authService: AuthService = inject(AuthService);
   private dataService: DataService = inject(DataService);
-  private translate: TranslateService = inject(TranslateService);
 
-  private translationSubscription: Subscription | undefined;
-  private mustAcceptTOSMessage = 'Debes aceptar los términos y condiciones.';
-  private completeAllFieldsMessage = 'Por favor, completa todos los campos.';
-  private nonAvailableUsernameMessage = 'El nombre de usuario ya está en uso. Por favor, elige otro.';
-  private genericErrorMessage = 'Ocurrió un error. Inténtalo de nuevo.';
-  private failedCaptchaMessage = 'Por favor, verifica que no eres un robot.';
-  private weakPasswordMessage: string = 'La contraseña debe tener al menos una mayúscula, una minúscula, un número y un símbolo.';
+  private mustAcceptTOSMessage = 'sign_up.must_accept_tos';
+  private completeAllFieldsMessage = 'sign_up.messages.complete_all_fields';
+  private nonAvailableUsernameMessage = 'sign_up.messages.non_available_username';
+  private genericErrorMessage = 'sign_up.messages.generic_error_message';
+  private failedCaptchaMessage = 'sign_up.messages.failed_captcha';
+  private weakPasswordMessage: string = 'sign_up.messages.weak_password';
 
   constructor() {}
 
@@ -53,29 +49,6 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  ngOnInit() {
-    this.translationSubscription = this.translate.stream(_([
-      "sign_up.must_accept_tos",
-      "sign_up.messages.complete_all_fields",
-      "sign_up.messages.non_available_username",
-      "sign_up.messages.generic_error_message",
-      "sign_up.messages.failed_captcha",
-      "sign_up.messages.weak_password",
-    ])).subscribe((translations: {[key:string]: string}) => {
-      this.mustAcceptTOSMessage = translations["sign_up.must_accept_tos"];
-      this.completeAllFieldsMessage = translations["sign_up.messages.complete_all_fields"];
-      this.nonAvailableUsernameMessage = translations["sign_up.messages.non_available_username"];
-      this.genericErrorMessage = translations["sign_up.messages.generic_error_message"];
-      this.failedCaptchaMessage = translations["sign_up.messages.failed_captcha"];
-      this.weakPasswordMessage = translations["sign_up.messages.weak_password"];
-    });
-  }
-
-  ngOnDestroy() {
-    if (this.translationSubscription) {
-      this.translationSubscription.unsubscribe();
-    }
-  }
   validatePassword(password: string): boolean {
     const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     if (!strongPasswordRegex.test(password)) {
@@ -85,6 +58,7 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
     this.weakPasswordMessage = '';
     return true;
   }
+
   register() {
     if (!this.termsAccepted) {
       this.errorMessage = this.mustAcceptTOSMessage;
@@ -137,6 +111,7 @@ export class RegistrationComponent implements OnInit, OnDestroy, AfterViewInit {
       console.error('Error al comprobar disponibilidad del nombre de usuario:', error);
     });
   }
+
   checkUsernameAvailability(username: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.dataService.searchUsername(username).subscribe((existingUsers: any[]) => {

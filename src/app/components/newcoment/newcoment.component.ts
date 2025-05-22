@@ -38,40 +38,24 @@ export class NewcomentComponent implements OnInit, OnDestroy {
   private translate: TranslateService = inject(TranslateService);
   private storageService: StorageService = inject(StorageService);
 
-  protected modifyCommentText = "Modificar Comentario";
-  protected sendCommentText = "Enviar Comentario";
+  protected modifyCommentText = "new_comment.modify_comment";
+  protected sendCommentText = "new_comment.send_comment";
 
   private translateSubscription: Subscription | undefined;
-  private successfullyDeletedCommentMessage = 'Comentario eliminado con éxito.';
-  private genericDeletionErrorMessage = 'Hubo un error al eliminar el comentario. Inténtalo de nuevo.';
-  private completeAllFieldsMessage = 'Por favor, completa todos los campos antes de enviar el comentario.';
-  private moreThan500CharactersMessage = 'El comentario no debe superar los 500 caracteres.';
-  private successfullyUpdatedMessage = 'Comentario actualizado con éxito.';
-  private successfullySentMessage = 'Comentario enviado con éxito.';
+  private successfullyDeletedCommentMessage = 'new_comment.messages.successfully_deleted';
+  private genericDeletionErrorMessage = 'new_comment.messages.generic_deletion_error';
+  private completeAllFieldsMessage = 'new_comment.messages.complete_all_fields';
+  private moreThan500CharactersMessage = 'new_comment.messages.more_than_500_characters';
+  private successfullyUpdatedMessage = 'new_comment.messages.successfully_updated';
+  private successfullySentMessage = 'new_comment.messages.successfully_sent';
   private genericSendingErrorMessage = 'Hubo un error al enviar el comentario. Inténtalo de nuevo.';
 
   constructor() {}
 
   ngOnInit(): void {
     this.translateSubscription = this.translate.stream(_([
-      "new_comment.modify_comment",
-      "new_comment.send_comment",
-      "new_comment.messages.successfully_deleted",
-      "new_comment.messages.generic_deletion_error",
-      "new_comment.messages.complete_all_fields",
-      "new_comment.messages.more_than_500_characters",
-      "new_comment.messages.successfully_updated",
-      "new_comment.messages.successfully_sent",
       "new_comment.messages.generic_sending_message"
     ])).subscribe((translations: {[key: string]: string}) => {
-      this.modifyCommentText = translations["new_comment.modify_comment"];
-      this.sendCommentText = translations["new_comment.send_comment"];
-      this.successfullyDeletedCommentMessage = translations["new_comment.messages.successfully_deleted"];
-      this.genericDeletionErrorMessage = translations["new_comment.messages.generic_deletion_error"];
-      this.completeAllFieldsMessage = translations["new_comment.messages.complete_all_fields"];
-      this.moreThan500CharactersMessage = translations["new_comment.messages.more_than_500_characters"];
-      this.successfullyUpdatedMessage = translations["new_comment.messages.successfully_updated"];
-      this.successfullySentMessage = translations["new_comment.messages.successfully_updated"];
       this.genericSendingErrorMessage = translations["new_comment.messages.generic_sending_message"];
     });
 

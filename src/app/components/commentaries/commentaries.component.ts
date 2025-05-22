@@ -26,12 +26,12 @@ export class CommentariesComponent implements OnInit, OnDestroy {
   selectedCommentToDelete: any = null;
 
   orderOptions = [
-    {value: "recentFirst", text: "Más recientes"},
-    {value: "oldFirst", text: "Más antiguos"},
-    {value: "mostStars", text: "Más estrellas"},
-    {value: "leastStars", text: "Menos estrellas"},
-    {value: "mostVoted", text: "Más votados"},
-    {value: "leastVoted", text: "Menos votados"},
+    {value: "recentFirst", text: "commentaries.sort.more_recent"},
+    {value: "oldFirst", text: "commentaries.sort.more_old"},
+    {value: "mostStars", text: "commentaries.sort.more_stars"},
+    {value: "leastStars", text: "commentaries.sort.less_stars"},
+    {value: "mostVoted", text: "commentaries.sort.more_voted"},
+    {value: "leastVoted", text: "commentaries.sort.less_voted"},
   ]
 
   selectedOrder = "recentFirst";
@@ -51,23 +51,9 @@ export class CommentariesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.translationSubscription = this.translate.stream(_([
       "commentaries.alert.should_log_in",
-      "commentaries.sort.more_recent",
-      "commentaries.sort.more_old",
-      "commentaries.sort.more_stars",
-      "commentaries.sort.less_stars",
-      "commentaries.sort.more_voted",
-      "commentaries.sort.less_voted",
     ]))
       .subscribe((translations: {[key: string]: string}) => {
         this.shouldLogInMessage = translations["commentaries.alert.should_log_in"];
-        this.orderOptions = [
-          {value: "recentFirst", text: translations["commentaries.sort.more_recent"]},
-          {value: "oldFirst", text: translations["commentaries.sort.more_old"]},
-          {value: "mostStars", text: translations["commentaries.sort.more_stars"]},
-          {value: "leastStars", text: translations["commentaries.sort.less_stars"]},
-          {value: "mostVoted", text: translations["commentaries.sort.more_voted"]},
-          {value: "leastVoted", text: translations["commentaries.sort.less_voted"]},
-        ];
       });
     this.authService.getCurrentUserObservable().subscribe((user) => {
       this.currentUserId = user ? user.uid : null;

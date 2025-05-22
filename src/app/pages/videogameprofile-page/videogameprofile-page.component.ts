@@ -1,4 +1,4 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DataService } from '../../services/data.service';
@@ -8,9 +8,7 @@ import { CommentariesComponent } from '../../components/commentaries/commentarie
 import { AuthService } from '../../services/auth.service';
 import {ApiService} from '../../services/api.service';
 import {collection, Firestore, getDocs, query, where} from '@angular/fire/firestore';
-import {TranslatePipe, TranslateService} from '@ngx-translate/core';
-import {marker as _} from '@colsen1991/ngx-translate-extract-marker';
-import {Subscription} from 'rxjs';
+import {TranslatePipe} from '@ngx-translate/core';
 import {StorageService} from '../../services/storage.service';
 
 @Component({
@@ -26,7 +24,7 @@ import {StorageService} from '../../services/storage.service';
     TranslatePipe
   ]
 })
-export class VideogamePageComponent implements OnInit, OnDestroy {
+export class VideogamePageComponent implements OnInit {
   comments: any[] = [];
   averageRating: number = 0;
   videogameId!: string;
@@ -44,14 +42,11 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private apiService: ApiService = inject(ApiService);
   private router: Router = inject(Router);
-  private translate: TranslateService = inject(TranslateService);
   private storageService: StorageService = inject(StorageService);
 
   protected selectedLanguage: string = this.storageService.getItem("lang") || "es";
-
-  private translationSubscription: Subscription | undefined;
-  protected modifyReviewText: string = 'Modificar valoración';
-  protected addReviewText: string = 'Añadir valoración';
+  protected modifyReviewText: string = 'videogame_profile_page.modify_review';
+  protected addReviewText: string = 'videogame_profile_page.add_review';
 
   constructor() {}
 
@@ -90,14 +85,6 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
         }
       }
       this.selectedLanguage = value;
-    });
-
-    this.translationSubscription = this.translate.stream(_([
-      "videogame_profile_page.modify_review",
-      "videogame_profile_page.add_review",
-    ])).subscribe((translations: {[key: string]: string}) => {
-      this.modifyReviewText = translations["videogame_profile_page.modify_review"];
-      this.addReviewText = translations["videogame_profile_page.add_review"];
     });
 
     this.route.params.subscribe(params => {
@@ -168,12 +155,6 @@ export class VideogamePageComponent implements OnInit, OnDestroy {
         });
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.translationSubscription) {
-      this.translationSubscription.unsubscribe();
-    }
   }
 
   loadComments(): void {

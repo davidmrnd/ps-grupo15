@@ -20,7 +20,7 @@
       <button
         (click)="submitComment()"
         class="submit-button">
-        {{ existingCommentId ? this.modifyCommentText : this.sendCommentText }}
+        {{ existingCommentId ? (this.modifyCommentText | translate) : (this.sendCommentText | translate) }}
       </button>
       <button
         *ngIf="existingCommentId"
@@ -40,5 +40,5 @@
       </div>
     </div>
   </div>
-  <p *ngIf="message" class="error-message">{{ message }}</p>
+  <p *ngIf="message" class="error-message">{{ message | translate }}</p>
 </div>
